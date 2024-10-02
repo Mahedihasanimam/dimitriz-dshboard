@@ -21,6 +21,7 @@ import SettingsTermsAndConditions from "../pages/SettingsTermsAndConditions";
 import EditTermsAndCondition from "../pages/EditTermsAndConditions";
 import CreateNewCourse from "../pages/CreateNewCourse";
 import Support from "../component/dashHome/Support";
+import Mycourse from "../pages/mycourse";
 
 
 
@@ -51,8 +52,8 @@ const router = createBrowserRouter([
                 element: <Category_Management />,
             },
             {
-                path: "/manage-users",
-                element: <Manage_Users />,
+                path: "/mycourse",
+                element: <Mycourse/>,
             },
             {
                 path: "/manage-users/seller-profile/:id",

@@ -53,7 +53,7 @@ const menuItems: MenuItem[] = [
   //   icon: <img src={categoryManagement} alt="Logo" width={18} height={18} />,
   // },
   {
-    path: "/manage-users",
+    path: "/mycourse",
     title: "My courses",
     icon: <BsStack  size={18} color="#667085" />,
   },
@@ -145,11 +145,11 @@ const Dashboard: React.FC<NotificationBadgeProps> = ({}) => {
             </h1>
           </div>
         );
-      case "/manage-users":
+      case "/mycourse":
         return (
           <div>
             <h1 className="text-[#333333] font-bold text-[24px]">
-              Manage Users
+            My Courses
             </h1>
           </div>
         );
@@ -198,7 +198,7 @@ const Dashboard: React.FC<NotificationBadgeProps> = ({}) => {
   };
 
   return (
-    <Layout style={{ height: "100vh" }}>
+    <Layout className="font-Merriweather" style={{ height: "100vh" }}>
       <Sider
         width={312}
         className="sidebar-menu  overflow-scroll"
