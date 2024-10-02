@@ -387,7 +387,7 @@ const Dashboard: React.FC<NotificationBadgeProps> = ({}) => {
             padding: "20px",
             overflowY: "auto",
             height: `calc(100vh - 80px)`,
-            background: "#1e1e1ef7",
+            background: "#FFFFFF",
           }}
         >
           <div className="h-full m-2 rounded p-3">

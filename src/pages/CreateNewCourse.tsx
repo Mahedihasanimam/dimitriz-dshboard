@@ -1,7 +1,7 @@
 
 import { BsStack } from 'react-icons/bs';
 import React from 'react';
-import { Tabs, Input, Select, Button } from 'antd';
+import { Tabs, Input, Select, Button, Menu } from 'antd';
 import { MdDetails } from 'react-icons/md';
 import { FaClipboardList } from 'react-icons/fa';
 import { AiOutlineCheckCircle } from 'react-icons/ai';
@@ -9,12 +9,23 @@ import { GoStack } from 'react-icons/go';
 import { IoClipboardOutline, IoPlayCircleOutline } from 'react-icons/io5';
 import { PiMonitorLight } from "react-icons/pi";
 import CourseDetails from '../component/dashHome/CourseDetails';
+import CurriculumSection from '../component/dashHome/CurriculumSection';
+import PublishCourse from '../component/dashHome/PublishCourse';
 // import { GoStack, MdDetails, FaClipboardList, AiOutlineCheckCircle } from 'react-icons/all'; // Import icons
 
 const { TabPane } = Tabs;
 const { Option } = Select;
 interface CreateNewCourseProps {}
 const CreateNewCourse: React.FC<CreateNewCourseProps> = () => {
+  const menu = (
+    <Menu>
+      <Menu.Item key="1">Video</Menu.Item>
+      <Menu.Item key="2">Attach File</Menu.Item>
+      <Menu.Item key="3">Captions</Menu.Item>
+      <Menu.Item key="4">Description</Menu.Item>
+      <Menu.Item key="5">Lecture Notes</Menu.Item>
+    </Menu>
+  );
   return (
     <div>
         <div className="container mx-auto my-10">
@@ -159,9 +170,11 @@ const CreateNewCourse: React.FC<CreateNewCourseProps> = () => {
           }
           key="3"
         >
-          <div> {/* Add content for the Curriculum tab here */} </div>
+          <div> {/* Add content for the Curriculum tab here */}
+            <CurriculumSection/>  
+             </div>
         </TabPane>
-
+       
         <TabPane
           tab={
             <span className="flex items-center gap-2 text-[#1D2939] font-semibold">
@@ -171,7 +184,9 @@ const CreateNewCourse: React.FC<CreateNewCourseProps> = () => {
           }
           key="4"
         >
-          <div> {/* Add content for the Publish Course tab here */} </div>
+          <div> {/* Add content for the Publish Course tab here */}
+            <PublishCourse/>
+             </div>
         </TabPane>
       </Tabs>
     </div>
