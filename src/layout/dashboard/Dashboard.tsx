@@ -58,7 +58,7 @@ const menuItems: MenuItem[] = [
     icon: <BsStack  size={18} color="#667085" />,
   },
   {
-    path: "/love",
+    path: "/earning",
     title: "Earning",
     icon: <FiCreditCard color="#667085" size={18} />,
   },
@@ -153,10 +153,10 @@ const Dashboard: React.FC<NotificationBadgeProps> = ({}) => {
             </h1>
           </div>
         );
-      case "/love":
+      case "/earning":
         return (
           <div>
-            <h1 className="text-[#333333] font-bold text-[24px]">Love</h1>
+            <h1 className="text-[#333333] font-bold text-[24px]">My Courses</h1>
           </div>
         );
       case "/transactions":

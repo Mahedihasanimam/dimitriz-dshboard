@@ -20,32 +20,32 @@ interface DataPoint {
 }
 
 const data: DataPoint[] = [
-  { name: "Jan", amt: 12000 }, // Low
-  { name: "Feb", amt: 12000 }, // High
-  { name: "Mar", amt: 7000 }, // Down
-  { name: "Apr", amt: 15000 }, // High
-  { name: "May", amt: 8000 }, // Down
-  { name: "Jun", amt: 16000 }, // High
-  { name: "Jul", amt: 9000 }, // Down
-  { name: "Aug", amt: 14000 }, // High
-  { name: "Sep", amt: 8500 }, // Down
-  { name: "Oct", amt: 13000 }, // High
-  { name: "Nov", amt: 7500 }, // Down
-  { name: "Dec", amt: 6000 }, // High
+  { name: "Jan", amt: 12000 },
+  { name: "Feb", amt: 12000 },
+  { name: "Mar", amt: 7000 }, 
+  { name: "Apr", amt: 15000 },
+  { name: "May", amt: 8000 }, 
+  { name: "Jun", amt: 16000 },
+  { name: "Jul", amt: 9000 }, 
+  { name: "Aug", amt: 14000 },
+  { name: "Sep", amt: 8500 }, 
+  { name: "Oct", amt: 13000 },
+  { name: "Nov", amt: 7500 }, 
+  { name: "Dec", amt: 6000 }, 
 ];
 const ratingData: DataPoint[] = [
-  { name: "Jan", amt: 18000 }, // Low
-  { name: "Feb", amt: 14000 }, // High
-  { name: "Mar", amt: 22000 }, // Down
-  { name: "Apr", amt: 9000 }, // High
-  { name: "May", amt: 8000 }, // Down
-  { name: "Jun", amt: 16000 }, // High
-  { name: "Jul", amt: 9000 }, // Down
-  { name: "Aug", amt: 14000 }, // High
-  { name: "Sep", amt: 8500 }, // Down
-  { name: "Oct", amt: 13000 }, // High
-  { name: "Nov", amt: 7500 }, // Down
-  { name: "Dec", amt: 6000 }, // High
+  { name: "Jan", amt: 18000 },
+  { name: "Feb", amt: 14000 },
+  { name: "Mar", amt: 22000 },
+  { name: "Apr", amt: 9000 }, 
+  { name: "May", amt: 8000 }, 
+  { name: "Jun", amt: 16000 },
+  { name: "Jul", amt: 9000 }, 
+  { name: "Aug", amt: 14000 },
+  { name: "Sep", amt: 8500 }, 
+  { name: "Oct", amt: 13000 },
+  { name: "Nov", amt: 7500 }, 
+  { name: "Dec", amt: 6000 }, 
 ];
 
 const RevenueChart: React.FC = () => {

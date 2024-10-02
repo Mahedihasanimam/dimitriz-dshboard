@@ -8,7 +8,8 @@ const DasboardHome = (props: Props) => {
   return (
  <>
     <Status />
-    <RevenueChart /></>
+    <RevenueChart />
+    </>
   )
 }
 

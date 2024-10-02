@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { ClockCircleOutlined, UsergroupDeleteOutlined, EllipsisOutlined } from "@ant-design/icons";
+import { ClockCircleOutlined, UsergroupDeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Rate, Dropdown, Menu, Image } from "antd";
 
 // Define the props type
@@ -9,7 +9,7 @@ interface CourseCardProps {
   courseTitle: string;
   instructor: string;
   rating: number;
-  price: string;
+  price: number;
   reviews: number;
   duration: string;
   students: number;
@@ -56,33 +56,28 @@ const CourseCard: React.FC<CourseCardProps> = ({
       />
       {/* Course Details */}
       <div className="p-4">
-        <div className="flex justify-between items-center pt-5">
-          <p className="text-sm text-[#475467] mb-2">
-            by <span className="text-[#1D2939] font-semibold">{instructor}</span>
-          </p>
-          <div className="flex items-center justify-center mb-2">
-            <Rate disabled allowHalf value={rating} />
-            <span className="text-[#475467] font-bold text-[16px] ml-2">{rating}</span>
-            <span className="text-[#475467] font-normal text-sm ml-2">({reviews})</span>
-          </div>
-        </div>
+       
         <h5 className="text-lg font-bold tracking-tight text-[#1D2939] mb-2">{courseTitle}</h5>
         <div className="flex items-center justify-between text-[#475467] text-sm py-4 border-b border-[#E5E7EB]">
-          <span className="mr-4 flex items-center font-normal">
-            <ClockCircleOutlined className="text-lg pr-2" />
-            {duration} Hours
-          </span>
+          
           <span className="flex items-center font-normal">
             <UsergroupDeleteOutlined className="text-lg pr-2" />
             {students} Students
           </span>
+        
+          <div className="flex items-center justify-center mb-2">
+            <Rate  count={1} disabled allowHalf value={rating} />
+            <span className="text-[#475467] font-bold text-[16px] ml-2">{rating}</span>
+            <span className="text-[#475467] font-normal text-sm ml-2">({reviews})</span>
+          </div>
+     
         </div>
         <div className="flex justify-between items-center py-4">
           <span className="text-lg font-semibold text-[#000000]">€ {price}</span>
 
           {/* Edit Icon with Dropdown Menu */}
           <Dropdown overlay={menu} trigger={['click']}>
-            <EllipsisOutlined className="text-xl cursor-pointer" />
+          <EditOutlined className="text-xl cursor-pointer" />
           </Dropdown>
         </div>
       </div>

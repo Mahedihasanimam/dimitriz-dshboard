@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import SelectBox from "../share/SelectBox";
+
 import { HiMiniUsers } from "react-icons/hi2";
 import { FaArrowTrendUp, FaUser } from "react-icons/fa6";
-import { SiCoursera, SiPaypal } from "react-icons/si";
+import { SiCoursera } from "react-icons/si";
 import { FcComboChart, FcDocument } from "react-icons/fc";
 
 // import { useGetAllStatusApiQuery } from "../redux/Features/getAllStatusApi";
@@ -13,6 +13,10 @@ import { CiCreditCard1, CiTrophy } from "react-icons/ci";
 import { FaRegUserCircle } from "react-icons/fa";
 import { BsStack } from "react-icons/bs";
 import { IoIosTrophy } from "react-icons/io";
+import SelectBox from "../component/share/SelectBox";
+import { FiCreditCard } from "react-icons/fi";
+import { LuCrown } from "react-icons/lu";
+import RevenueChart from "../component/dashHome/RevenuuesChart";
 // Define a type for the API response
 interface StatusAttributes {
   totalEarnings: number;
@@ -29,43 +33,28 @@ interface StatusData {
 const cardData = [
   {
     id: 1,
-    icon: <PlayCircleOutlined style={{ fontSize: "30px", color: "#0E68E7" }} />,
-    title: "684",
-    description: "Enrolled Courses",
+    icon: <LuCrown style={{fontSize: '30px',color:'#039855'}} />,
+    title: '€27,350.00',
+    description: 'Total Revenue',
   },
   {
     id: 2,
-    icon: <GrDocumentVerified style={{ fontSize: "30px", color: "#7F56D9" }} />,
-    title: "03",
-    description: "Active course",
+    icon: <GrDocumentVerified  style={{fontSize: '30px',color:'#7F56D9'}} />,
+    title: '€33,350.00',
+    description: 'Current Balance',
   },
   {
     id: 3,
-    icon: <IoIosTrophy style={{ fontSize: "30px", color: "#039855" }} />,
-    title: "486",
-    description: "Completed Courses",
+    icon: <FiCreditCard style={{fontSize: '30px',color:'#D92D20'}} />,
+    title: '486',
+    description: 'Total Withdrawals',
   },
-  {
-    id: 4,
-    icon: <FaRegUserCircle style={{ fontSize: "30px", color: "#D92D20" }} />,
-    title: "47,684",
-    description: "Students",
-  },
-  {
-    id: 5,
-    icon: <BsStack style={{ fontSize: "30px", color: "#F79009" }} />,
-    title: "24,996",
-    description: "Total Course Sold",
-  },
-  {
-    id: 6,
-    icon: <CiCreditCard1 style={{ fontSize: "30px", color: "#475467" }} />,
-    title: "€7,461,767.00",
-    description: "USD Total Earning",
-  },
+  
+ 
 ];
 
-const Status: React.FC = () => {
+
+const Earning: React.FC = () => {
   const [selectedCard, setSelectedCard] = useState<number | null>(null);
   const [selectedValue, setSelectedValue] = useState<string | undefined>();
 
@@ -83,26 +72,16 @@ const Status: React.FC = () => {
     { value: "3", label: "Year" },
   ];
   return (
-    <div className="bg-[#FFFFFF] p-6 rounded-xl rounded-b-none">
-      <div className="flex justify-between w-full">
-        <div className="pr-8">
-          <SelectBox
-            options={selectOptions}
-            placeholder="Week"
-            onChange={handleSelectChange}
-            style={{ width: 100 }}
-          />
-        </div>
-      </div>
+    <div>
+         <div className="bg-[#FFFFFF] p-6 rounded-xl rounded-b-none">
+  
       <div className="grid grid-cols-3 gap-4  mt-[12px]">
         {cardData.map((card, index) => {
           const bgColors = [
-            "bg-[#D8F0FF]",
-            "bg-[#F9F5FF]",
             "bg-[#ECFDF3]",
+            "bg-[#F9F5FF]",
             "bg-[#FEF3F2]",
-            "bg-[#FFFAEB]",
-            "bg-[#F9FAFB]",
+         
           ]; // Define your background colors here
           const selectedBgColor =
             selectedCard === index
@@ -136,8 +115,10 @@ const Status: React.FC = () => {
           );
         })}
       </div>
+      <RevenueChart/>
+    </div>
     </div>
   );
 };
 
-export default Status;
+export default Earning;
