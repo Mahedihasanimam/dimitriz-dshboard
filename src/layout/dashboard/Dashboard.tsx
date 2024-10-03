@@ -63,7 +63,7 @@ const menuItems: MenuItem[] = [
     icon: <FiCreditCard color="#667085" size={18} />,
   },
   {
-    path: "/transactions",
+    path: "/webiner",
     title: "Webinar",
     icon: <CiFlag1 color="#667085" size={20} />,
   },
@@ -159,11 +159,11 @@ const Dashboard: React.FC<NotificationBadgeProps> = ({}) => {
             <h1 className="text-[#333333] font-bold text-[24px]">My Courses</h1>
           </div>
         );
-      case "/transactions":
+      case "/webiner":
         return (
           <div>
             <h1 className="text-[#333333] font-bold text-[24px]">
-              Transactions
+             Webiner
             </h1>
           </div>
         );

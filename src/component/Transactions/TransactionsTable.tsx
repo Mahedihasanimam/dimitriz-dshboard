@@ -37,7 +37,7 @@ const TransactionTable: React.FC<ProductListingProps> = () => {
   const pageSize = 10;
 
   const data: UserData[] = [...Array(9).keys()].map((item, index) => ({
-    name: "Sam",
+    name: "Mastercards",
     sId: index + 1,
     image: <img src={image} className="w-9 h-9 rounded" alt="avatar" />,
     date: "9-24-204",
@@ -45,7 +45,7 @@ const TransactionTable: React.FC<ProductListingProps> = () => {
     category: "Vehicle",
     amount: "$6729.00",
     quantity: "Quantity",
-    status: "Approved",
+    status: "Completed",
     action: {
       sId: index + 1,
       image: <img src={image} className="w-9 h-9 rounded" alt="" />,
@@ -53,7 +53,7 @@ const TransactionTable: React.FC<ProductListingProps> = () => {
       category: "Category",
       amount: "$6729.00",
       quantity: "quantity",
-      status: "Approved",
+      status: "Completed",
       date: "9-24-204",
       purchasedProduct: "iMac air 2017",
       contact: "0521545861520",
@@ -67,15 +67,11 @@ const TransactionTable: React.FC<ProductListingProps> = () => {
       key: "date",
     },
     {
-      title: "Name",
+      title: "method",
       dataIndex: "name",
       key: "name",
     },
-    {
-      title: "Purchased Product ",
-      dataIndex: "purchasedProduct",
-      key: "purchasedProduct",
-    },
+
 
     {
       title: "Amount",
@@ -128,10 +124,10 @@ const TransactionTable: React.FC<ProductListingProps> = () => {
   };
 
   return (
-    <div className="mt-2">
+    <div className="mt-12">
       <div className="flex justify-between w-full">
-        <div>
-          <h1 className="text-xl font-bold text-[#5D5D5D]">Overview</h1>
+        <div className="py-4">
+          <h1 className="text-xl font-bold text-[#5D5D5D]">Withdrow history</h1>
           <p className="text-[#5D5D5D]">Activities summary at a glance</p>
         </div>
         <div className="pr-8">

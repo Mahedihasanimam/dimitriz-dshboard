@@ -1,22 +1,42 @@
-import {Button, Checkbox, Input } from "antd";
+import { Button, Checkbox, Image, Input, UploadProps } from "antd";
 const { TextArea } = Input;
 import React from "react";
 import { MdEmail } from "react-icons/md";
+import { Upload } from "antd";
+import { message } from "antd";
 
 type Props = {};
-
+const props: UploadProps = {
+  name: "file",
+  multiple: true,
+  action: "https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload",
+  onChange(info) {
+    const { status } = info.file;
+    if (status !== "uploading") {
+      console.log(info.file, info.fileList);
+    }
+    if (status === "done") {
+      message.success(`${info.file.name} file uploaded successfully.`);
+    } else if (status === "error") {
+      message.error(`${info.file.name} file upload failed.`);
+    }
+  },
+  onDrop(e) {
+    console.log("Dropped files", e.dataTransfer.files);
+  },
+};
+const { Dragger } = Upload;
 const SettingsPage = (props: Props) => {
   return (
     <div className="max-w-2xl space-y-4 border p-6 rounded-md shadow-md">
       <div className="flex gap-6 ">
-        <div className="w-full" >
+        <div className="w-full">
           <label className="block font-medium mb-1 text-[#344054]">
             First Name
           </label>
           <Input
-          className="w-full"
+            className="w-full"
             style={{
-              
               height: "44px",
               borderColor: "#D0D5DD",
               color: "#667085",
@@ -32,9 +52,8 @@ const SettingsPage = (props: Props) => {
             Last Name
           </label>
           <Input
-          className="w-full"
+            className="w-full"
             style={{
-         
               height: "44px",
               borderColor: "#D0D5DD",
               color: "#667085",
@@ -45,15 +64,14 @@ const SettingsPage = (props: Props) => {
           />
         </div>
       </div>
-      <div className="flex gap-6 " >
-      <div className="w-full" >
+      <div className="flex gap-6 ">
+        <div className="w-full">
           <label className="block font-medium mb-1 text-[#344054]">
-          Profession
+            Profession
           </label>
           <Input
-          className="w-full"
+            className="w-full"
             style={{
-              
               height: "44px",
               borderColor: "#D0D5DD",
               color: "#667085",
@@ -62,15 +80,14 @@ const SettingsPage = (props: Props) => {
             }}
             placeholder="Lead UX"
           />
-      </div>
-      <div className="w-full" >
+        </div>
+        <div className="w-full">
           <label className="block font-medium mb-1 text-[#344054]">
-          Company name
+            Company name
           </label>
           <Input
-          className="w-full"
+            className="w-full"
             style={{
-              
               height: "44px",
               borderColor: "#D0D5DD",
               color: "#667085",
@@ -79,70 +96,53 @@ const SettingsPage = (props: Props) => {
             }}
             placeholder="Google"
           />
+        </div>
       </div>
-      </div>
-      <div className="w-full" >
-          <label className="block font-medium mb-1 text-[#344054]">
-         Email
-          </label>
-          <Input
-          prefix={
-            <MdEmail size={20}/>
-          }
-          className="w-full"
-            style={{
-              
-              height: "44px",
-              borderColor: "#D0D5DD",
-              color: "#667085",
-              fontSize: "16px",
-              fontWeight: 400,
-            }}
-            placeholder="emily@gmail.com"
-          />
-        </div>
-      <div className="w-full" >
-          <label className="block font-medium mb-1 text-[#344054]">
-          Message
-          </label>
-          <TextArea
-          className="w-full"
-            style={{
-              
-              height: "128px",
-              borderColor: "#D0D5DD",
-              color: "#667085",
-              fontSize: "16px",
-              fontWeight: 400,
-            }}
-            
-          />
-        </div>
-        <div>
-            <Checkbox id="agree" className="text-[16px] font-normal text-[#475467]">
-                <label htmlFor="agree">You agree to our friendly privacy policy.</label>
-            </Checkbox>
-        </div>
+      <div className="w-full">
+        <label className="block font-medium mb-1 text-[#344054]">Email</label>
         <Input
-          type="submit"
-          value="Send message"
+          prefix={<MdEmail size={20} />}
+          className="w-full"
           style={{
-            backgroundColor: "#0E68E7",
-            color: "#FFFFFF",
             height: "44px",
-            borderRadius: "4px",
-            cursor: "pointer",
-            fontWeight: 600,
+            borderColor: "#D0D5DD",
+            color: "#667085",
             fontSize: "16px",
-            width: "100%",
-            marginTop: "24px",
+            fontWeight: 400,
           }}
+          placeholder="emily@gmail.com"
+        />
+      </div>
+      <div className="w-full flex gap-6 pt-6">
+        <Image
+          className="h-6 w-6 rounded-full"
+          src="https://via.placeholder.com/150"
         />
 
-<div className="flex justify-end gap-4 items-center  py-6">
-              <Button style={{height: '44px',fontSize: '16px', fontWeight:400}} >Cancel</Button>
-              <Button style={{height: '44px',fontSize: '16px', fontWeight:400}} type="primary">Save & Next</Button>
-            </div>
+        <div className="w-full">
+          <Dragger {...props}>
+            <p className="ant-upload-text text-[#1253BB] text-xl ">
+              Click to upload
+            </p>
+            <p className="ant-upload-hint">
+              or Drag an drop a
+              <span className="">SVG, PNG, JPG or GIF (max. 800x400px)</span>
+            </p>
+          </Dragger>
+        </div>
+      </div>
+
+      <div className="flex justify-end gap-4 items-center  py-6">
+        <Button style={{ height: "44px", fontSize: "16px", fontWeight: 400 }}>
+          Cancel
+        </Button>
+        <Button
+          style={{ height: "44px", fontSize: "16px", fontWeight: 400 }}
+          type="primary"
+        >
+          Save changes
+        </Button>
+      </div>
     </div>
   );
 };
