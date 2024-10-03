@@ -22,7 +22,10 @@ import { HiOutlineSupport } from "react-icons/hi";
 import { IoSettingsOutline } from "react-icons/io5";
 import { BsStack } from "react-icons/bs";
 import { FiCreditCard } from "react-icons/fi";
+import { LuMonitor, LuUsers } from "react-icons/lu";
 const { Header, Sider, Content } = Layout;
+const isadmin=true
+
 
 interface MenuItem {
   path: string;
@@ -47,11 +50,8 @@ const menuItems: MenuItem[] = [
     title: "Create new course",
     icon: <PlusOutlined style={{ color: "#667085", fontSize: 20 }} />,
   },
-  // {
-  //   path: "/category_management",
-  //   title: "Category Management",
-  //   icon: <img src={categoryManagement} alt="Logo" width={18} height={18} />,
-  // },
+ 
+  
   {
     path: "/mycourse",
     title: "My courses",
@@ -67,8 +67,27 @@ const menuItems: MenuItem[] = [
     title: "Webinar",
     icon: <CiFlag1 color="#667085" size={20} />,
   },
+
+
+  // admin dashboard menu iitems ----------------------------
+  {
+    path: "/usermanagement",
+    title: "usermanagements",
+    icon: <LuUsers  color="#667085" size={20} />,
+  },
+  {
+    path: "/content",
+    title: "contents",
+    icon: <LuMonitor   color="#667085" size={20} />,
+  },
+  {
+    path: "/transactions",
+    title: "transactions",
+    icon: <LuMonitor   color="#667085" size={20} />,
+  },
   
 ];
+
 const bottomMenuItems: MenuItem[] = [
   {
     path: "/support",
@@ -180,6 +199,26 @@ const Dashboard: React.FC<NotificationBadgeProps> = ({}) => {
           <div>
             <h1 className="text-[#101828] font-bold text-[24px]">
             Get in touch
+     
+            </h1>
+         
+          </div>
+        );
+      case "/usermanagement":
+        return (
+          <div>
+            <h1 className="text-[#101828] font-bold text-[24px]">
+            Welcome back, Dimitristzitzi
+     
+            </h1>
+         
+          </div>
+        );
+      case "/content":
+        return (
+          <div>
+            <h1 className="text-[#101828] font-bold text-[24px]">
+            Contents for review
      
             </h1>
          

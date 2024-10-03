@@ -3,7 +3,7 @@ import { ChevronLeft, Pencil, Search, Trash } from "lucide-react";
 import { Input } from "antd";
 import image from "../assets/Images/Notifications/Avatar.png";
 import SelectBox from "../component/share/SelectBox";
-import SellerActivityChart from "../component/manageUsers/SellerActivityChart";
+import SellerActivityChart from "../component/admin/manageUsers/SellerActivityChart";
 import CustomTable from "../component/share/CustomTable";
 import ModalComponent from "../component/share/ModalComponent";
 

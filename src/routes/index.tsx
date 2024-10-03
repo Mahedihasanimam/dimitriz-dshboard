@@ -22,6 +22,10 @@ import Support from "../component/dashHome/Support";
 import Mycourse from "../pages/mycourse";
 import Earning from "../pages/Earning";
 import Webiner from "../pages/Webiner";
+import Totalusers from "../component/admin/manageUsers/Totalusers";
+import Content from "../component/admin/Content";
+import TransactionsStatus from "../component/Transactions/TransactionStatus";
+
 
 
 
@@ -56,10 +60,7 @@ const router = createBrowserRouter([
                 path: "/mycourse",
                 element: <Mycourse/>,
             },
-            {
-                path: "/manage-users/seller-profile/:id",
-                element: <Seller_Profile />,
-            },
+            
             {
                 path: "/earning",
                 element: <Earning />,
@@ -68,6 +69,27 @@ const router = createBrowserRouter([
                 path: "/webiner",
                 element: <Webiner />,
             },
+
+
+            // admin menu item --------------
+            {
+                path: "/usermanagement",
+                element: <Totalusers />,
+            },
+            {
+                path: "/content",
+                element:<Content/>
+            },
+            {
+                path: "/transactions",
+                element: <TransactionsStatus />,
+            },
+
+
+
+
+
+
             {
                 path: "/support",
                 element: <Support />,
@@ -76,14 +98,7 @@ const router = createBrowserRouter([
                 path: "/settings",
                 element: <SettingsPage />,
             },
-            {
-                path: "/settings/personalInformation",
-                element: <Settings_personalInformation />,
-            },
-            {
-                path: "settings/termsAndCondition/edittermsAndConditions",
-                element: <EditTermsAndCondition />
-            },
+            
         ]
     },
     {
