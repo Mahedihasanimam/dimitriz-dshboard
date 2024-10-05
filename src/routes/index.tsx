@@ -25,6 +25,9 @@ import Webiner from "../pages/Webiner";
 import Totalusers from "../component/admin/manageUsers/Totalusers";
 import Content from "../component/admin/Content";
 import TransactionsStatus from "../component/Transactions/TransactionStatus";
+import Recordings from "../component/student/Recordings";
+import Mycourses from "../component/student/Mycourses";
+import Recources from "../component/student/Recources";
 
 
 
@@ -40,6 +43,7 @@ const router = createBrowserRouter([
         path: "/",
         element: <Dashboard handleNotifications={handleNotifications} />,
         children: [
+            // instructor menu item --------------
             {
                 path: "/",
                 element: <DasboardHome />,
@@ -85,11 +89,25 @@ const router = createBrowserRouter([
                 element: <TransactionsStatus />,
             },
 
+            // student menu item ---------------
+            {
+                path: "/recordings",
+                element:<Recordings/>
+            },
+            {
+                path: "/mycourcess",
+                element:<Mycourses/>
+            },
+            {
+                path: "/resources",
+                element:<Recources/>
+            },
 
 
 
 
 
+            // this is for all 
             {
                 path: "/support",
                 element: <Support />,

@@ -239,3 +239,10 @@ border-color: transparent !important;
   color: #a19e9e !important;
 }
 
+:where(.css-dev-only-do-not-override-qnu6hi).ant-collapse .ant-collapse-content>.ant-collapse-content-box {
+
+  background-color: #F2F4F7;
+}
+:where(.css-dev-only-do-not-override-qnu6hi).ant-rate .ant-rate-star:not(:last-child) {
+  margin-inline-end: 0px;
+}

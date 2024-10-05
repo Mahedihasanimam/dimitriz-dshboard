@@ -1,6 +1,6 @@
 import React from "react";
 import { Avatar, Badge, Input, Layout, Menu, Popover } from "antd";
-import { Bell, Lock, LogOut, Search, User, User2Icon } from "lucide-react";
+import { Bell, FolderArchive, Lock, LogOut, PlayCircle, Search, User, User2Icon } from "lucide-react";
 import { Link, Outlet, useNavigate, useLocation } from "react-router-dom";
 import logo from "../../assets/Images/logo.png";
 import logoChoozy from "../../assets/Images/dashboard/pie-chart.svg";
@@ -8,7 +8,7 @@ import productListing from "../../assets/Images/dashboard/tag.png";
 import categoryManagement from "../../assets/Images/dashboard/categoryManagement.png";
 import manageUser from "../../assets/Images/dashboard/ManageUser.png";
 import { FaRegUserCircle, FaRegHeart } from "react-icons/fa";
-import { CiCreditCard1, CiFlag1 } from "react-icons/ci";
+import { CiCreditCard1, CiFlag1, CiFolderOn } from "react-icons/ci";
 import settings from "../../assets/Images/dashboard/settings.png";
 import SubMenu from "antd/es/menu/SubMenu";
 import Settings_personalInformation from "./../../pages/Settings_personalInformation";
@@ -35,6 +35,8 @@ interface MenuItem {
 }
 
 const menuItems: MenuItem[] = [
+
+  // instructor menu items-------------
   {
     path: "/",
     title: "Dashboard",
@@ -86,6 +88,23 @@ const menuItems: MenuItem[] = [
     icon: <LuMonitor   color="#667085" size={20} />,
   },
   
+
+  // students menu items -----------------
+ {
+  path: "/recordings",
+  title: "Recordings",
+  icon: <PlayCircle  size={18} color="#667085" />,
+ },
+ {
+  path: "/mycourcess",
+  title: "My courses",
+  icon: <BsStack  size={18}  color="#667085" />,
+ },
+ {
+  path: "/resources",
+  title: "Recources",
+  icon: <CiFolderOn  size={18} color="#667085" />,
+ },
 ];
 
 const bottomMenuItems: MenuItem[] = [
@@ -172,6 +191,22 @@ const Dashboard: React.FC<NotificationBadgeProps> = ({}) => {
             </h1>
           </div>
         );
+      case "/mycourcess":
+        return (
+          <div>
+            <h1 className="text-[#333333] font-bold text-[24px]">
+            Welcome back, Emily
+            </h1>
+          </div>
+        );
+      case "/resources":
+        return (
+          <div>
+            <h1 className="text-[#333333] font-bold text-[24px]">
+            Find essential resources
+            </h1>
+          </div>
+        );
       case "/earning":
         return (
           <div>
@@ -183,6 +218,14 @@ const Dashboard: React.FC<NotificationBadgeProps> = ({}) => {
           <div>
             <h1 className="text-[#333333] font-bold text-[24px]">
              Webiner
+            </h1>
+          </div>
+        );
+      case "/recordings":
+        return (
+          <div>
+            <h1 className="text-[#333333] font-bold text-[24px]">
+            Recorded classes
             </h1>
           </div>
         );
