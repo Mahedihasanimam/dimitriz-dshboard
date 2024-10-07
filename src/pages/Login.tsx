@@ -1,75 +1,129 @@
+"use client";
 import React from "react";
-import AuthWrapper from "../component/share/AuthWrapper";
-import Title from "../component/share/Title";
-import { Button, Checkbox, Form, Input } from "antd";
-import { Link, useNavigate } from "react-router-dom";
-import logo from "../assets/Images/logoChoozy.svg";
+import { Form, Input, Button, Checkbox, Image } from "antd";
+import logoimage from "../assets/Images/dashboard/logo.png";
+import { Link } from "react-router-dom";
 
-interface LoginFormValues {
+// Define the types for form values
+interface SignInValues {
   email: string;
   password: string;
-  remember?: boolean;
+  remember: boolean;
 }
 
 const Login: React.FC = () => {
-  const navigate = useNavigate();
+  const onFinish = (values: SignInValues) => {
+    console.log("Success:", values);
+  };
 
-  const onFinish = (values: LoginFormValues) => {
-    console.log(values);
-    navigate("/");
+  const onFinishFailed = (errorInfo: any) => {
+    console.log("Failed:", errorInfo);
   };
 
   return (
-    <AuthWrapper>
-      <div className="text-center mb-12">
-        {/* <Title>Login</Title> */}
-        <div className="flex py-8">
-          <div className="flex items-center mx-auto gap-2">
-            <img src={logo} alt="Logo" className="w-20" />
-            <h1 className="font-bold text-3xl">Choozy</h1>
-          </div>
-        </div>
-        <p>Please enter your email and password to continue</p>
-      </div>
-      <Form<LoginFormValues> layout="vertical" onFinish={onFinish}>
-        <Form.Item
-          label="Email"
-          name="email"
-          rules={[{ required: true, message: "Please enter your email" }]}
-        >
-          <Input placeholder="Enter your email" style={{ height: "50px" }} />
-        </Form.Item>
-        <Form.Item
-          label="Password"
-          name="password"
-          rules={[{ required: true, message: "Please enter your password" }]}
-        >
-          <Input.Password
-            placeholder="Enter your password"
-            style={{ height: "50px" }}
-          />
-        </Form.Item>
-        <Form.Item>
-          <div className="flex justify-between items-center">
-            <Form.Item name="remember" valuePropName="checked" noStyle>
-              <Checkbox>Remember me</Checkbox>
-            </Form.Item>
 
-            <Link className="login-form-forgot" to="/auth/forget-password">
-              Forgot password
-            </Link>
+      <div className="pt-12 w-full">
+        <div className="text-center px-2 py-8">
+          <div className="flex justify-center items-center mb-4">
+            <Image src={logoimage} alt="Logo" />
           </div>
-        </Form.Item>
-        <Form.Item>
-          <Button
-           className="bg-[#4964C6] h-12 text-white text-lg w-full mt-6"
-            htmlType="submit"
-          >
-            Sign In
-          </Button>
-        </Form.Item>
-      </Form>
-    </AuthWrapper>
+          <h1 className="text-3xl font-bold mb-4">Log in to your account</h1>
+          <h3 className="text-[#475467] text-[16px]">
+            Welcome back! Please enter your details.
+          </h3>
+        </div>
+        <div className="lg:max-w-lg w-full mx-auto px-4">
+          <div className="flex justify-center items-center ">
+            <Form
+              name="signin"
+              layout="vertical"
+              onFinish={onFinish}
+              onFinishFailed={onFinishFailed}
+              style={{ maxWidth: "400px", width: "100%" }}
+            >
+              <Form.Item
+                label={
+                  <label
+                    htmlFor="email"
+                    className="text-sm text-[#344054] font-medium"
+                  >
+                    Email
+                  </label>
+                }
+                name="email"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your email!",
+                    type: "email",
+                  },
+                ]}
+              >
+                <Input
+                  className="border border-[#D0D5DD] p-2 text-[16px] text-[#667085] font-normal hover:border-[#D0D5DD] focus:border-[#dde2eb]"
+                  placeholder="Enter your email"
+                />
+              </Form.Item>
+
+              <Form.Item
+                label={
+                  <label
+                    htmlFor="password"
+                    className="text-sm text-[#344054] font-medium"
+                  >
+                    Password
+                  </label>
+                }
+                name="password"
+                rules={[{ required: true, message: "Please input your password!" }]}
+              >
+                <Input.Password
+                  className="border border-[#D0D5DD] p-2 text-[16px] text-[#667085] font-normal hover:border-[#D0D5DD] focus:border-[#dde2eb]"
+                  placeholder="Enter your password"
+                />
+              </Form.Item>
+
+              <div className="flex justify-between items-center">
+                <Form.Item
+                  name="remember"
+                  className="w-fit"
+                  valuePropName="checked"
+                >
+                  <Checkbox className="text-[14px] text-[#344054] font-medium">
+                    Remember me
+                  </Checkbox>
+                </Form.Item>
+
+                {/* Forgot Password Link */}
+                <Link
+                  to="/auth/forget-password"
+                  className="text-[14px] text-[#195671] font-semibold hover:underline pb-4"
+                >
+                  Forgot password?
+                </Link>
+              </div>
+
+              <Form.Item>
+                <Button
+                  className="text-[#FFFFFF] text-[16px] font-semibold p-6"
+                  size="large"
+                  type="primary"
+                  htmlType="submit"
+                  block
+                >
+                  Log In
+                </Button>
+              </Form.Item>
+
+              {/* Google Sign In Button */}
+             
+            </Form>
+          </div>
+          
+
+        </div>
+      </div>
+
   );
 };
 

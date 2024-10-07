@@ -22,19 +22,13 @@ import imageone from "../../assets/Images/dashboard/Avatar.png";
 import { DownloadCloud, File } from "lucide-react";
 import { FcDocument } from "react-icons/fc";
 
-
-
-
-
-
 const Recordings: React.FC = () => {
-    
   return (
     <div className="bg-white p-6">
       <h1 className="text-[24px] font-bold ">UX Design Course</h1>
-      <div className="flex gap-6 item-center justify-between mb-4 container mx-auto">
+      <div className="xl:flex justify-between gap-6 item-center justify-between mb-4 container mx-auto">
         {/* left content ---------- */}
-        <div className="w-1/2">
+        <div className=" w-full">
           <video
             className="w-full mt-24 rounded-2xl"
             src={coursevideo}
@@ -44,10 +38,20 @@ const Recordings: React.FC = () => {
 
           {/* avater  */}
           <div>
-            <div className="flex items-center justify-between space-x-2">
-              <div className="flex item-center gap-4">
+            <div className="lg:flex flex-col justify-between space-x-2">
+
+            <div>
+                    <p className="text-[#263238] text-[14px] font-normal flex items-center gap-2">
+                      Last updated :{" "}
+                      <span className="text-[#1D2939] block text-[14px] font-semibold">
+                        Oct 26, 2024
+                      </span>
+                    </p>
+                  </div>
+                  
+              {/* <div className="xl:flex flex-col item-center gap-4">
                 <Avatar.Group className="pt-2" maxCount={5}>
-                  {/* Image for student */}
+                 
                   <Avatar src={imageone} />
                   <Avatar src={imageone} />
                   <Avatar src={imageone} />
@@ -59,40 +63,50 @@ const Recordings: React.FC = () => {
                   <Avatar src={imageone} />
                   <Avatar src={imageone} />
                 </Avatar.Group>
-                <div className="">
-                  <p className="text-[#1D2939] block text-lg font-semibold">
-                    512
-                  </p>
 
-                  <p className="text-[#263238] text-[14px] font-normal">
-                    Students watching
-                  </p>
+                <div className="flex item-center justify-between w-full gap-2">
+                  <div className="">
+                    <p className="text-[#1D2939] block text-lg font-semibold">
+                      512
+                    </p>
+
+                    <p className="text-[#263238] text-[14px] font-normal">
+                      Students watching
+                    </p>
+                  </div>
+
+                
                 </div>
-              </div>
-              <div>
-                <p className="text-[#263238] text-[14px] font-normal flex items-center gap-2">
-                  Last updated :{" "}
-                  <span className="text-[#1D2939] block text-[14px] font-semibold">
-                    Oct 26, 2024
-                  </span>
-                </p>
-              </div>
+              </div> */}
             </div>
           </div>
 
-
-        <div className="border rounded-lg flex item-center justify-between gap-4 my-4">
-            <a className="bg-[#F2F4F7] px-6 py-2 text-[14px] text-[#1D2939] font-semibold rounded-md flex itemcenter gap-2" href="#decription">
-           <button> Decription</button>
+          <div className="border rounded-lg xl:flex md:flex flex-wrap item-center justify-between gap-4 my-4">
+            <a
+              className="bg-[#F2F4F7] px-6 py-2 text-[14px] text-[#1D2939] font-semibold rounded-md flex itemcenter gap-2"
+              href="#decription"
+            >
+              <button> Decription</button>
             </a>
-            <a className=" px-6 py-2 text-[14px] text-[#1D2939] font-semibold rounded-md flex itemcenter gap-2" href="#decription">
-           <button> Lectures Notes</button>
+            <a
+              className=" px-6 py-2 text-[14px] text-[#1D2939] font-semibold rounded-md flex itemcenter gap-2"
+              href="#decription"
+            >
+              <button> Lectures Notes</button>
             </a>
-            <a className=" px-6 py-2 text-[14px] text-[#1D2939] font-semibold rounded-md flex itemcenter gap-2" href="#decription">
-           <button> Attach File <span className="bg-[#A9EBF8] rounded-sm py-1 ml-2 px-3 text-[14px]   text-[#1D2939] font-semibold">01</span></button>
+            <a
+              className=" px-6 py-2 text-[14px] text-[#1D2939] font-semibold rounded-md flex itemcenter gap-2"
+              href="#decription"
+            >
+              <button>
+                {" "}
+                Attach File{" "}
+                <span className="bg-[#A9EBF8] rounded-sm py-1 ml-2 px-3 text-[14px]   text-[#1D2939] font-semibold">
+                  01
+                </span>
+              </button>
             </a>
-           
-        </div>
+          </div>
           {/* decription here */}
           <div>
             <h1 className="text-[24px] font-bold py-4 ">
@@ -117,55 +131,87 @@ const Recordings: React.FC = () => {
           </div>
           <div>
             <div className="flex items-center justify-between space-x-2  py-5">
-            <h1 className="text-[24px] font-bold py-4 ">
-            Lecture Notes
-            </h1>
-            <button className="bg-[#D8F0FF] text-[14px] font-semibold rounded-md px-4 py-2 text-[#1253BB] flex itemcenter gap-2"> <DownloadCloud/>  Download Notes</button>
+              <h1 className="text-[24px] font-bold py-4 ">Lecture Notes</h1>
+              <button className="bg-[#D8F0FF] text-[14px] font-semibold rounded-md px-4 py-2 text-[#1253BB] flex itemcenter gap-2">
+                {" "}
+                <DownloadCloud /> Download Notes
+              </button>
             </div>
             <p className="text-[14px] font-normal leading-8">
-            In ut aliquet ante. Curabitur mollis tincidunt turpis, sed aliquam mauris finibus vel. Praesent eget mi in mi maximus egestas. Mauris eget ipsum in justo bibendum pellentesque. Sed id arcu in arcu ullamcorper eleifend condimentum quis diam. Phasellus tempus, urna ut auctor mattis, nisi nunc tincidunt lorem, eu egestas augue lectus sit amet sapien. Maecenas tristique aliquet massa, a venenatis augue tempor in. Aliquam turpis urna, imperdiet in lacus a, posuere suscipit augue.
+              In ut aliquet ante. Curabitur mollis tincidunt turpis, sed aliquam
+              mauris finibus vel. Praesent eget mi in mi maximus egestas. Mauris
+              eget ipsum in justo bibendum pellentesque. Sed id arcu in arcu
+              ullamcorper eleifend condimentum quis diam. Phasellus tempus, urna
+              ut auctor mattis, nisi nunc tincidunt lorem, eu egestas augue
+              lectus sit amet sapien. Maecenas tristique aliquet massa, a
+              venenatis augue tempor in. Aliquam turpis urna, imperdiet in lacus
+              a, posuere suscipit augue.
             </p>
             <p className="text-[14px] font-normal leading-8">
-            Nullam non quam a lectus finibus varius nec a orci. Aliquam efficitur sem cursus elit efficitur lacinia
+              Nullam non quam a lectus finibus varius nec a orci. Aliquam
+              efficitur sem cursus elit efficitur lacinia
             </p>
             <ul className="text-[14px] font-normal leading-8 list-disc	pl-4">
-                <li className="">Morbi sit amet pretium tellus. Donec blandit fermentum tincidunt.</li>
-                <li>Proin iaculis sem et imperdiet tristique. Nam varius ac nisl id sodales. Donec iaculis interdum mattis.</li>
-                <li>Curabitur posuere ultricies diam in egestas.</li>
-                <li>Donec id diam et lacus pharetra vestibulum a id est. Mauris vestibulum massa quis elit feugiat, dictum maximus ipsum pellentesque.</li>
-                <li>Sed elementum, libero id lacinia aliquet, purus nibh consectetur mauris, eget interdum mi lacus vitae sem.</li>
+              <li className="">
+                Morbi sit amet pretium tellus. Donec blandit fermentum
+                tincidunt.
+              </li>
+              <li>
+                Proin iaculis sem et imperdiet tristique. Nam varius ac nisl id
+                sodales. Donec iaculis interdum mattis.
+              </li>
+              <li>Curabitur posuere ultricies diam in egestas.</li>
+              <li>
+                Donec id diam et lacus pharetra vestibulum a id est. Mauris
+                vestibulum massa quis elit feugiat, dictum maximus ipsum
+                pellentesque.
+              </li>
+              <li>
+                Sed elementum, libero id lacinia aliquet, purus nibh consectetur
+                mauris, eget interdum mi lacus vitae sem.
+              </li>
             </ul>
 
             <p className="text-[14px] font-normal leading-8 pt-4">
-            Donec congue aliquam lorem nec congue. Suspendisse eu risus mattis, interdum ante sed, fringilla urna. Praesent mattis dictum sapien a lacinia. Ut scelerisque magna aliquet, blandit arcu quis, consequat purus. Suspendisse eget scelerisque felis. Integer vulputate urna laoreet purus vehicula condimentum. Donec quis luctus quam. Curabitur quis molestie ante. Nam pharetra sagittis varius. Sed ullamcorper facilisis bibendum.
+              Donec congue aliquam lorem nec congue. Suspendisse eu risus
+              mattis, interdum ante sed, fringilla urna. Praesent mattis dictum
+              sapien a lacinia. Ut scelerisque magna aliquet, blandit arcu quis,
+              consequat purus. Suspendisse eget scelerisque felis. Integer
+              vulputate urna laoreet purus vehicula condimentum. Donec quis
+              luctus quam. Curabitur quis molestie ante. Nam pharetra sagittis
+              varius. Sed ullamcorper facilisis bibendum.
             </p>
-
 
             {/* atach file here---------------------- */}
             <div id="decription" className="py-10">
-            <h1 className="text-[24px]  font-bold text-[#1D2026]">Attach Files <span className="font-normal">(01)</span></h1>
-                <div className="bg-[#F5F7FA] rounded-md mt-6 p-6 flex item-center justify-between max-w-lg">
-                    <div className="flex gap-2 items-center " >
-                        <FileOutlined className="text-[#475467] text-[40px]" />
-                        <div>
-                        <p className="text-[16px] font-medium text-[#1D2026]">Create account on webflow.pdf</p>
-                        <p className="text-[#6E7485]">12.6 MB</p>
-                        </div>
-                        
-                    </div>
-                    <div>
-                        <Button size="large" type="primary"> Download File</Button>
-                    </div>
-
+              <h1 className="text-[24px]  font-bold text-[#1D2026]">
+                Attach Files <span className="font-normal">(01)</span>
+              </h1>
+              <div className="bg-[#F5F7FA] rounded-md mt-6 p-6 xl:flex lg:flex flex-wrap item-center justify-between max-w-lg">
+                <div className="flex gap-2 items-center ">
+                  <FileOutlined className="text-[#475467] text-[40px]" />
+                  <div>
+                    <p className="text-[16px] font-medium text-[#1D2026]">
+                      Create account on webflow.pdf
+                    </p>
+                    <p className="text-[#6E7485]">12.6 MB</p>
+                  </div>
                 </div>
+                <div>
+                  <Button size="large" type="primary">
+                    {" "}
+                    Download File
+                  </Button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
         {/* ritht content --------------- */}
-        <div className="w-1/2">
+        <div className="xl:max-w-2xl  w-full">
           {/* Course curriculum section here ------------- */}
-          <div className="xl:max-w-2xl lg:max-w-xl w-full  my-12  p-4">
+          <div className="xl:max-w-2xl  w-full  my-12  lg:p-4 p-0">
             {/* lacture folder ----------------- */}
             <div className="flex items-center justify-between mb-4 pl-8 ">
               <div className="flex flex-wrap items-center justify-between lg:gap-6 md:gap-6 gap-1">

@@ -5,7 +5,7 @@ import CourseCard from "../component/mycourse/CourseCard";
 
 const { Option } = Select;
 
-const MyCourse: React.FC = () => {
+const MycourseCard: React.FC = () => {
   const coursemenu = [
     {
       id: 1,
@@ -132,7 +132,7 @@ const MyCourse: React.FC = () => {
       {/* Search Input */}
 
       {/* Dropdowns for Sort By, Category, and Ratings */}
-      <div className="flex justify-between space-x-4">
+      <div className="flex flex-wrap justify-between space-x-4">
         <div className="mb-4">
         <p className='text-[16px] font-medium text-[#344054] pb-2'>Search</p>
           <Input
@@ -186,7 +186,7 @@ const MyCourse: React.FC = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 lg:grid-cols-3 gap-4 py-6">
+      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 lg:grid-cols-2 gap-4 py-6">
         {coursemenu.map((item) => (
           <CourseCard
             key={item.id}
@@ -205,4 +205,4 @@ const MyCourse: React.FC = () => {
   );
 };
 
-export default MyCourse;
+export default MycourseCard;

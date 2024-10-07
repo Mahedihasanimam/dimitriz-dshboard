@@ -7,7 +7,7 @@ import Manage_Users from '../../../pages/Manage_Users';
 const Totalusers: React.FC = () => {
     return (
         <div>
-           <Input style={{ height: '44px',fontSize: '16px' }} prefix={<IoSearchOutline />} placeholder="Search users by name or email" />
+           {/* <Input style={{ height: '44px',fontSize: '16px' }} prefix={<IoSearchOutline />} placeholder="Search users by name or email" /> */}
            <Manage_Users/>
         </div>
     );

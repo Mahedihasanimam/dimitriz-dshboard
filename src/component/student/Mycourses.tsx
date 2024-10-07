@@ -88,7 +88,7 @@ const Mycourses: React.FC = () => {
   ];
   return (
     <div className="bg-white p-6">
-      <div className="grid grid-cols-3 gap-4  mt-[12px]">
+      <div className="grid xl:grid-cols-3 lg:grid-cols-2 grid-cols-1 gap-4  mt-[12px]">
         {cardData.map((card, index) => {
           const bgColors = ["bg-[#ECFDF3]", "bg-[#F9F5FF]", "bg-[#FEF3F2]"]; // Define your background colors here
           const selectedBgColor =
@@ -123,9 +123,9 @@ const Mycourses: React.FC = () => {
           );
         })}
       </div>
-      <div className="lg:flex flex-wrap gap-8 justify-between items-center mt-[12px]">
+      <div className="lg:flex flex-wrap gap-8 justify-between items-center my-8">
       <Card
-          className=" max-w-2xl w-full p-4"
+          className="max-w-2xl w-full p-4"
           style={{
             backgroundColor: "#6941C6", // Dark green background
             borderRadius: "12px",
@@ -136,8 +136,9 @@ const Mycourses: React.FC = () => {
           bodyStyle={{ padding: 0 }}
         >
           <div
+          className="xl:flex flex-wrap"
             style={{
-              display: "flex",
+             
               justifyContent: "space-between",
               alignItems: "center",
             }}
@@ -207,8 +208,9 @@ const Mycourses: React.FC = () => {
           bodyStyle={{ padding: 0 }}
         >
           <div
+            className="xl:flex flex-wrap"
             style={{
-              display: "flex",
+              
               justifyContent: "space-between",
               alignItems: "center",
             }}
@@ -275,7 +277,7 @@ const Mycourses: React.FC = () => {
             <h1 className="text-[20px] text-[#101828] font-bold mb-6">Explore more</h1>
             <h3 className="text-[14px] text-medium font-semibold  flex item-center underline cursor-pointer">Browse All <MdArrowForwardIos className="mt-1" /> </h3>
         </div>
-      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 lg:grid-cols-3 gap-4 py-6">
+      <div className="grid grid-cols-1 sm:grid-cols-1  xl:grid-cols-3 lg:grid-cols-2 gap-4 py-6">
         {coursemenu.map((item) => (
           <CourseCard
             key={item.id}

@@ -121,7 +121,7 @@ const TransactionsStatus: React.FC = () => {
           />
         </div>
       </div>
-      <div className="grid grid-cols-3 gap-4  mt-[12px]">
+      <div className="grid xl:grid-cols-3 lg:grid-cols-2 grid-cols-1 gap-4  mt-[12px]">
         {cardData.map((card, index) => {
           const bgColors = ["bg-[#FEF3F2]", "bg-[#F9FAFB]", "bg-[#ECFDF3]"]; // Define your background colors here
           const selectedBgColor =

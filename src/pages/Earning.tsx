@@ -98,7 +98,7 @@ const Earning: React.FC = () => {
     <div>
          <div className="bg-[#FFFFFF] p-6 rounded-xl rounded-b-none">
   
-      <div className="grid grid-cols-3 gap-4  mt-[12px]">
+      <div className="grid xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1 grid-cols-1 gap-4  mt-[12px]">
         {cardData.map((card, index) => {
           const bgColors = [
             "bg-[#ECFDF3]",

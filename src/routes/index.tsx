@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import Dashboard from "../layout/dashboard/Dashboard";
 import React from "react";
 import DasboardHome from "../pages/DasboardHome";
-import Category_Management from "../pages/Category_Management";
+// import Category_Management from "../pages/Category_Management";
 
 import Transactions from "../pages/Webiner";
 import SettingsPage from "../pages/Settings";
@@ -12,22 +12,20 @@ import Login from "../pages/Login";
 import ForgetPassword from "../pages/ForgetPassword";
 import VerifyEmail from "../pages/VerifyEmail";
 import SetNewPassword from "../pages/SetNewPassword";
-import Seller_Profile from "../pages/Seller_Profile";
-import Settings_personalInformation from "../pages/Settings_personalInformation";
-import SettingsFaq from "../pages/SettingsFaq";
-import SettingsTermsAndConditions from "../pages/SettingsTermsAndConditions";
-import EditTermsAndCondition from "../pages/EditTermsAndConditions";
 import CreateNewCourse from "../pages/CreateNewCourse";
 import Support from "../component/dashHome/Support";
-import Mycourse from "../pages/mycourse";
 import Earning from "../pages/Earning";
 import Webiner from "../pages/Webiner";
 import Totalusers from "../component/admin/manageUsers/Totalusers";
 import Content from "../component/admin/Content";
 import TransactionsStatus from "../component/Transactions/TransactionStatus";
 import Recordings from "../component/student/Recordings";
-import Mycourses from "../component/student/Mycourses";
+
 import Recources from "../component/student/Recources";
+import Mycourses from "../component/student/Mycourses";
+import MycourseCard from "../pages/MycourseCard";
+
+
 
 
 
@@ -57,12 +55,8 @@ const router = createBrowserRouter([
                 element: <CreateNewCourse />,
             },
             {
-                path: "/category_management",
-                element: <Category_Management />,
-            },
-            {
                 path: "/mycourse",
-                element: <Mycourse/>,
+                element: <MycourseCard/>,
             },
             
             {

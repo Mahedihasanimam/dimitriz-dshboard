@@ -1,73 +1,115 @@
-import React from "react";
-import AuthWrapper from "../component/share/AuthWrapper";
-import Title from "../component/share/Title";
-import { Button, Form, Input } from "antd";
-import { useNavigate } from "react-router-dom";
-import logo from "../assets/Images/logoChoozy.svg";
-
-// Define an interface for the form values
-interface SetNewPasswordFormValues {
-  password: string;
-  confirmPassword: string;
-}
+import React, { useState } from "react";
+import { Form, Input, Button, Alert } from "antd";
+import { Link } from "react-router-dom";
 
 const SetNewPassword: React.FC = () => {
-  const navigate = useNavigate();
+  const [alertMessage, setAlertMessage] = useState<string | null>(null); // State for alert message
+  const [alertType, setAlertType] = useState<"success" | "error" | null>(null);
 
-  // Define the `onFinish` function with appropriate types
-  const onFinish = (values: SetNewPasswordFormValues) => {
-    console.log(values);
-    navigate("/auth/login");
+  const onFinish = (values: { newpassword: string; Confirmpassword: string }) => {
+    console.log("Success:", values);
+    const { newpassword, Confirmpassword } = values;
+
+    if (newpassword !== Confirmpassword) {
+      setAlertMessage("Passwords do not match");
+      setAlertType("error");
+    } else {
+      setAlertMessage("Password created successfully");
+      setAlertType("success");
+    }
+  };
+
+  const onFinishFailed = (errorInfo: any) => {
+    console.log("Failed:", errorInfo);
   };
 
   return (
-    <AuthWrapper>
-      <div className="text-center mb-12">
-        <div className="flex py-8">
-          <div className="flex items-center mx-auto gap-2">
-            <img src={logo} alt="Logo" className="w-20" />
-            <h1 className="font-bold text-3xl">Choozy</h1>
+
+      <div className="max-w-md w-full mx-auto pt-32 px-4">
+        {alertMessage && (
+          <Alert
+            message={alertMessage}
+            type={alertType}
+            showIcon
+            className="mb-4"
+          />
+        )}
+        <div className="text-start">
+          <h1 className="text-3xl font-bold mb-4">Create a new password</h1>
+        </div>
+        <div className="lg:max-w-lg w-full mx-auto pt-8">
+          <div className="flex justify-start items-center">
+            <Form
+              name="create-password"
+              layout="vertical"
+              onFinish={onFinish}
+              onFinishFailed={onFinishFailed}
+              style={{ maxWidth: "400px", width: "100%" }}
+            >
+              <Form.Item
+                label={
+                  <label
+                    htmlFor="newpassword"
+                    className="text-sm text-[#344054] font-medium"
+                  >
+                    New password
+                  </label>
+                }
+                name="newpassword"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your new password!",
+                  },
+                ]}
+                required={false}
+              >
+                <Input.Password
+                  className="border border-[#D0D5DD] p-2 text-[16px] text-[#667085] font-normal hover:border-[#D0D5DD] focus:border-[#dde2eb]"
+                  placeholder="Enter new password"
+                />
+              </Form.Item>
+              <Form.Item
+                label={
+                  <label
+                    htmlFor="Confirmpassword"
+                    className="text-sm text-[#344054] font-medium"
+                  >
+                    Confirm password
+                  </label>
+                }
+                name="Confirmpassword"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your confirm password!",
+                  },
+                ]}
+                required={false}
+              >
+                <Input.Password
+                  className="border border-[#D0D5DD] p-2 text-[16px] text-[#667085] font-normal hover:border-[#D0D5DD] focus:border-[#dde2eb]"
+                  placeholder="Re-enter new Password"
+                />
+              </Form.Item>
+
+              <Form.Item>
+               <Link to="/">
+               <Button
+                  className="text-[#FFFFFF] text-[16px] font-semibold p-6"
+                  size="large"
+                  type="primary"
+                  htmlType="submit"
+                  block
+                >
+                  Submit
+                </Button>
+               </Link>
+              </Form.Item>
+            </Form>
           </div>
         </div>
-        <p>
-          Create a new password. Ensure it differs from previous ones for
-          security
-        </p>
       </div>
-      <Form<SetNewPasswordFormValues> layout="vertical" onFinish={onFinish}>
-        <Form.Item
-          label="New password"
-          name="password"
-          rules={[
-            { required: true, message: "Please enter your new password" },
-          ]}
-        >
-          <Input.Password
-            placeholder="Write new password"
-            style={{ height: "50px" }}
-          />
-        </Form.Item>
-        <Form.Item
-          label="Confirm Password"
-          name="confirmPassword"
-          rules={[{ required: true, message: "Please confirm your password" }]}
-        >
-          <Input.Password
-            placeholder="Write confirm password"
-            style={{ height: "50px" }}
-          />
-        </Form.Item>
-
-        <Form.Item>
-          <Button
-            className="bg-[#4964C6] h-12 text-white text-lg w-full mt-6"
-            htmlType="submit"
-          >
-            Sign In
-          </Button>
-        </Form.Item>
-      </Form>
-    </AuthWrapper>
   );
 };
 

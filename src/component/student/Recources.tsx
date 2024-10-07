@@ -20,7 +20,7 @@ const Recources: React.FC = () => {
      
 
 
-      <div className="flex jusitfy-between space-x-4 w-full my-8">
+      <div className="xl:flex lg:flex flex-wrap jusitfy-between space-x-4 w-full my-8">
       {/* Left Cards */}
       <div className="flex flex-col space-y-4 w-full max-w-4xl">
         {/* First Card */}
@@ -104,7 +104,7 @@ const Recources: React.FC = () => {
       </div>
 
       {/* Right Image Card */}
-      <div className="relative    rounded-lg overflow-hidden shadow-md">
+      <div className="relative  mt-4   rounded-lg overflow-hidden shadow-md">
         <img
           src={groupimg}
           alt="Webinar"
