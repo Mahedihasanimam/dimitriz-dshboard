@@ -208,8 +208,8 @@ const bottomMenuItems: MenuItem[] = [
 ];
 
 // Define role flags
-const isAdmin = true; // Change this based on the role of the user
-const isInstructor = false;
+const isAdmin = false; // Change this based on the role of the user
+const isInstructor = true;
 const isUser = false;
 
 // Select the appropriate menu items based on the role
