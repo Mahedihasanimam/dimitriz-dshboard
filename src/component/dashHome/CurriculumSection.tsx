@@ -111,9 +111,6 @@ const CurriculumSection: React.FC = () => {
       <Menu.Item key="2" onClick={() => handleMenuClick("Attach File")}>
         Attach File
       </Menu.Item>
-      <Menu.Item key="3" onClick={() => handleMenuClick("Captions")}>
-        Captions
-      </Menu.Item>
       <Menu.Item key="4" onClick={() => handleMenuClick("Description")}>
         Description
       </Menu.Item>
