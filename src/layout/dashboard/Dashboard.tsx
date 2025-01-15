@@ -246,6 +246,7 @@ const Dashboard: React.FC<NotificationBadgeProps> = ({}) => {
   const navigate = useNavigate();
   const location = useLocation();
 
+
   const handleLogout = () => {
     Swal.fire({
       title: "Are you sure?",
@@ -262,7 +263,7 @@ const Dashboard: React.FC<NotificationBadgeProps> = ({}) => {
           text: "Your'r Logged out.",
           icon: "success",
         });
-        navigate("/auth/login");
+        window.location.href = "http://localhost:3000/auth/login/";
       }
     });
   };
