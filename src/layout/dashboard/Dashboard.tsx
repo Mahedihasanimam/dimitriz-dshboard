@@ -1,24 +1,16 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Avatar, Badge, Input, Layout, Menu, Popover, Progress } from "antd";
 import {
   Bell,
-  FolderArchive,
   Lock,
   LogOut,
   PlayCircle,
-  Search,
   User,
   User2Icon,
 } from "lucide-react";
 import { Link, Outlet, useNavigate, useLocation } from "react-router-dom";
 import logo from "../../assets/Images/logo.png";
-import logoChoozy from "../../assets/Images/dashboard/pie-chart.svg";
-import productListing from "../../assets/Images/dashboard/tag.png";
-import categoryManagement from "../../assets/Images/dashboard/categoryManagement.png";
-import manageUser from "../../assets/Images/dashboard/ManageUser.png";
-import { FaRegUserCircle, FaRegHeart } from "react-icons/fa";
-import { CiCreditCard1, CiFlag1, CiFolderOn } from "react-icons/ci";
-import settings from "../../assets/Images/dashboard/settings.png";
+import { CiFlag1, CiFolderOn } from "react-icons/ci";
 import SubMenu from "antd/es/menu/SubMenu";
 import Settings_personalInformation from "./../../pages/Settings_personalInformation";
 
@@ -37,85 +29,15 @@ import { FcMenu } from "react-icons/fc";
 import { RxCross2 } from "react-icons/rx";
 import { IoMdMenu } from "react-icons/io";
 import Swal from "sweetalert2";
+import Providers from "../../lib/Providers";
+import PrivateRoute from "../../component/PrivateRoute";
+import { useAuth } from "../../context/AuthContext";
+import { useLazyGetProfileQuery } from "../../redux/features/users/UserApi";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../redux/features/users/userSlice";
 const { Header, Sider, Content } = Layout;
 const isadmin = true;
 
-// interface MenuItem {
-//   path: string;
-//   title: string;
-//   icon: React.ReactNode;
-//   children?: MenuItem[];
-// }
-
-// const menuItems: MenuItem[] = [
-
-//   // instructor menu items-------------
-//   {
-//     path: "/",
-//     title: "Dashboard",
-//     icon: (
-//       <AlignRightOutlined
-//         style={{ color: "#667085", fontSize: 20 }}
-//         className="rotate-90 "
-//       />
-//     ),
-//   },
-//   {
-//     path: "/createnewcourse",
-//     title: "Create new course",
-//     icon: <PlusOutlined style={{ color: "#667085", fontSize: 20 }} />,
-//   },
-
-//   {
-//     path: "/mycourse",
-//     title: "My courses",
-//     icon: <BsStack  size={18} color="#667085" />,
-//   },
-//   {
-//     path: "/earning",
-//     title: "Earning",
-//     icon: <FiCreditCard color="#667085" size={18} />,
-//   },
-//   {
-//     path: "/webiner",
-//     title: "Webinar",
-//     icon: <CiFlag1 color="#667085" size={20} />,
-//   },
-
-//   // admin dashboard menu iitems ----------------------------
-//   {
-//     path: "/usermanagement",
-//     title: "usermanagements",
-//     icon: <LuUsers  color="#667085" size={20} />,
-//   },
-//   {
-//     path: "/content",
-//     title: "contents",
-//     icon: <LuMonitor   color="#667085" size={20} />,
-//   },
-//   {
-//     path: "/transactions",
-//     title: "transactions",
-//     icon: <LuMonitor   color="#667085" size={20} />,
-//   },
-
-//   // students menu items -----------------
-//  {
-//   path: "/recordings",
-//   title: "Recordings",
-//   icon: <PlayCircle  size={18} color="#667085" />,
-//  },
-//  {
-//   path: "/mycourcess",
-//   title: "My courses",
-//   icon: <BsStack  size={18}  color="#667085" />,
-//  },
-//  {
-//   path: "/resources",
-//   title: "Recources",
-//   icon: <CiFolderOn  size={18} color="#667085" />,
-//  },
-// ];
 interface MenuItem {
   path: string;
   title: string;
@@ -245,6 +167,25 @@ interface NotificationBadgeProps {
 const Dashboard: React.FC<NotificationBadgeProps> = ({}) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
+const {logout}=useAuth()
+const [getProfile] = useLazyGetProfileQuery();
+
+const addedToken = localStorage.getItem("token");
+const token = localStorage.getItem("token");
+const handlesetUser = useCallback(async () => {
+  const user = await getProfile(token);
+ 
+  if (user?.data?.data) {
+    dispatch(setUser(user?.data?.data));
+  }
+},[getProfile,dispatch]);
+
+useEffect(() => {
+  if (addedToken) {
+    handlesetUser();
+  }
+}, [addedToken,handlesetUser]);
 
 
   const handleLogout = () => {
@@ -258,6 +199,7 @@ const Dashboard: React.FC<NotificationBadgeProps> = ({}) => {
       confirmButtonText: "Yes, Log out!",
     }).then((result) => {
       if (result.isConfirmed) {
+        logout();
         Swal.fire({
           title: "Logged out!",
           text: "Your'r Logged out.",
@@ -391,6 +333,11 @@ const Dashboard: React.FC<NotificationBadgeProps> = ({}) => {
     setMobileMenu(!mobileMenu);
   };
   return (
+
+    <PrivateRoute>
+
+    <Providers>
+
     <Layout className="font-Merriweather" style={{ height: "100vh" }}>
       <div className="absolute top-2 xl:hidden lg:hidden block left-4 w-full h-16 z-50">
         {/* mobile menu  */}
@@ -603,6 +550,8 @@ const Dashboard: React.FC<NotificationBadgeProps> = ({}) => {
         </Content>
       </Layout>
     </Layout>
+    </Providers>
+    </PrivateRoute>
   );
 };
 
