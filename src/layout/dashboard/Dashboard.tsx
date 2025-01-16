@@ -54,7 +54,7 @@ interface NotificationBadgeProps {
   handleNotifications: (event: React.MouseEvent<HTMLDivElement>) => void;
 }
 
-const Dashboard: React.FC<NotificationBadgeProps> = ({}) => {
+const Dashboard: React.FC<NotificationBadgeProps> = ({ }) => {
   const [isAdmin, setisadmin] = useState(false);
   const [isUser, setIsUser] = useState(false);
   const [isInstructor, setIsInstructor] = useState(false);
@@ -63,99 +63,102 @@ const Dashboard: React.FC<NotificationBadgeProps> = ({}) => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
-const {logout}=useAuth()
+  const { logout } = useAuth()
 
 
-// Admin menu items
-const adminMenuItems: MenuItem[] = [
-  {
-    path: "/usermanagement",
-    title: "User Management",
-    icon: <LuUsers color="#667085" size={20} />,
-  },
-  {
-    path: "/content",
-    title: "Contents",
-    icon: <LuMonitor color="#667085" size={20} />,
-  },
-  {
-    path: "/transactions",
-    title: "Transactions",
-    icon: <LuMonitor color="#667085" size={20} />,
-  },
-];
+  // Admin menu items
+  const adminMenuItems: MenuItem[] = [
+    {
+      path: "/usermanagement",
+      title: "User Management",
+      icon: <LuUsers color="#667085" size={20} />,
+    },
+    {
+      path: "/content",
+      title: "Contents",
+      icon: <LuMonitor color="#667085" size={20} />,
+    },
+    {
+      path: "/transactions",
+      title: "Transactions",
+      icon: <LuMonitor color="#667085" size={20} />,
+    },
+  ];
 
 
 
-// Instructor menu items
-const instructorMenuItems: MenuItem[] = [
-  {
-    path: "/",
-    title: "Dashboard",
-    icon: (
-      <AlignRightOutlined
-        style={{ color: "#667085", fontSize: 20 }}
-        className="rotate-90"
-      />
-    ),
-  },
-  {
-    path: "/createnewcourse",
-    title: "Create new course",
-    icon: <PlusOutlined style={{ color: "#667085", fontSize: 20 }} />,
-  },
-  {
-    path: "/mycourse",
-    title: "My courses",
-    icon: <BsStack size={18} color="#667085" />,
-  },
-  {
-    path: "/earning",
-    title: "Earning",
-    icon: <FiCreditCard color="#667085" size={18} />,
-  },
-  {
-    path: "/webiner",
-    title: "Webinar",
-    icon: <CiFlag1 color="#667085" size={20} />,
-  },
-];
+  // Instructor menu items
+  const instructorMenuItems: MenuItem[] = [
+    {
+      path: "/",
+      title: "Dashboard",
+      icon: (
+        <AlignRightOutlined
+          style={{ color: "#667085", fontSize: 20 }}
+          className="rotate-90"
+        />
+      ),
+    },
+    {
+      path: "/createnewcourse",
+      title: "Create new course",
+      icon: <PlusOutlined style={{ color: "#667085", fontSize: 20 }} />,
+    },
+    {
+      path: "/mycourse",
+      title: "My courses",
+      icon: <BsStack size={18} color="#667085" />,
+    },
+    {
+      path: "/earning",
+      title: "Earning",
+      icon: <FiCreditCard color="#667085" size={18} />,
+    },
+    {
+      path: "/webiner",
+      title: "Webinar",
+      icon: <CiFlag1 color="#667085" size={20} />,
+    },
+  ];
 
-// User menu items
-const userMenuItems: MenuItem[] = [
-  {
-    path: "/recordings",
-    title: "Recordings",
-    icon: <PlayCircle size={18} color="#667085" />,
-  },
-  {
-    path: "/mycourcess",
-    title: "My Courses",
-    icon: <BsStack size={18} color="#667085" />,
-  },
-  {
-    path: "/resources",
-    title: "Resources",
-    icon: <CiFolderOn size={18} color="#667085" />,
-  },
-];
-const bottomMenuItems: MenuItem[] = [
-  {
-    path: "/support",
-    title: "Support",
-    icon: <HiOutlineSupport size={20} color="#667085" />,
-  },
-  {
-    path: "/settings",
-    title: "Settings",
-    icon: <IoSettingsOutline size={20} color="#667085" />,
-  },
-];
+  // User menu items
+  const userMenuItems: MenuItem[] = [
+    {
+      path: "/recordings",
+      title: "Recordings",
+      icon: <PlayCircle size={18} color="#667085" />,
+    },
+    {
+      path: "/mycourcess",
+      title: "My Courses",
+      icon: <BsStack size={18} color="#667085" />,
+    },
+    {
+      path: "/resources",
+      title: "Resources",
+      icon: <CiFolderOn size={18} color="#667085" />,
+    },
+  ];
+  const bottomMenuItems: MenuItem[] = [
+    {
+
+      path: "/support",
+      title: "Support",
+      icon: <HiOutlineSupport size={20} color="#667085" />,
+    },
+    {
+      path: "/settings",
+      title: "Settings",
+      icon: <IoSettingsOutline size={20} color="#667085" />,
+    },
+
+
+  ];
 
 
 
   const user = useSelector((state: any) => state.user.user);
-
+// console.log('dashboaroduser',user)
   // UseEffect to handle role-based state updates
   useEffect(() => {
     if (user?.role.includes("admin")) {
@@ -179,7 +182,7 @@ const bottomMenuItems: MenuItem[] = [
 
 
 
-let selectedMenuItems: MenuItem[] = [];
+  let selectedMenuItems: MenuItem[] = [];
 
   if (isAdmin) {
     selectedMenuItems = adminMenuItems;
@@ -188,20 +191,7 @@ let selectedMenuItems: MenuItem[] = [];
   } else if (isUser) {
     selectedMenuItems = userMenuItems;
   }
-const content = (
-  <div className="w-40">
-    <p className="mb-2">
-      <Link to="/profile" className="flex items-center gap-2">
-        <User2Icon size={18} /> <span className="text-md">Profile</span>
-      </Link>
-    </p>
-    <p className="mb-3">
-      <Link to="/change-password" className="flex items-center gap-2">
-        <Lock size={18} /> <span className="text-md">Change password</span>
-      </Link>
-    </p>
-  </div>
-);
+
 
   const handleLogout = () => {
     Swal.fire({
@@ -351,221 +341,227 @@ const content = (
 
     <PrivateRoute>
 
-    <Providers>
+      <Providers>
 
-    <Layout className="font-Merriweather" style={{ height: "100vh" }}>
-      <div className="absolute top-2 xl:hidden lg:hidden block left-4 w-full h-16 z-50">
-        {/* mobile menu  */}
-        <button onClick={handlemobilemenu}>
-          {mobileMenu ? (
-            <IoMdMenu size={25} style={{ color: "#0E68E7" }} />
-          ) : (
-            <RxCross2 size={25} style={{ color: "#0E68E7" }} />
-          )}
-        </button>
-      </div>
-      <Sider
-        width={312}
-        className={`${`sidebar-menu   absolute xl:block lg:block ${
-          mobileMenu ? "hidden" : "block"
-        } overflow-scroll`}`}
-        style={{
-          position: "fixed",
-          left: 0,
-          top: 0,
-          bottom: 0,
-          overflow: "auto",
-          zIndex: 2,
-        }}
-        trigger={null}
-      >
-        <img src={logo} alt="Logo" className="mx-auto py-6  w-[264px]" />
-        <div className="px-2">
-          <Input
-            placeholder="Search"
-            className="w-full mt-4 px-4 py-2  mb-6"
-            prefix={
-              <SearchOutlined
-                className="text-xl text-gray-500"
-                size={100}
-                color="#667085"
+        <Layout className="font-Merriweather" style={{ height: "100vh" }}>
+          <div className="absolute top-2 xl:hidden lg:hidden block left-4 w-full h-16 z-50">
+            {/* mobile menu  */}
+            <button onClick={handlemobilemenu}>
+              {mobileMenu ? (
+                <IoMdMenu size={25} style={{ color: "#0E68E7" }} />
+              ) : (
+                <RxCross2 size={25} style={{ color: "#0E68E7" }} />
+              )}
+            </button>
+          </div>
+          <Sider
+            width={312}
+            className={`${`sidebar-menu   absolute xl:block lg:block ${mobileMenu ? "hidden" : "block"
+              } overflow-scroll`}`}
+            style={{
+              position: "fixed",
+              left: 0,
+              top: 0,
+              bottom: 0,
+              overflow: "auto",
+              zIndex: 2,
+            }}
+            trigger={null}
+          >
+            <img src={logo} alt="Logo" className="mx-auto py-6  w-[264px]" />
+            <div className="px-2">
+              <Input
+                placeholder="Search"
+                className="w-full mt-4 px-4 py-2  mb-6"
+                prefix={
+                  <SearchOutlined
+                    className="text-xl text-gray-500"
+                    size={100}
+                    color="#667085"
+                  />
+                }
+                size="large"
               />
-            }
-            size="large"
-          />
-        </div>
-        <Menu
-          mode="inline"
-          style={{ background: "#1E1E1E", color: "`white`" }}
-          defaultSelectedKeys={["1"]}
-        >
-          {selectedMenuItems.map((item, index) => {
-            const isActive = location.pathname === item.path;
-            if (item.children) {
-              return (
-                <SubMenu
-                  key={`submenu-${index}`}
-                  title={item.title}
-                  icon={item.icon}
-                  style={{
-                    color: isActive ? "red" : "#fff",
-                    fontWeight: isActive ? "bold" : "normal",
-                    fontSize: "16px",
-                    marginBottom: "10px",
-                    backgroundColor: isActive ? "#F2F5FC" : "transparent",
-                  }}
-                >
-                  {item.children.map((child, childIndex) => (
-                    <Menu.Item
-                      key={`child-${childIndex}`}
-                      icon={child.icon}
+            </div>
+            <Menu
+              mode="inline"
+              style={{ background: "#1E1E1E", color: "`white`" }}
+              defaultSelectedKeys={["2"]}
+            >
+              {selectedMenuItems.map((item, index) => {
+                const isActive = location.pathname === item.path;
+                if (item.children) {
+                  return (
+                    <SubMenu
+                      key={`submenu-${index}`}
+                      title={item.title}
+                      icon={item.icon}
                       style={{
-                        color:
-                          location.pathname === child.path ? "red" : "#fff",
-                        fontWeight:
-                          location.pathname === child.path ? "bold" : "normal",
+                        color: isActive ? "red" : "#fff",
+                        fontWeight: isActive ? "bold" : "normal",
                         fontSize: "16px",
+                        marginBottom: "10px",
+                        backgroundColor: isActive ? "#F2F5FC" : "transparent",
                       }}
                     >
-                      <Link to={child.path}>{child.title}</Link>
-                    </Menu.Item>
-                  ))}
-                </SubMenu>
-              );
-            } else {
-              return (
-                <Menu.Item
-                  key={`item-${index}`}
-                  icon={item.icon}
-                  style={{
-                    color: isActive ? "blue" : "#fff",
-                    fontWeight: isActive ? "bold" : "normal",
-                    fontSize: "16px",
-                    marginBottom: "10px",
-                    backgroundColor: isActive ? "#F2F5FC" : "transparent",
-                  }}
-                >
-                  <Link to={item.path}>{item.title}</Link>
-                </Menu.Item>
-              );
-            }
-          })}
-
-          <div className="py-36 mt-16 px-4 w-full">
-            <div className="py-4">
-              {bottomMenuItems.map((item, index) => {
-                const isActive = location.pathname === item.path;
-
-                return (
-                  <Menu.Item
-                    key={index}
-                    icon={item.icon}
-                    style={{
-                      color: isActive ? "blue" : "#fff",
-                      fontWeight: isActive ? "bold" : "normal",
-                      fontSize: "16px",
-                      padding: "0 10px",
-                      backgroundColor: isActive ? "#F2F5FC" : "transparent",
-                    }}
-                  >
-                    <Link to={item.path}>{item.title}</Link>
-                  </Menu.Item>
-                );
-              })}
-            </div>
-
-           {
-            isUser &&  <div className="bg-[#F9FAFB] p-4 rounded-md   ">
-            <h3 className="text-[16px] font-semibold text-[#101828] ">Course Progress</h3>
-            <p className="text-[14px] text-[#667085]  leading-6 pt-4 ">You’ve completed 80% of UX Design  Course. Enroll new courses?</p>
-          <Progress className="py-2" percent={80}  strokeColor={"#7F56D9"} showInfo={false} />
-            <h3 className="text-'[16px] font-bold text-[#6941C6] py-2"><span className="text-[#475467]">Dismiss</span> Browse New Course</h3>
-          </div>
-           }
-            <div className="flex  gap-8 ">
-              <div className="flex gap-2 w-3/4 items-center">
-                <Popover
-                  className="cursor-pointer"
-                  placement="top"
-                  content={content}
-                >
-                  <div>
-                    <Avatar
+                      {item.children.map((child, childIndex) => (
+                        <Menu.Item
+                          key={`child-${childIndex}`}
+                          icon={child.icon}
+                          style={{
+                            color:
+                              location.pathname === child.path ? "red" : "#fff",
+                            fontWeight:
+                              location.pathname === child.path ? "bold" : "normal",
+                            fontSize: "16px",
+                          }}
+                        >
+                          <Link to={child.path}>{child.title}</Link>
+                        </Menu.Item>
+                      ))}
+                    </SubMenu>
+                  );
+                } else {
+                  return (
+                    <Menu.Item
+                      key={`item-${index}`}
+                      icon={item.icon}
                       style={{
-                        width: "40px",
-                        height: "40px",
-                        backgroundColor: "gray",
+                        color: isActive ? "blue" : "#fff",
+                        fontWeight: isActive ? "bold" : "normal",
+                        fontSize: "16px",
+                        marginBottom: "10px",
+                        backgroundColor: isActive ? "#F2F5FC" : "transparent",
                       }}
-                      icon={<User size={25} />}
-                    />
-                  </div>
-                </Popover>
+                    >
+                      <Link to={item.path}>{item.title}</Link>
+                    </Menu.Item>
+                  );
+                }
+              })}
 
-                <div className="space-y-4">
-                  <h1 className="text-black">John Doe</h1>
-                  <h1 className="text-black">ex@ample.com</h1>
+              <div className="py-36 mt-16 px-4 w-full">
+                <div className="py-4">
+                  <Menu>
+                    {bottomMenuItems.map((item, index) => {
+                      const isActive = location.pathname === item.path;
+                      return (
+                        <Menu.Item
+                          key={index} 
+                          icon={item.icon}
+                          style={{
+                            color: isActive ? "blue" : "#fff",
+                            fontWeight: isActive ? "bold" : "normal",
+                            fontSize: "16px",
+                            padding: "0 10px",
+                            backgroundColor: isActive ? "#F2F5FC" : "transparent",
+                          }}
+                        >
+                          <Link to={item.path}>{item.title}</Link>
+                        </Menu.Item>
+                      );
+                    })}
+                  </Menu>
+                </div>
+
+
+
+                {
+                  isUser && <div className="bg-[#F9FAFB] p-4 rounded-md   ">
+                    <h3 className="text-[16px] font-semibold text-[#101828] ">Course Progress</h3>
+                    <p className="text-[14px] text-[#667085]  leading-6 pt-4 ">You’ve completed 80% of UX Design  Course. Enroll new courses?</p>
+                    <Progress className="py-2" percent={80} strokeColor={"#7F56D9"} showInfo={false} />
+                    <h3 className="text-'[16px] font-bold text-[#6941C6] py-2"><span className="text-[#475467]">Dismiss</span> Browse New Course</h3>
+                  </div>
+                }
+                <div className="flex  gap-8 ">
+                  <div className="flex gap-2 w-3/4 items-center">
+                    <Popover
+                      className="cursor-pointer"
+                      placement="top"
+                     
+                    >
+                      <div>
+                        <Avatar
+                          style={{
+                            width: "40px",
+                            height: "40px",
+                            backgroundColor: "gray",
+                          }}
+                          icon={<User size={25} />}
+                        />
+                      </div>
+                    </Popover>
+
+                    <div className="space-y-4">
+                      <h1 className="text-black">John Doe</h1>
+                      <h1 className="text-black">ex@ample.com</h1>
+                    </div>
+                  </div>
+                  <div>
+                    <Menu>
+
+                      <Menu.Item
+
+                        key="500"
+                        icon={<LogOut size={20} />}
+                        style={{ color: "red", fontSize: "16px" }}
+                        onClick={handleLogout}
+                      />
+                    </Menu>
+                  </div>
                 </div>
               </div>
+            </Menu>
 
-              <div>
-                <Menu.Item
-                  key="500"
-                  icon={<LogOut size={20} />}
-                  style={{ color: "red", fontSize: "16px" }}
-                  onClick={handleLogout}
-                />
-              </div>
-            </div>
-          </div>
-        </Menu>
-      </Sider>
+          </Sider>
 
-      <Layout className="xl:ml-[312px] lg:ml-[312px]  ml-[0px]">
-        <Header
-          style={{
-            position: "fixed",
-            width: "83vw",
-            top: 0,
-            left: 312,
-            background: "#F6F6F6",
-            height: "80px",
-            paddingTop: "20px",
-            zIndex: 10, // Increased z-index
-            display: "flex",
-            justifyContent: "flex-end",
-            alignItems: "center",
-          }}
-        >
-          <div className="w-full justify-between flex items-center">
-            <div>{getTitle()}</div>
-            <div
-              onClick={handleNotifications}
-              className="cursor-pointer"
-              style={{ zIndex: 11 }} // Ensure the badge has a higher z-index than other elements
+          <Layout className="xl:ml-[312px] lg:ml-[312px]  ml-[0px]">
+            <Header
+              style={{
+                position: "fixed",
+                width: "83vw",
+                top: 0,
+                left: 312,
+                background: "#F6F6F6",
+                height: "80px",
+                paddingTop: "20px",
+                zIndex: 10, // Increased z-index
+                display: "flex",
+                justifyContent: "flex-end",
+                alignItems: "center",
+              }}
             >
-              <Badge count={5}>
-                <Bell size={30} color="gray" />
-              </Badge>
-            </div>
-          </div>
-        </Header>
+              <div className="w-full justify-between flex items-center">
+                <div>{getTitle()}</div>
+                <div
+                  onClick={handleNotifications}
+                  className="cursor-pointer"
+                  style={{ zIndex: 11 }} // Ensure the badge has a higher z-index than other elements
+                >
+                  <Badge count={5}>
+                    <Bell size={30} color="gray" />
+                  </Badge>
+                </div>
+              </div>
+            </Header>
 
-        <Content
-          style={{
-            marginTop: 80,
-            padding: "20px",
-            overflowY: "auto",
-            height: `calc(100vh - 80px)`,
-            background: "#FFFFFF",
-          }}
-        >
-          <div className="h-full m-2 rounded p-3">
-            <Outlet />
-          </div>
-        </Content>
-      </Layout>
-    </Layout>
-    </Providers>
+            <Content
+              style={{
+                marginTop: 80,
+                padding: "20px",
+                overflowY: "auto",
+                height: `calc(100vh - 80px)`,
+                background: "#FFFFFF",
+              }}
+            >
+              <div className="h-full m-2 rounded p-3">
+                <Outlet />
+              </div>
+            </Content>
+          </Layout>
+        </Layout>
+      </Providers>
     </PrivateRoute>
   );
 };
