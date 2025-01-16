@@ -33,10 +33,14 @@ import Providers from "../../lib/Providers";
 import PrivateRoute from "../../component/PrivateRoute";
 import { useAuth } from "../../context/AuthContext";
 import { useLazyGetProfileQuery } from "../../redux/features/users/UserApi";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../../redux/features/users/userSlice";
 const { Header, Sider, Content } = Layout;
-const isadmin = true;
+
+
+
+
+
 
 interface MenuItem {
   path: string;
@@ -44,6 +48,23 @@ interface MenuItem {
   icon: React.ReactNode;
   children?: MenuItem[];
 }
+
+
+interface NotificationBadgeProps {
+  handleNotifications: (event: React.MouseEvent<HTMLDivElement>) => void;
+}
+
+const Dashboard: React.FC<NotificationBadgeProps> = ({}) => {
+  const [isAdmin, setisadmin] = useState(false);
+  const [isUser, setIsUser] = useState(false);
+  const [isInstructor, setIsInstructor] = useState(false);
+
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const dispatch = useDispatch();
+const {logout}=useAuth()
+
 
 // Admin menu items
 const adminMenuItems: MenuItem[] = [
@@ -63,6 +84,8 @@ const adminMenuItems: MenuItem[] = [
     icon: <LuMonitor color="#667085" size={20} />,
   },
 ];
+
+
 
 // Instructor menu items
 const instructorMenuItems: MenuItem[] = [
@@ -129,22 +152,42 @@ const bottomMenuItems: MenuItem[] = [
   },
 ];
 
-// Define role flags
-const isAdmin = false; // Change this based on the role of the user
-const isInstructor = true;
-const isUser = false;
 
-// Select the appropriate menu items based on the role
+
+  const user = useSelector((state: any) => state.user.user);
+
+  // UseEffect to handle role-based state updates
+  useEffect(() => {
+    if (user?.role.includes("admin")) {
+      setisadmin(true);
+    } else {
+      setisadmin(false);
+    }
+
+    if (user?.role.includes("Instructor")) {
+      setIsInstructor(true);
+    } else {
+      setIsInstructor(false);
+    }
+
+    if (user?.role.includes("user")) {
+      setIsUser(true);
+    } else {
+      setIsUser(false);
+    }
+  }, [user]); // Run this effect only when the `user` changes
+
+
+
 let selectedMenuItems: MenuItem[] = [];
 
-if (isAdmin) {
-  selectedMenuItems = adminMenuItems;
-} else if (isInstructor) {
-  selectedMenuItems = instructorMenuItems;
-} else if (isUser) {
-  selectedMenuItems = userMenuItems;
-}
-
+  if (isAdmin) {
+    selectedMenuItems = adminMenuItems;
+  } else if (isInstructor) {
+    selectedMenuItems = instructorMenuItems;
+  } else if (isUser) {
+    selectedMenuItems = userMenuItems;
+  }
 const content = (
   <div className="w-40">
     <p className="mb-2">
@@ -159,34 +202,6 @@ const content = (
     </p>
   </div>
 );
-
-interface NotificationBadgeProps {
-  handleNotifications: (event: React.MouseEvent<HTMLDivElement>) => void;
-}
-
-const Dashboard: React.FC<NotificationBadgeProps> = ({}) => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const dispatch = useDispatch();
-const {logout}=useAuth()
-const [getProfile] = useLazyGetProfileQuery();
-
-const addedToken = localStorage.getItem("token");
-const token = localStorage.getItem("token");
-const handlesetUser = useCallback(async () => {
-  const user = await getProfile(token);
- 
-  if (user?.data?.data) {
-    dispatch(setUser(user?.data?.data));
-  }
-},[getProfile,dispatch]);
-
-useEffect(() => {
-  if (addedToken) {
-    handlesetUser();
-  }
-}, [addedToken,handlesetUser]);
-
 
   const handleLogout = () => {
     Swal.fire({
