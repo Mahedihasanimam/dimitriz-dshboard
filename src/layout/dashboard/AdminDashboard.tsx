@@ -55,7 +55,7 @@ interface NotificationBadgeProps {
   handleNotifications: (event: React.MouseEvent<HTMLDivElement>) => void;
 }
 
-const Dashboard: React.FC<NotificationBadgeProps> = ({ }) => {
+const AdminDashboard: React.FC<NotificationBadgeProps> = ({ }) => {
   const [isAdmin, setisadmin] = useState(false);
   const [isUser, setIsUser] = useState(false);
   const [isInstructor, setIsInstructor] = useState(false);
@@ -70,7 +70,7 @@ const Dashboard: React.FC<NotificationBadgeProps> = ({ }) => {
   // Admin menu items
   const adminMenuItems: MenuItem[] = [
     {
-      path: "/usermanagement",
+      path: "/",
       title: "User Management",
       icon: <LuUsers color="#667085" size={20} />,
     },
@@ -87,59 +87,6 @@ const Dashboard: React.FC<NotificationBadgeProps> = ({ }) => {
   ];
 
 
-
-  // Instructor menu items
-  const instructorMenuItems: MenuItem[] = [
-    {
-      path: "/",
-      title: "Dashboard",
-      icon: (
-        <AlignRightOutlined
-          style={{ color: "#667085", fontSize: 20 }}
-          className="rotate-90"
-        />
-      ),
-    },
-    {
-      path: "/createnewcourse",
-      title: "Create new course",
-      icon: <PlusOutlined style={{ color: "#667085", fontSize: 20 }} />,
-    },
-    {
-      path: "/mycourse",
-      title: "My courses",
-      icon: <BsStack size={18} color="#667085" />,
-    },
-    {
-      path: "/earning",
-      title: "Earning",
-      icon: <FiCreditCard color="#667085" size={18} />,
-    },
-    {
-      path: "/webiner",
-      title: "Webinar",
-      icon: <CiFlag1 color="#667085" size={20} />,
-    },
-  ];
-
-  // User menu items
-  const userMenuItems: MenuItem[] = [
-    {
-      path: "/recordings",
-      title: "Recordings",
-      icon: <PlayCircle size={18} color="#667085" />,
-    },
-    {
-      path: "/mycourcess",
-      title: "My Courses",
-      icon: <BsStack size={18} color="#667085" />,
-    },
-    // {
-    //   path: "/resources",
-    //   title: "Resources",
-    //   icon: <CiFolderOn size={18} color="#667085" />,
-    // },
-  ];
   const bottomMenuItems: MenuItem[] = [
     {
 
@@ -159,38 +106,7 @@ const Dashboard: React.FC<NotificationBadgeProps> = ({ }) => {
 
 
   const user = useSelector((state: any) => state.user.user);
-// console.log('dashboaroduser',user)
-  // UseEffect to handle role-based state updates
-  useEffect(() => {
-    if (user?.role.includes("admin")) {
-      setisadmin(true);
-    } else {
-      setisadmin(false);
-    }
-    if (user?.role.includes("Instructor")) {
-      setIsInstructor(true);
-    } else {
-      setIsInstructor(false);
-    }
 
-    if (user?.role.includes("user")) {
-      setIsUser(true);
-    } else {
-      setIsUser(false);
-    }
-  }, [user]); // Run this effect only when the `user` changes
-
-
-
-  let selectedMenuItems: MenuItem[] = [];
-
-  if (isAdmin) {
-    selectedMenuItems = adminMenuItems;
-  } else if (isInstructor) {
-    selectedMenuItems = instructorMenuItems;
-  } else if (!isInstructor &&  isUser) {
-    selectedMenuItems = userMenuItems;
-  }
 
 
   const handleLogout = () => {
@@ -393,7 +309,7 @@ const Dashboard: React.FC<NotificationBadgeProps> = ({ }) => {
               style={{ background: "#1E1E1E", color: "`white`" }}
               defaultSelectedKeys={["2"]}
             >
-              {selectedMenuItems.map((item, index) => {
+              {adminMenuItems.map((item, index) => {
                 const isActive = location.pathname === item.path;
                 if (item.children) {
                   return (
@@ -582,4 +498,4 @@ const Dashboard: React.FC<NotificationBadgeProps> = ({ }) => {
   );
 };
 
-export default Dashboard;
+export default AdminDashboard;

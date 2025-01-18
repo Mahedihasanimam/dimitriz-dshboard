@@ -12,7 +12,7 @@ import { Link, Outlet, useNavigate, useLocation } from "react-router-dom";
 import logo from "../../assets/Images/logo.png";
 import { CiFlag1, CiFolderOn } from "react-icons/ci";
 import SubMenu from "antd/es/menu/SubMenu";
-import Settings_personalInformation from "./../../pages/Settings_personalInformation";
+import Settings_personalInformation from "../../pages/Settings_personalInformation";
 
 import {
   SearchOutlined,
@@ -55,7 +55,7 @@ interface NotificationBadgeProps {
   handleNotifications: (event: React.MouseEvent<HTMLDivElement>) => void;
 }
 
-const Dashboard: React.FC<NotificationBadgeProps> = ({ }) => {
+const UserDashboard: React.FC<NotificationBadgeProps> = ({ }) => {
   const [isAdmin, setisadmin] = useState(false);
   const [isUser, setIsUser] = useState(false);
   const [isInstructor, setIsInstructor] = useState(false);
@@ -67,60 +67,6 @@ const Dashboard: React.FC<NotificationBadgeProps> = ({ }) => {
   const { logout } = useAuth()
 
 
-  // Admin menu items
-  const adminMenuItems: MenuItem[] = [
-    {
-      path: "/usermanagement",
-      title: "User Management",
-      icon: <LuUsers color="#667085" size={20} />,
-    },
-    {
-      path: "/content",
-      title: "Contents",
-      icon: <LuMonitor color="#667085" size={20} />,
-    },
-    {
-      path: "/transactions",
-      title: "Transactions",
-      icon: <LuMonitor color="#667085" size={20} />,
-    },
-  ];
-
-
-
-  // Instructor menu items
-  const instructorMenuItems: MenuItem[] = [
-    {
-      path: "/",
-      title: "Dashboard",
-      icon: (
-        <AlignRightOutlined
-          style={{ color: "#667085", fontSize: 20 }}
-          className="rotate-90"
-        />
-      ),
-    },
-    {
-      path: "/createnewcourse",
-      title: "Create new course",
-      icon: <PlusOutlined style={{ color: "#667085", fontSize: 20 }} />,
-    },
-    {
-      path: "/mycourse",
-      title: "My courses",
-      icon: <BsStack size={18} color="#667085" />,
-    },
-    {
-      path: "/earning",
-      title: "Earning",
-      icon: <FiCreditCard color="#667085" size={18} />,
-    },
-    {
-      path: "/webiner",
-      title: "Webinar",
-      icon: <CiFlag1 color="#667085" size={20} />,
-    },
-  ];
 
   // User menu items
   const userMenuItems: MenuItem[] = [
@@ -159,39 +105,9 @@ const Dashboard: React.FC<NotificationBadgeProps> = ({ }) => {
 
 
   const user = useSelector((state: any) => state.user.user);
-// console.log('dashboaroduser',user)
-  // UseEffect to handle role-based state updates
-  useEffect(() => {
-    if (user?.role.includes("admin")) {
-      setisadmin(true);
-    } else {
-      setisadmin(false);
-    }
-    if (user?.role.includes("Instructor")) {
-      setIsInstructor(true);
-    } else {
-      setIsInstructor(false);
-    }
-
-    if (user?.role.includes("user")) {
-      setIsUser(true);
-    } else {
-      setIsUser(false);
-    }
-  }, [user]); // Run this effect only when the `user` changes
 
 
-
-  let selectedMenuItems: MenuItem[] = [];
-
-  if (isAdmin) {
-    selectedMenuItems = adminMenuItems;
-  } else if (isInstructor) {
-    selectedMenuItems = instructorMenuItems;
-  } else if (!isInstructor &&  isUser) {
-    selectedMenuItems = userMenuItems;
-  }
-
+  
 
   const handleLogout = () => {
     Swal.fire({
@@ -393,7 +309,7 @@ const Dashboard: React.FC<NotificationBadgeProps> = ({ }) => {
               style={{ background: "#1E1E1E", color: "`white`" }}
               defaultSelectedKeys={["2"]}
             >
-              {selectedMenuItems.map((item, index) => {
+              {userMenuItems.map((item, index) => {
                 const isActive = location.pathname === item.path;
                 if (item.children) {
                   return (
@@ -582,4 +498,4 @@ const Dashboard: React.FC<NotificationBadgeProps> = ({ }) => {
   );
 };
 
-export default Dashboard;
+export default UserDashboard;
