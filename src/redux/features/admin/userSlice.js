@@ -1,10 +1,11 @@
-const { api } = require("@/baseApi");
+import { api } from "../../baseApi";
+
 
 const userSlice = api.injectEndpoints({
   endpoints: (builder) => ({
     getAllUsers: builder.query({
-      query: ({ page, perPage, search }) =>
-        `users?page=${page}&per_page=${perPage}&search=${search}`,
+      query: () =>
+        `/users`,
       providesTags: ["user"],
     }),
   

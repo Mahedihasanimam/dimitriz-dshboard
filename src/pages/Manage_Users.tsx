@@ -1,170 +1,189 @@
-import { Checkbox, Input, Table } from "antd";
-import { Pencil, Search, Trash } from "lucide-react";
-import React, { useState } from "react";
-import image from "../assets/Images/Notifications/Avatar.png";
-import ModalComponent from "../component/share/ModalComponent";
-import { Link } from "react-router-dom";
+'use client';
 
-const Manage_Users = () => {
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [openModel, setOpenModel] = useState<boolean>(false);
-  const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
-  const [userData, setUserData] = useState<UserAction | null>(null);
-  const [role, setRole] = useState<string>("");
+import React, { useState } from 'react';
+import { Pencil, Trash2 } from 'lucide-react';
+import { Button, Checkbox, Image, Input, Modal } from 'antd';
+import { useGetAllUsersQuery } from '../redux/features/admin/userSlice';
+import { imageUrl } from '../redux/baseApi';
+import avaterimg from '../assets/Images/dashboard/Avatar.png';
+export default function UserTable() {
+  const { data, isLoading, error } = useGetAllUsersQuery(); // Fetch data using Redux Toolkit
+  const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [editingUser, setEditingUser] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState<string>(''); // Search term state
+  const [deleteUserId, setDeleteUserId] = useState<string | null>(null); // For delete confirmation modal
 
-  const pageSize = 10;
+  const users = data?.data?.result || []; // Fetched users data or an empty array
+  const usersPerPage = 8;
 
-  const data: UserData[] = [...Array(9).keys()].map((item, index) => ({
-    sId: index + 1,
-    image: <img src={image} className="w-9 h-9 rounded" alt="avatar" />,
-    name: "User " + (index + 1),
-    role: index % 2 === 0 ? "Admin" : "Member", // Dynamic role for each user
-    email: "user" + (index + 1) + "@gmail.com",
-    action: {
-      sId: index + 1,
-      image: <img src={image} className="w-9 h-9 rounded" alt="" />,
-      name: "User " + (index + 1),
-      dateOfBirth: "24-05-2024",
-      contact: "0521545861520",
-      role: index % 2 === 0 ? "Admin" : "Member", // Assign role dynamically
-    },
-  }));
-
-  const columns = [
-    {
-      title: <Checkbox/>,
-      dataIndex: "",
-      key: "",
-    },
-    {
-      title: "Users",
-      dataIndex: "image",
-      key: "image",
-      render: (_: any, record: UserData) => (
-        <div className="flex items-center">
-          {record.image}
-          <Link
-            to={`seller-profile/${record.sId}`}
-            className="ml-3 text-blue-500 hover:underline"
-          >
-            {record.name}
-          </Link>
-        </div>
-      ),
-    },
-    {
-      title: "Role",
-      dataIndex: "role",
-      key: "role",
-    },
-    {
-      title: "email address",
-      dataIndex: "email",
-      key: "email",
-    },
-    {
-      title: <div className="text-right">Action</div>,
-      dataIndex: "action",
-      key: "action",
-      render: (_: any, record: UserData) => (
-        <div className="flex items-center justify-end gap-3">
-          <button
-            onClick={() => handleUser(record.action)}
-            className="hover:bg-primary p-1 rounded bg-blue"
-          >
-            <Pencil />
-          </button>
-          <button
-            onClick={() => handleDelete(record.action)}
-            className="bg-secondary px-3 py-1 rounded hover:bg-primary"
-          >
-            <Trash />
-          </button>
-        </div>
-      ),
-    },
-  ];
-
-  const handlePage = (page: number) => {
-    setCurrentPage(page);
+  const toggleUser = (userId: string) => {
+    setSelectedUsers((prev) =>
+      prev.includes(userId) ? prev.filter((id) => id !== userId) : [...prev, userId]
+    );
   };
 
-  const handleUser = (action: UserAction) => {
-    setUserData(action);
-    setRole(action.role); // Set the role dynamically based on user action data
-    setOpenModel(true);
+  const toggleAllUsers = () => {
+    setSelectedUsers((prev) =>
+      prev.length === users.length ? [] : users.map((user) => user.id)
+    );
   };
 
-  const handleDelete = (action: UserAction) => {
-    setUserData(action);
-    setOpenDeleteModal(true);
+  const handleEdit = (userId: string) => {
+    setEditingUser(userId);
   };
 
-  const confirmApprove = () => {
-    console.log("Approved:", userData, role);
-    setOpenModel(false);
-    // Add your approve logic here
+  const handleSave = (userId: string, newName: string, newRole: string) => {
+    // Save the updated name and role (this assumes local changes only)
+    setEditingUser(null);
   };
 
-  const confirmDelete = () => {
-    console.log("Deleted:", userData);
-    setOpenDeleteModal(false);
-    // Add your delete logic here
+  const confirmDelete = (userId: string) => {
+    setDeleteUserId(userId);
   };
+
+  const handleDelete = () => {
+    if (deleteUserId) {
+      // Perform delete logic here
+      setDeleteUserId(null);
+    }
+  };
+
+  const filteredUsers = users.filter(
+    (user) =>
+      user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+     
+      user.email.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const indexOfLastUser = currentPage * usersPerPage;
+  const indexOfFirstUser = indexOfLastUser - usersPerPage;
+  const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
+  const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
+
+  if (isLoading) return <div>Loading...</div>; // Loading state
+  if (error) return <div>Error fetching users!</div>; // Error state
 
   return (
-    <div>
+    <div className="rounded-lg">
+      {/* Search Field */}
       <Input
-        prefix={<Search />}
-        className="w-full rounded-2xl h-12 bg-base border-0 text-primary placeholder:text-gray-200"
-        placeholder="Search for Listing"
         style={{
-          backgroundColor: "#f0f0f0",
-          color: "#333333",
+          height: '44px',
+          borderColor: '#D0D5DD',
+          color: '#667085',
+          fontSize: '16px',
+          fontWeight: 400,
         }}
+        placeholder="Search by name, role, or email"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className="mt-2"
       />
-      <div className="py-8">
-        <Table
-          dataSource={data}
-          columns={columns}
-          pagination={{
-            pageSize,
-            total: 50,
-            current: currentPage,
-            onChange: handlePage,
-          }}
-          rowClassName={() => "hover:bg-transparent"}
-        />
-        
-        {/* Approve Modal */}
-        <ModalComponent
-          openModel={openModel}
-          setOpenModel={setOpenModel}
-          title="User role"
-          subtitle="This is the current role of the selected user"
-          cancelLabel="Cancel"
-          role={role} // Pass the selected role
-          setRole={setRole} // Function to change the role
-          showRoleSelect={true} // Show the role select in this modal
-          confirmLabel="Save Changes"
-          onConfirm={confirmApprove}
-          value={userData} // Passing dynamic user data
-        />
 
-        {/* Delete Modal */}
-        <ModalComponent
-          openModel={openDeleteModal}
-          setOpenModel={setOpenDeleteModal}
-          title="Delete User"
-          subtitle="Are you sure you want to delete this item?"
-          confirmLabel="Delete"
-          cancelLabel="Cancel"
-          value={userData} // Passing dynamic user data
-          onConfirm={confirmDelete}
-        />
+      {/* User Table */}
+      <div className="overflow-x-auto border border-gray-200 bg-white mt-4 rounded-lg">
+        <div className="p-6 pb-4">
+          <h2 className="text-base font-semibold text-gray-900">Total users</h2>
+          <p className="text-sm text-gray-500">{filteredUsers.length} users</p>
+        </div>
+        <table className="w-full">
+          <thead className="bg-gray-50 text-xs uppercase text-gray-500">
+            <tr>
+              <th className="px-6 py-3 text-left">
+                <Checkbox
+                  checked={selectedUsers.length === currentUsers.length}
+                  onClick={toggleAllUsers}
+                />
+              </th>
+              <th className="px-6 py-3 text-left">Name</th>
+              <th className="px-6 py-3 text-left">Role</th>
+              <th className="px-6 py-3 text-left">Email address</th>
+              <th className="px-6 py-3 text-left sr-only">Actions</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-200">
+            {currentUsers.map((user: any) => (
+              <tr key={user.id} className="text-sm">
+                <td className="px-6 py-4">
+                  <Checkbox
+                    checked={selectedUsers.includes(user.id)}
+                    onClick={() => toggleUser(user.id)}
+                  />
+                </td>
+                <td className="px-6 py-4">
+                  <div className="flex items-center gap-3">
+                    <div className="relative h-10 w-10">
+                     {
+                      user?.image ? <Image
+                      preview={false}
+                      src={imageUrl + user.image}
+                      alt={user.name}
+                      className="rounded-full object-cover"
+                    /> :  <Image
+                    preview={false}
+                    src={avaterimg}
+                    alt={user.name}
+                    className="rounded-full object-cover"
+                  />
+                     }
+                    </div>
+                    <div>
+                      <div className="font-medium text-gray-900">{user.name}</div>
+                      <div className="text-gray-500 flex">@{user.name}</div>
+                    </div>
+                  </div>
+                </td>
+                <td className="px-6 py-4 text-gray-500">{user?.role}</td>
+                <td className="px-6 py-4 text-gray-500">{user?.email}</td>
+                <td className="px-6 py-4">
+                  <div className="flex gap-2">
+                    <Button
+                      aria-label="Edit user"
+                      onClick={() => handleEdit(user.id)}
+                    >
+                      <Pencil className="h-4 w-4 text-gray-500" />
+                    </Button>
+                    <Button
+                      aria-label="Delete user"
+                      onClick={() => confirmDelete(user.id)}
+                    >
+                      <Trash2 className="h-4 w-4 text-gray-500" />
+                    </Button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Pagination */}
+      <div className="flex items-center justify-between px-6 py-4 border-t border-gray-200">
+        <Button
+          onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
+          disabled={currentPage === 1}
+        >
+          Previous
+        </Button>
+        <div className="flex items-center gap-2">
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+            <Button
+              key={page}
+              onClick={() => setCurrentPage(page)}
+              type={currentPage === page ? 'primary' : 'default'}
+            >
+              {page}
+            </Button>
+          ))}
+        </div>
+        <Button
+          onClick={() => setCurrentPage((prev) => Math.min(totalPages, prev + 1))}
+          disabled={currentPage === totalPages}
+        >
+          Next
+        </Button>
       </div>
     </div>
   );
-};
-
-export default Manage_Users;
+}

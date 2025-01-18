@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 import CourseCard from "../mycourse/CourseCard";
 import { BiRightArrow } from "react-icons/bi";
 import { MdArrowForwardIos } from "react-icons/md";
+import { useSelector } from "react-redux";
 const Mycourses: React.FC = () => {
   const [selectedCard, setSelectedCard] = useState<number | null>(null);
   const cardData = [
@@ -45,6 +46,8 @@ const Mycourses: React.FC = () => {
   };
 
 
+  const user = useSelector((state: any) => state.user.user);
+console.log('user',user?.enrolledCourses)
   const coursemenu = [
     {
       id: 1,
@@ -87,8 +90,8 @@ const Mycourses: React.FC = () => {
     }
   ];
   return (
-    <div className="bg-white p-6">
-      <div className="grid xl:grid-cols-3 lg:grid-cols-2 grid-cols-1 gap-4  mt-[12px]">
+    <div className="bg-white p-6 ">
+      {/* <div className="grid xl:grid-cols-3 lg:grid-cols-2 grid-cols-1 gap-4  mt-[12px]"> 
         {cardData.map((card, index) => {
           const bgColors = ["bg-[#ECFDF3]", "bg-[#F9F5FF]", "bg-[#FEF3F2]"]; // Define your background colors here
           const selectedBgColor =
@@ -122,8 +125,8 @@ const Mycourses: React.FC = () => {
             </div>
           );
         })}
-      </div>
-      <div className="lg:flex flex-wrap gap-8 justify-between items-center my-8">
+      </div> */}
+      {/* <div className="lg:flex flex-wrap gap-8 justify-between items-center my-8">
       <Card
           className="max-w-2xl w-full p-4"
           style={{
@@ -267,28 +270,17 @@ const Mycourses: React.FC = () => {
 
           
         </Card>
-      </div>
+      </div> */}
 
 
 
 
 
-        <div className="flex item-center justify-between pt-8">
-            <h1 className="text-[20px] text-[#101828] font-bold mb-6">Explore more</h1>
-            <h3 className="text-[14px] text-medium font-semibold  flex item-center underline cursor-pointer">Browse All <MdArrowForwardIos className="mt-1" /> </h3>
-        </div>
       <div className="grid grid-cols-1 sm:grid-cols-1  xl:grid-cols-3 lg:grid-cols-2 gap-4 py-6">
-        {coursemenu.map((item) => (
+        {user?.enrolledCourses?.map((item) => (
           <CourseCard
             key={item.id}
-            courseimage={item.imageLink}
-            courseTitle={item.courseTitle}
-            instructor={item.instructor}
-            rating={item.rating}
-            price={item.price}
-            reviews={item.reviews}
-            duration={item.duration}
-            students={item.students}
+           data={item}
           />
         ))}
       </div>

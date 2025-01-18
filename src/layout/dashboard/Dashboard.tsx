@@ -35,6 +35,7 @@ import { useAuth } from "../../context/AuthContext";
 import { useLazyGetProfileQuery } from "../../redux/features/users/UserApi";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../../redux/features/users/userSlice";
+import { imageUrl } from "../../redux/baseApi";
 const { Header, Sider, Content } = Layout;
 
 
@@ -337,6 +338,9 @@ const Dashboard: React.FC<NotificationBadgeProps> = ({ }) => {
   const handlemobilemenu = () => {
     setMobileMenu(!mobileMenu);
   };
+
+
+  console.log("location.pathname", imageUrl+user?.image);
   return (
 
     <PrivateRoute>
@@ -497,7 +501,9 @@ const Dashboard: React.FC<NotificationBadgeProps> = ({ }) => {
                             height: "40px",
                             backgroundColor: "gray",
                           }}
-                          icon={<User size={25} />}
+                          icon={
+                          <img src={ imageUrl+user?.image} alt="avatar" style={{ width: "40px", height: "40px", borderRadius: "50%" }} />
+                          }
                         />
                       </div>
                     </Popover>
