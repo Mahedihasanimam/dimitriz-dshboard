@@ -19,7 +19,7 @@ import {
 
 import coursevideo from "../../../src/assets/video/7647629-hd_1920_1080_30fps.mp4";
 
-import { DownloadCloud, File } from "lucide-react";
+import { DownloadCloud, File } from "lucide-react"; 
 import { FcDocument } from "react-icons/fc";
 import { useSelector } from "react-redux";
 import { useGetSingleCourseByidQuery } from "../../redux/features/course/productApi";

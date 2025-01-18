@@ -384,6 +384,8 @@ const Dashboard: React.FC<NotificationBadgeProps> = ({ }) => {
               />
             </div>
             <Menu
+            
+            className="h-[calc(100vh-400px)] "
               mode="inline"
               style={{ background: "#1E1E1E", color: "`white`" }}
               defaultSelectedKeys={["2"]}
@@ -440,8 +442,15 @@ const Dashboard: React.FC<NotificationBadgeProps> = ({ }) => {
                 }
               })}
 
-              <div className="py-36 mt-16 px-4 w-full">
-                <div className="py-4">
+            </Menu>
+
+            <Menu
+
+                     mode="inline"
+                     style={{ background: "#1E1E1E", color: "`white`" }}
+            >
+              <div className=" px-4 w-full ">
+                <div className="py-4 ">
                   <Menu>
                     {bottomMenuItems.map((item, index) => {
                       const isActive = location.pathname === item.path;
@@ -466,15 +475,15 @@ const Dashboard: React.FC<NotificationBadgeProps> = ({ }) => {
 
 
 
-                {
+                {/* {
                   isUser && <div className="bg-[#F9FAFB] p-4 rounded-md   ">
                     <h3 className="text-[16px] font-semibold text-[#101828] ">Course Progress</h3>
                     <p className="text-[14px] text-[#667085]  leading-6 pt-4 ">You’ve completed 80% of UX Design  Course. Enroll new courses?</p>
                     <Progress className="py-2" percent={80} strokeColor={"#7F56D9"} showInfo={false} />
                     <h3 className="text-'[16px] font-bold text-[#6941C6] py-2"><span className="text-[#475467]">Dismiss</span> Browse New Course</h3>
                   </div>
-                }
-                <div className="flex  gap-8 ">
+                } */}
+                <div className="flex  gap-8  ">
                   <div className="flex gap-2 w-3/4 items-center">
                     <Popover
                       className="cursor-pointer"
@@ -493,9 +502,10 @@ const Dashboard: React.FC<NotificationBadgeProps> = ({ }) => {
                       </div>
                     </Popover>
 
+ {/* ------------------------------------------------------------------------------------------------------------------------------------------ */}
                     <div className="space-y-4">
-                      <h1 className="text-black">John Doe</h1>
-                      <h1 className="text-black">ex@ample.com</h1>
+                      <h1 className="text-black">{user?.name}</h1>
+                      <h1 className="text-black">{user?.email}</h1>
                     </div>
                   </div>
                   <div>
@@ -512,6 +522,7 @@ const Dashboard: React.FC<NotificationBadgeProps> = ({ }) => {
                   </div>
                 </div>
               </div>
+
             </Menu>
 
           </Sider>
