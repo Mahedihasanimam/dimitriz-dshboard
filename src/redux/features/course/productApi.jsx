@@ -10,7 +10,30 @@ const courseApi = api.injectEndpoints({
       }),
       providesTags: ["course"],
     }),
- 
+    
+    getallcourse: builder.query({
+      query: () => ({
+        url: `/course/get-all-courses`,
+        method: "GET",
+      }),
+      providesTags: ["course"],
+    }),
+
+    delteCourse: builder.mutation({
+      query: (id) => ({
+        url: `/course/delete-course-by-id/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["course"],
+    }),
+
+    approveCourse : builder.mutation({
+      query: (id) => ({
+        url: `/course/toggle-approve-cancel-course/${id}`,
+        method: "PATCH",
+      }),
+      invalidatesTags: ["course"],
+    }),
     
 
 
@@ -19,4 +42,7 @@ const courseApi = api.injectEndpoints({
 
 export const {
   useGetSingleCourseByidQuery,
+  useGetallcourseQuery,
+  useDelteCourseMutation,
+  useApproveCourseMutation
 } = courseApi;

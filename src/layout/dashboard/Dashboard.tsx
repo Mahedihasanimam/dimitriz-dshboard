@@ -59,7 +59,7 @@ const Dashboard: React.FC<NotificationBadgeProps> = ({ }) => {
   const [isAdmin, setisadmin] = useState(false);
   const [isUser, setIsUser] = useState(false);
   const [isInstructor, setIsInstructor] = useState(false);
-
+  const user = useSelector((state: any) => state.user.user);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -140,27 +140,33 @@ const Dashboard: React.FC<NotificationBadgeProps> = ({ }) => {
     //   icon: <CiFolderOn size={18} color="#667085" />,
     // },
   ];
-  const bottomMenuItems: MenuItem[] = [
-    {
 
-      path: "/support",
-      title: "Support",
-      icon: <HiOutlineSupport size={20} color="#667085" />,
-    },
+
+  const bottomMenuItems: MenuItem[] = [
     {
       path: "/settings",
       title: "Settings",
       icon: <IoSettingsOutline size={20} color="#667085" />,
     },
-
-
   ];
+  
+  // Jodi user role admin na hoy, tahole "Support" menu item add korbo
+  if (!user?.role?.includes("admin")) {
+    bottomMenuItems.unshift({
+      path: "/support",
+      title: "Support",
+      icon: <HiOutlineSupport size={20} color="#667085" />,
+    });
+  }
+  
 
 
 
-  const user = useSelector((state: any) => state.user.user);
+
 // console.log('dashboaroduser',user)
   // UseEffect to handle role-based state updates
+
+  console.log("user", user?.role === "admin");
   useEffect(() => {
     if (user?.role.includes("admin")) {
       setisadmin(true);
