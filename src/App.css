@@ -246,3 +246,6 @@ border-color: transparent !important;
 :where(.css-dev-only-do-not-override-qnu6hi).ant-rate .ant-rate-star:not(:last-child) {
   margin-inline-end: 0px;
 }
+.ant-select.ant-select-outlined {
+  border: 1px solid lightgray;
+}

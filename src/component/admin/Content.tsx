@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useState } from 'react';
@@ -73,7 +72,6 @@ export default function CourseTable() {
   const handleApproveCourse = async () => {
     try {
       const res = await approveCourse(selectedCourseId);
-      console.log(res,selectedCourseId);
       if (res?.data?.success) {
         message.success('Course approved successfully');
         setIsModalOpen(false);
@@ -101,7 +99,7 @@ export default function CourseTable() {
       ),
     },
     {
-      title: 'Name',
+      title: 'Company',
       dataIndex: 'instructor',
       render: (_: any, record: Course) => (
         <div className="flex items-center gap-3">
@@ -125,7 +123,7 @@ export default function CourseTable() {
       render: (roles: string[]) => roles?.[0] || 'N/A',
     },
     {
-      title: 'Course',
+      title: 'Requested for review',
       dataIndex: 'title',
     },
     {
@@ -218,7 +216,12 @@ export default function CourseTable() {
           columns={columns}
           dataSource={filteredUsers}
           rowKey="_id"
-          pagination={false}
+          pagination={{
+            total: filteredUsers.length,
+            pageSize: 10,
+            showSizeChanger: true,
+            showTotal: (total) => `Total ${total} items`
+          }}
         />
       </div>
       <Modal

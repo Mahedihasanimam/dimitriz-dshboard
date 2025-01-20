@@ -1,20 +1,36 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Pencil, Trash2 } from 'lucide-react';
-import { Button, Checkbox, Image, Input, Modal } from 'antd';
-import { useGetAllUsersQuery } from '../redux/features/admin/userSlice';
+import { Pencil, Search, Trash2 } from 'lucide-react';
+import { Button, Checkbox, Image, Input, Modal, Select } from 'antd';
+import { useDeleteUsersMutation, useGetAllUsersQuery, useUpdateUserRoleMutation } from '../redux/features/admin/userSlice';
 import { imageUrl } from '../redux/baseApi';
 import avaterimg from '../assets/Images/dashboard/Avatar.png';
+
+const { Option } = Select;
+
+interface User {
+  _id: string;
+  name: string;
+  email: string;
+  role: string;
+  image?: string;
+}
+
 export default function UserTable() {
-  const { data, isLoading, error } = useGetAllUsersQuery(); // Fetch data using Redux Toolkit
+  const { data, isLoading, error } = useGetAllUsersQuery();
+  const [deleteUser] = useDeleteUsersMutation();
+  const [updateUserRole] = useUpdateUserRoleMutation();
+
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [editingUser, setEditingUser] = useState<string | null>(null);
-  const [searchTerm, setSearchTerm] = useState<string>(''); // Search term state
-  const [deleteUserId, setDeleteUserId] = useState<string | null>(null); // For delete confirmation modal
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [deleteUserId, setDeleteUserId] = useState<string | null>(null);
+  const [editingUser, setEditingUser] = useState<User | null>(null);
+  const [isEditModalVisible, setIsEditModalVisible] = useState(false);
+  const [editingUserRole, setEditingUserRole] = useState('');
 
-  const users = data?.data?.result || []; // Fetched users data or an empty array
+  const users = data?.data?.result || [];
   const usersPerPage = 8;
 
   const toggleUser = (userId: string) => {
@@ -29,30 +45,44 @@ export default function UserTable() {
     );
   };
 
-  const handleEdit = (userId: string) => {
-    setEditingUser(userId);
+  const handleEdit = (user: User) => {
+    setEditingUser(user);
+    setEditingUserRole(user.role);
+    setIsEditModalVisible(true);
   };
 
-  const handleSave = (userId: string, newName: string, newRole: string) => {
-    // Save the updated name and role (this assumes local changes only)
-    setEditingUser(null);
+  const handleSave = async () => {
+    if (editingUser) {
+      try {
+        await updateUserRole({ userId: editingUser._id, role: editingUserRole }).unwrap();
+        setIsEditModalVisible(false);
+        setEditingUser(null);
+      } catch (error) {
+        console.error('Failed to update user role:', error);
+      }
+    }
   };
 
   const confirmDelete = (userId: string) => {
     setDeleteUserId(userId);
   };
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
+    console.log(deleteUserId);
     if (deleteUserId) {
-      // Perform delete logic here
-      setDeleteUserId(null);
+      try {
+        const res= await deleteUser(deleteUserId).unwrap();
+        console.log(res);
+        setDeleteUserId(null);
+      } catch (error) {
+        console.error('Failed to delete user:', error);
+      }
     }
   };
 
   const filteredUsers = users.filter(
     (user) =>
       user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-     
       user.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -61,12 +91,11 @@ export default function UserTable() {
   const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
   const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
 
-  if (isLoading) return <div>Loading...</div>; // Loading state
-  if (error) return <div>Error fetching users!</div>; // Error state
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error fetching users!</div>;
 
   return (
     <div className="rounded-lg">
-      {/* Search Field */}
       <Input
         style={{
           height: '44px',
@@ -79,9 +108,9 @@ export default function UserTable() {
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         className="mt-2"
+        prefix={<Search className="h-4 w-4 opacity-50" />}
       />
 
-      {/* User Table */}
       <div className="overflow-x-auto border border-gray-200 bg-white mt-4 rounded-lg">
         <div className="p-6 pb-4">
           <h2 className="text-base font-semibold text-gray-900">Total users</h2>
@@ -93,7 +122,7 @@ export default function UserTable() {
               <th className="px-6 py-3 text-left">
                 <Checkbox
                   checked={selectedUsers.length === currentUsers.length}
-                  onClick={toggleAllUsers}
+                  onChange={toggleAllUsers}
                 />
               </th>
               <th className="px-6 py-3 text-left">Name</th>
@@ -103,30 +132,32 @@ export default function UserTable() {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
-            {currentUsers.map((user: any) => (
-              <tr key={user.id} className="text-sm">
+            {currentUsers.map((user: User) => (
+              <tr key={user._id} className="text-sm">
                 <td className="px-6 py-4">
                   <Checkbox
-                    checked={selectedUsers.includes(user.id)}
-                    onClick={() => toggleUser(user.id)}
+                    checked={selectedUsers.includes(user._id)}
+                    onChange={() => toggleUser(user._id)}
                   />
                 </td>
                 <td className="px-6 py-4">
                   <div className="flex items-center gap-3">
                     <div className="relative h-10 w-10">
-                     {
-                      user?.image ? <Image
-                      preview={false}
-                      src={imageUrl + user.image}
-                      alt={user.name}
-                      className="rounded-full object-cover"
-                    /> :  <Image
-                    preview={false}
-                    src={avaterimg}
-                    alt={user.name}
-                    className="rounded-full object-cover"
-                  />
-                     }
+                      {user?.image ? (
+                        <Image
+                          preview={false}
+                          src={imageUrl + user.image || "/placeholder.svg"}
+                          alt={user.name}
+                          className="rounded-full object-cover"
+                        />
+                      ) : (
+                        <Image
+                          preview={false}
+                          src={avaterimg || "/placeholder.svg"}
+                          alt={user.name}
+                          className="rounded-full object-cover"
+                        />
+                      )}
                     </div>
                     <div>
                       <div className="font-medium text-gray-900">{user.name}</div>
@@ -140,13 +171,13 @@ export default function UserTable() {
                   <div className="flex gap-2">
                     <Button
                       aria-label="Edit user"
-                      onClick={() => handleEdit(user.id)}
+                      onClick={() => handleEdit(user)}
                     >
                       <Pencil className="h-4 w-4 text-gray-500" />
                     </Button>
                     <Button
                       aria-label="Delete user"
-                      onClick={() => confirmDelete(user.id)}
+                      onClick={() => confirmDelete(user?._id)}
                     >
                       <Trash2 className="h-4 w-4 text-gray-500" />
                     </Button>
@@ -158,7 +189,6 @@ export default function UserTable() {
         </table>
       </div>
 
-      {/* Pagination */}
       <div className="flex items-center justify-between px-6 py-4 border-t border-gray-200">
         <Button
           onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
@@ -184,6 +214,35 @@ export default function UserTable() {
           Next
         </Button>
       </div>
+
+      {/* Delete Confirmation Modal */}
+      <Modal
+        title="Confirm Delete"
+        open={deleteUserId !== null}
+        onOk={handleDelete}
+        onCancel={() => setDeleteUserId(null)}
+      >
+        <p className='text-[16px] text-[#101828]'>Are you sure you want to delete this user?</p>
+      </Modal>
+
+      {/* Edit Role Modal */}
+      <Modal
+        title="Edit User Role"
+        open={isEditModalVisible}
+        onOk={handleSave}
+        onCancel={() => setIsEditModalVisible(false)}
+      >
+        <Select
+          value={editingUserRole}
+          onChange={(value) => setEditingUserRole(value)}
+          style={{ width: '100%' }}
+        >
+          <Option value="user">User</Option>
+          <Option value="admin">Admin</Option>
+          <Option value="instructor">Instructor</Option>
+        </Select>
+      </Modal>
     </div>
   );
 }
+
