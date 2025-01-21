@@ -161,6 +161,8 @@ const Dashboard: React.FC<NotificationBadgeProps> = ({ }) => {
   
 
 
+  // console.log('user',user?.enrolledCourses.length)
+  // console.log('user',user?.role.includes('instructor'))
 
 
 // console.log('dashboaroduser',user)
@@ -173,7 +175,7 @@ const Dashboard: React.FC<NotificationBadgeProps> = ({ }) => {
     } else {
       setisadmin(false);
     }
-    if (user?.role.includes("Instructor")) {
+    if (user?.role.includes("instructor")) {
       setIsInstructor(true);
     } else {
       setIsInstructor(false);

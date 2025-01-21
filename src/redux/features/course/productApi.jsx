@@ -19,6 +19,16 @@ const courseApi = api.injectEndpoints({
       providesTags: ["course"],
     }),
 
+
+
+    getallCategory: builder.query({
+      query: () => ({
+        url: `/course/get-all-categories`,
+        method: "GET",
+      }),
+      
+    }),
+
     delteCourse: builder.mutation({
       query: (id) => ({
         url: `/course/delete-course-by-id/${id}`,
@@ -44,5 +54,6 @@ export const {
   useGetSingleCourseByidQuery,
   useGetallcourseQuery,
   useDelteCourseMutation,
-  useApproveCourseMutation
+  useApproveCourseMutation,
+  useGetallCategoryQuery,
 } = courseApi;

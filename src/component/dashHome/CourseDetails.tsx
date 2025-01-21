@@ -8,68 +8,108 @@ const { Paragraph } = Typography;
 const MAX_FIELDS = 8;
 const MAX_CHARACTERS = 120;
 
-const CourseDetails: React.FC = () => {
-  const [thumbnail, setThumbnail] = useState<string | null>(null);
-  const [video, setVideo] = useState<string | null>(null);
-  const [inputFields, setInputFields] = useState(Array(4).fill(""));
-  const [inputFields2, setInputFields2] = useState(Array(4).fill(""));
-  const [inputFields3, setInputFields3] = useState(Array(4).fill(""));
+const CourseDetails: React.FC = ({ formData }: any) => {
 
+  
+  const [thumbnail, setThumbnail] = useState<File | null>(null);
+  const [prevthumbnail, prevsetThumbnail] = useState<string | null>(null);
+  const [video, setVideo] = useState<File | null>(null);
+  const [prevVideo, setprevVideo] = useState<string | null>(null);
+  const [teachingMaterials, setteachingMaterials] = useState(Array(4).fill(""));
+  const [targetAudience, settargetAudience] = useState(Array(4).fill(""));
+  const [requirements, setrequirements] = useState(Array(4).fill(""));
+  const [contentData, setContentData] = useState<string>("");
   // Helper function to handle image preview
   const handlePreviewImage = (file: File) => {
+    console.log(file);
+    setThumbnail(file)
     const reader = new FileReader();
     reader.onload = () => {
-      setThumbnail(reader.result as string);
+      prevsetThumbnail(reader.result as string);
     };
     reader.readAsDataURL(file);
   };
 
   // Helper function to handle video preview
   const handlePreviewVideo = (file: File) => {
+    setVideo(file)
     const reader = new FileReader();
     reader.onload = () => {
-      setVideo(reader.result as string);
+      setprevVideo(reader.result as string);
     };
     reader.readAsDataURL(file);
   };
 
   const handleAddField = () => {
-    if (inputFields.length < MAX_FIELDS) {
-      setInputFields([...inputFields, ""]);
+    if (teachingMaterials.length < MAX_FIELDS) {
+      setteachingMaterials([...teachingMaterials, ""]);
     }
   };
 
   const handleInputChange = (index, value) => {
-    const newInputFields = [...inputFields];
-    newInputFields[index] = value;
-    setInputFields(newInputFields);
+    const newteachingMaterials = [...teachingMaterials];
+    newteachingMaterials[index] = value;
+    setteachingMaterials(newteachingMaterials);
   };
 
   const handleAddField2 = () => {
-    if (inputFields2.length < MAX_FIELDS) {
-      setInputFields2([...inputFields2, ""]);
+    if (targetAudience.length < MAX_FIELDS) {
+      settargetAudience([...targetAudience, ""]);
     }
-  };
-  const handleInputChange2 = (index, value) => {
-    const newInputFields = [...inputFields2];
-    newInputFields[index] = value;
-    setInputFields2(newInputFields);
-  };
-  const handleAddField3 = () => {
-    if (inputFields3.length < MAX_FIELDS) {
-      setInputFields3([...inputFields3, ""]);
-    }
-  };
-  const handleInputChange3 = (index, value) => {
-    const newInputFields = [...inputFields3];
-    newInputFields[index] = value;
-    setInputFields2(newInputFields);
   };
 
+  const handleInputChange2 = (index, value) => {
+    const newteachingMaterials = [...targetAudience];
+    newteachingMaterials[index] = value;
+    settargetAudience(newteachingMaterials);
+  };
+
+  const handleAddField3 = () => {
+    if (requirements.length < MAX_FIELDS) {
+      setrequirements([...requirements, ""]);
+    }
+  };
+
+  const handleInputChange3 = (index, value) => {
+    const newteachingMaterials = [...requirements];
+    newteachingMaterials[index] = value;
+    setrequirements(newteachingMaterials);
+  };
+
+
+  // Callback function to receive the data from the child
+  const handleContentChange = (content: string) => {
+    console.log("Received content from child:", content);
+    setContentData(content);
+  };
   // Function to count the number of words in a string
   const countWords = (text) => {
     return text.trim().split(/\s+/).filter(Boolean).length;
   };
+  const handleSaveAndNext = () => {
+    const courseData = {
+      image:thumbnail,
+      videoFile:video,
+      teachingMaterials,
+      targetAudience,
+      requirements
+    };
+  
+    // Create a new object to log each field's name and value in the required format
+    const formattedData = {
+      ...formData,
+      thumbnail: thumbnail,
+      video: video,
+      "teachingMaterials": teachingMaterials,
+      "targetAudience": targetAudience,
+      "requirements": requirements,
+      'decription':contentData
+    };
+   
+    // Log the formatted data object
+    console.log("All course data:", formattedData);
+  };
+  
 
   return (
     <div className="p-6">
@@ -80,9 +120,9 @@ const CourseDetails: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         {/* Course Thumbnail Preview */}
         <div className="flex gap-4 items-center border p-4 rounded-md w-full">
-          {thumbnail ? (
+          {prevthumbnail ? (
             <img
-              src={thumbnail}
+              src={prevthumbnail}
               alt="Course Thumbnail"
               className="w-full h-48 object-cover rounded-md"
             />
@@ -112,9 +152,9 @@ const CourseDetails: React.FC = () => {
 
         {/* Course Trailer Preview or Placeholder */}
         <div className="flex  items-center border p-4 rounded-md gap-4 w-full">
-          {video ? (
+          {prevVideo ? (
             <video
-              src={video}
+              src={prevVideo}
               controls
               className="w-full h-48 object-cover rounded-md"
             />
@@ -150,15 +190,15 @@ const CourseDetails: React.FC = () => {
       <div>
         <h3 className="text-lg font-semibold mb-2">Course Descriptions</h3>
 
-        <EditTermsAndCondition />
+        <EditTermsAndCondition onContentChange={handleContentChange} />
         <div className="p-4">
           {/* Header with Flexbox */}
           <div className="flex justify-between items-center mb-4">
             <h3 className="font-semibold">
-              What you will teach in this course ({inputFields.length}/
+              What you will teach in this course ({teachingMaterials.length}/
               {MAX_FIELDS})
             </h3>
-            {inputFields.length < MAX_FIELDS && (
+            {teachingMaterials.length < MAX_FIELDS && (
               <Button onClick={handleAddField} type="primary">
                 + Add new
               </Button>
@@ -166,7 +206,7 @@ const CourseDetails: React.FC = () => {
           </div>
 
           {/* Input Fields */}
-          {inputFields.map((field, index) => {
+          {teachingMaterials.map((field, index) => {
             const charCount = field.length; // Count characters in the current input field
             return (
               <div key={index} className="mb-4">
@@ -174,6 +214,7 @@ const CourseDetails: React.FC = () => {
                   0{index + 1}
                 </label>
                 <Input
+                name="courseDescription"
                   style={{
                     width: "100%",
                     height: "44px",
@@ -199,9 +240,9 @@ const CourseDetails: React.FC = () => {
           {/* Header with Flexbox */}
           <div className="flex justify-between items-center mb-4">
             <h3 className="font-semibold">
-              Target Audience ({inputFields2.length}/{MAX_FIELDS})
+              Target Audience ({targetAudience.length}/{MAX_FIELDS})
             </h3>
-            {inputFields2.length < MAX_FIELDS && (
+            {targetAudience.length < MAX_FIELDS && (
               <Button onClick={handleAddField2} type="primary">
                 + Add new
               </Button>
@@ -209,7 +250,7 @@ const CourseDetails: React.FC = () => {
           </div>
 
           {/* Input Fields */}
-          {inputFields2.map((field, index) => {
+          {targetAudience.map((field, index) => {
             const charCount = field.length; // Count characters in the current input field
             return (
               <div key={index} className="mb-4">
@@ -241,9 +282,9 @@ const CourseDetails: React.FC = () => {
           {/* Header with Flexbox */}
           <div className="flex justify-between items-center mb-4">
             <h3 className="font-semibold">
-              Course requirements ({inputFields3.length}/{MAX_FIELDS})
+              Course Requirements ({requirements.length}/{MAX_FIELDS})
             </h3>
-            {inputFields3.length < MAX_FIELDS && (
+            {requirements.length < MAX_FIELDS && (
               <Button onClick={handleAddField3} type="primary">
                 + Add new
               </Button>
@@ -251,7 +292,7 @@ const CourseDetails: React.FC = () => {
           </div>
 
           {/* Input Fields */}
-          {inputFields3.map((field, index) => {
+          {requirements.map((field, index) => {
             const charCount = field.length; // Count characters in the current input field
             return (
               <div key={index} className="mb-4">
@@ -268,7 +309,7 @@ const CourseDetails: React.FC = () => {
                     fontWeight: 400,
                   }}
                   value={field}
-                  placeholder={`What is you course requirements...`}
+                  placeholder={`Prerequisites for this course...`}
                   maxLength={MAX_CHARACTERS} // Limit the input to 120 characters
                   onChange={(e) => handleInputChange3(index, e.target.value)}
                 />
@@ -279,17 +320,16 @@ const CourseDetails: React.FC = () => {
             );
           })}
         </div>
-
-        <div className="flex justify-between mt-8">
-          <Button>Preview</Button>
-          <Button
-            style={{ height: "44px", fontSize: "16px", fontWeight: 400 }}
-            type="primary"
-          >
-            Save & Next
-          </Button>
-        </div>
       </div>
+
+      {/* Save and Next Button */}
+      <Button
+        type="primary"
+        onClick={handleSaveAndNext}
+        className="w-full mt-8 h-[44px] text-lg font-semibold"
+      >
+       Publish Course
+      </Button>
     </div>
   );
 };

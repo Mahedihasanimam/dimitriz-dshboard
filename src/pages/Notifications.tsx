@@ -3,10 +3,20 @@ import { IoIosArrowBack } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import { Avatar, Badge } from "antd";
 import avg from "../assets/Images/Notifications/Avatar.png";
+import { useSelector } from "react-redux";
+import { useGetNotifiByUserIdQuery } from "../redux/features/users/UserApi";
+import moment from "moment";
 
 type Props = {};
 
 const Notifications = (props: Props) => {
+  const user = useSelector((state: any) => state.user.user);
+  console.log("user id from notification", user?._id);
+
+  const { data } = useGetNotifiByUserIdQuery(user?._id);
+
+  console.log(data?.notifications);
+
   const navigate = useNavigate();
   const handleBack = () => {
     console.log("click,");
@@ -24,61 +34,41 @@ const Notifications = (props: Props) => {
           <h1 className="text-[24px] font-bold">Notifications</h1>
           <a href="#">
             <sup>
-              <Badge count={2}>{/* <Avatar shape="none" size="" /> */}</Badge>
+              <Badge count={data?.notifications?.length || 0} />
             </sup>
           </a>
         </div>
-        <h1 className="text-[#5E7FD3]">See All</h1>
+        <h1 className="text-[#5E7FD3] cursor-pointer">See All</h1>
       </div>
-      {/* all Notifications */}
-      <div className="flex justify-between py-2">
-        <div className="flex gap-2 items-center">
-          <Avatar size={60} src={avg} />
-          <h1>
-          <span className="text-xl font-bold"> Leslie</span> Share a product
-          </h1>
+      {/* Notifications List */}
+      {data?.notifications?.map((notification: any) => (
+        <div
+          key={notification._id}
+          className="flex justify-between items-center py-4 border-b"
+        >
+          <div className="flex gap-4 items-center">
+            <Avatar size={60} src={avg} />
+            <div>
+              <h1 className="text-xl font-bold">
+                {notification.type === "course"
+                  ? "New Course"
+                  : notification.type === "others"
+                  ? "System Message"
+                  : "Notification"}
+              </h1>
+              <p>{notification.message}</p>
+            </div>
+          </div>
+          <div className="text-right">
+            <h1 className="text-sm text-gray-500">
+              {moment(notification.createdAt).fromNow()}
+            </h1>
+            {!notification.isRead && (
+              <Badge color="red" count="New" offset={[10, 0]} />
+            )}
+          </div>
         </div>
-        <h1>2 minutes ago</h1>
-      </div>
-      <div className="flex justify-between py-2">
-        <div className="flex gap-2 items-center">
-          <Avatar size={60} src={avg} />
-          <h1>
-          <span className="text-xl font-bold"> Leslie</span> Share a product
-          </h1>
-        </div>
-        <h1>2 minutes ago</h1>
-      </div>
-      <div className="flex justify-between py-2">
-        <div className="flex gap-2 items-center">
-          <Avatar size={60} src={avg} />
-          <h1>
-          <span className="text-xl font-bold"> Leslie</span> Share a product
-          </h1>
-        </div>
-        <h1>2 minutes ago</h1>
-      </div>
-      <div className="flex justify-between py-2">
-        <div className="flex gap-2 items-center">
-          <Avatar size={60} src={avg} />
-          <h1>
-          <span className="text-xl font-bold"> Leslie</span> Share a product
-          </h1>
-        </div>
-        <h1>2 minutes ago</h1>
-      </div>
-      <div className="flex justify-between py-2">
-        <div className="flex gap-2 items-center">
-          <Avatar size={60} src={avg} />
-          <h1>
-          <span className="text-xl font-bold"> Leslie</span> Share a product
-          </h1>
-        </div>
-       <div className="flex items-center gap-4">
-       <h1>2 minutes ago</h1>
-       <Badge color="red" count={0}>{/* <Avatar shape="none" size="" /> */}</Badge>
-       </div>
-      </div>
+      ))}
     </div>
   );
 };

@@ -2,6 +2,7 @@ import React from "react";
 import { Input, Select } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import CourseCard from "../component/mycourse/CourseCard";
+import { useSelector } from "react-redux";
 
 const { Option } = Select;
 
@@ -125,6 +126,8 @@ const MycourseCard: React.FC = () => {
       category: "All courses",
     },
   ];
+  const user = useSelector((state: any) => state.user.user);
+  console.log('user---------------------------',user)
 
   //To Do: Implement the search functionality
   return (

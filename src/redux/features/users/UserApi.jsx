@@ -166,5 +166,6 @@ export const {
   useLeaveAreviewMutation,
   useGetAbotUsQuery,
   useUpdatePasswordMutation,
-  useGetadminProfileQuery
+  useGetadminProfileQuery,
+  useGetNotifiByUserIdQuery,
 } = userApi;

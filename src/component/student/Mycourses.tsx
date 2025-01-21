@@ -47,7 +47,10 @@ const Mycourses: React.FC = () => {
 
 
   const user = useSelector((state: any) => state.user.user);
-console.log('user',user?.enrolledCourses)
+
+
+  
+// console.log('user---------------------------',user?.enrolledCourses)
   const coursemenu = [
     {
       id: 1,

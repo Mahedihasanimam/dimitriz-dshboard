@@ -18,16 +18,20 @@ interface ApiResponse {
 const data = {
   data: {
     attributes: {
-      content: "Enter you course descriptions",
+      content: "Enter your course descriptions",
     },
   },
 };
 
-const EditTermsAndCondition: React.FC = () => {
+interface EditTermsAndConditionProps {
+  onContentChange: (content: string) => void; // Parent callback function type
+}
+
+const EditTermsAndCondition: React.FC<EditTermsAndConditionProps> = ({ onContentChange }) => {
   const navigate = useNavigate();
   const editor = useRef(null);
   const [content, setContent] = useState<string>("");
-console.log(content);
+
   useEffect(() => {
     setContent(data?.data?.attributes?.content || "");
   }, []);
@@ -46,68 +50,60 @@ console.log(content);
     });
   };
 
-  // const handleUpdate = async () => {
-  //   console.log(content);
-
-  //   try {
-  //     const response = await setData({
-  //       content: content,
-  //     });
-
-  //     if (response?.data?.statusCode === 201) {
-  //       Swal.fire({
-  //         position: "top-center",
-  //         icon: "success",
-  //         title: response?.data?.message,
-  //         showConfirmButton: false,
-  //         timer: 1500,
-  //       });
-  //       navigate("/settings/terms-conditions");
-  //     }
-  //   } catch (error: any) {
-  //     Swal.fire({
-  //       icon: "error",
-  //       title: "Try Again...",
-  //       text: error?.response?.data?.message || "An error occurred",
-  //       footer: '<a href="#">Why do I have this issue?</a>',
-  //     });
-  //   }
-  // };
-
   const handleBackTermsAndCondition = () => {
     // navigate("/termsAndConditons");
   };
 
+  const handleSave = async () => {
+    // Log the content before sending it to the API
+    console.log("Content before saving:", content);
+
+    // Call setData with the updated content
+    const response = await setData({ content });
+    
+    // After saving, log the response
+    console.log("API Response:", response);
+    
+    // Show a success message
+    if (response.data.statusCode === 201) {
+      Swal.fire({
+        icon: 'success',
+        title: 'Success!',
+        text: response.data.message,
+      });
+    }
+
+    // Send the content back to the parent component
+    onContentChange(content); // This will call the parent callback function
+  };
+
   return (
-    <div className="relative  bg-white p-6 rounded-md">
+    <div className="relative bg-white p-6 rounded-md">
       <div
         onClick={handleBackTermsAndCondition}
         className="mt-[44px] cursor-pointer flex items-center pb-3 gap-2"
       >
         <MdOutlineKeyboardArrowLeft size={34} />
-        <h1 className="text-[24px] font-semibold"> course descriptions</h1>
+        <h1 className="text-[24px] font-semibold">Course Descriptions</h1>
       </div>
       <div className="text-justify mt-[24px] relative">
         <JoditEditor
           ref={editor}
           value={content}
-          onChange={(newContent) => setContent(newContent)}
-          className="text-wrap bg-red-900"
-          
-        />
-        {/* <Button
-          onClick={handleUpdate}
-          style={{
-            backgroundColor: "#193664",
-            color: "#fff",
-            height: "56px",
+          onChange={(newContent) => {
+            setContent(newContent);
+            // Use DOMParser to extract plain text
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(newContent, "text/html");
+            const plainText = doc.body.textContent || "";
+            console.log("Content changed (plain text):", plainText);
+            onContentChange(plainText);
           }}
-          block
-          className="mt-[30px] hover:text-white bg-secondary hover:bg-gradient-to-r from-red-500 via-red-600 to-red-800
-          text-white py-3 rounded-lg w-full text-[18px] font-medium duration-200"
-        >
-          Update
-        </Button> */}
+          className="text-wrap bg-red-900"
+        />
+      </div>
+      <div className="mt-4">
+        <Button onClick={handleSave}>Save & Next</Button>
       </div>
     </div>
   );
