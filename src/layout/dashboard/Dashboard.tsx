@@ -106,6 +106,11 @@ const Dashboard: React.FC<NotificationBadgeProps> = ({ }) => {
       icon: <PlusOutlined style={{ color: "#667085", fontSize: 20 }} />,
     },
     {
+      path: "/Section&Lecture",
+      title: "Section&Lecture",
+      icon: <PlusOutlined style={{ color: "#667085", fontSize: 20 }} />,
+    },
+    {
       path: "/mycourse",
       title: "My courses",
       icon: <BsStack size={18} color="#667085" />,

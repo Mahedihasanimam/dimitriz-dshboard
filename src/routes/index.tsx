@@ -24,6 +24,7 @@ import Recordings from "../component/student/Recordings";
 import Recources from "../component/student/Recources";
 import Mycourses from "../component/student/Mycourses";
 import MycourseCard from "../pages/MycourseCard";
+import CoursePage from "../pages/Section&Lecture";
 
 
 
@@ -53,6 +54,10 @@ const router = createBrowserRouter([
             {
                 path: "/createnewcourse",
                 element: <CreateNewCourse />,
+            },
+            {
+                path: "/Section&Lecture",
+                element: <CoursePage />,
             },
             {
                 path: "/mycourse",

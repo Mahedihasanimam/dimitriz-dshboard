@@ -160,7 +160,7 @@ const CreateNewCourse: React.FC<CreateNewCourseProps> = () => {
                     <label className="block text-sm font-medium mb-1">Course Sub-category</label>
                     <select
                       name="courseSubCategory"
-                      value={formData.basicInfo.courseSubCategory}
+                      value={formData.basicInfo?.courseSubCategory}
                       onChange={(e) => handleChange(e, "basicInfo")}
                       className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
                     >
@@ -258,45 +258,9 @@ const CreateNewCourse: React.FC<CreateNewCourseProps> = () => {
             </div>
           </TabPane>
 
-          <TabPane
-            tab={
-              <span className="flex items-center gap-2 text-[#1D2939] font-semibold">
-                <PiMonitorLight size={24} />
-                Curriculum
-              </span>
-            }
-            key="3"
-          >
-            <div>
-              {" "}
-              {/* Add content for the Curriculum tab here */}
-              <CurriculumSection
-                formData={formData.curriculum}
-                handleChange={handleChange}
-                handleSubmit={handleSubmit}
-              />
-            </div>
-          </TabPane>
+          
 
-          <TabPane
-            tab={
-              <span className="flex items-center gap-2 text-[#1D2939] font-semibold">
-                <IoPlayCircleOutline size={24} />
-                Publish Course
-              </span>
-            }
-            key="4"
-          >
-            <div>
-              {" "}
-              {/* Add content for the Publish Course tab here */}
-              <PublishCourse
-                formData={formData.publishCourse}
-                handleChange={handleChange}
-                handleSubmit={handleSubmit}
-              />
-            </div>
-          </TabPane>
+
         </Tabs>
       </div>
     </div>
