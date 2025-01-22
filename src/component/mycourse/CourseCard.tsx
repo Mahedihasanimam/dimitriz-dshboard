@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 
 
 const CourseCard = ({ data}) => {
-
+console.log('______________',data)
 
   return (
     <div className=" w-full bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden">
@@ -56,7 +56,7 @@ const CourseCard = ({ data}) => {
           </span>
           <span className="flex items-center font-normal">
             <UsergroupDeleteOutlined className="text-lg pr-2" />
-            {data?.students}  Students
+            {data?.enrolledStudents?.length}  Students
           </span>
         </div>
        
