@@ -2,13 +2,16 @@ import React, { useState } from "react";
 import { Upload, Button, Input, Typography, message } from "antd";
 import { UploadOutlined, VideoCameraOutlined } from "@ant-design/icons";
 import EditTermsAndCondition from "../../pages/EditTermsAndConditions";
+import { useCreateCourseMutation } from "../../redux/features/course/productApi";
+import Swal from "sweetalert2";
+
 
 const { TextArea } = Input;
 const { Paragraph } = Typography;
 const MAX_FIELDS = 8;
 const MAX_CHARACTERS = 120;
 
-const CourseDetails: React.FC = ({ formData }: any) => {
+const CourseDetails: React.FC = ({ formData:getedformdata }: any) => {
 
   
   const [thumbnail, setThumbnail] = useState<File | null>(null);
@@ -19,6 +22,10 @@ const CourseDetails: React.FC = ({ formData }: any) => {
   const [targetAudience, settargetAudience] = useState(Array(4).fill(""));
   const [requirements, setrequirements] = useState(Array(4).fill(""));
   const [contentData, setContentData] = useState<string>("");
+
+
+const [createCourse]=useCreateCourseMutation()
+
   // Helper function to handle image preview
   const handlePreviewImage = (file: File) => {
     console.log(file);
@@ -86,28 +93,46 @@ const CourseDetails: React.FC = ({ formData }: any) => {
   const countWords = (text) => {
     return text.trim().split(/\s+/).filter(Boolean).length;
   };
-  const handleSaveAndNext = () => {
-    const courseData = {
-      image:thumbnail,
-      videoFile:video,
-      teachingMaterials,
-      targetAudience,
-      requirements
-    };
+  const handleSaveAndNext = async () => {
+    // Create a new FormData instance
+    const formdata = new FormData();
   
-    // Create a new object to log each field's name and value in the required format
-    const formattedData = {
-      ...formData,
-      thumbnail: thumbnail,
-      video: video,
-      "teachingMaterials": teachingMaterials,
-      "targetAudience": targetAudience,
-      "requirements": requirements,
-      'decription':contentData
-    };
-   
-    // Log the formatted data object
-    console.log("All course data:", formattedData);
+    // Append each field to FormData
+    formdata.append('image', thumbnail); // Append the image
+    formdata.append('videoFile', video); // Append the video file
+    formdata.append('teachingMaterials', JSON.stringify(teachingMaterials)); // Convert to JSON if it's an array or object
+    formdata.append('targetAudience', JSON.stringify(targetAudience)); // Convert to JSON
+    formdata.append('requirements', JSON.stringify(requirements)); // Convert to JSON
+    formdata.append('description', contentData); // Add description
+    formdata.append('congratulationsMessage', 'nai'); // Add the message
+  
+    // Add remaining fields from `getedformdata`
+    Object.keys(getedformdata).forEach((key) => {
+      formdata.append(key, getedformdata[key]);
+    });
+  
+    try {
+      // Make the API call
+      const res = await createCourse(formdata).unwrap();
+  
+      // Optional: Show success alert if needed
+      if (res?.success) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Success!',
+          text: 'Course created successfully',
+        });
+      }
+  
+      // Log all key-value pairs in FormData for debugging
+      formdata.forEach((value, key) => {
+        console.log(`${key}: ${value}`);
+      });
+  
+      console.log("Response:", res);
+    } catch (error) {
+      console.error("Error creating course:", error);
+    }
   };
   
 
@@ -136,7 +161,9 @@ const CourseDetails: React.FC = ({ formData }: any) => {
               Upload your course thumbnail (1200x800 pixels, .jpg, .jpeg, or
               .png).
             </Paragraph>
+            
             <Upload
+
               beforeUpload={(file) => {
                 handlePreviewImage(file);
                 return false; // Prevent auto-upload

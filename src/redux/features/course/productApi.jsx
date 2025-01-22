@@ -29,6 +29,20 @@ const courseApi = api.injectEndpoints({
       
     }),
 
+
+
+    createCourse: builder.mutation({
+      query: (body) => ({
+        url: `/course/add-course`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["course"],
+    }),
+
+
+
+
     delteCourse: builder.mutation({
       query: (id) => ({
         url: `/course/delete-course-by-id/${id}`,
@@ -56,4 +70,5 @@ export const {
   useDelteCourseMutation,
   useApproveCourseMutation,
   useGetallCategoryQuery,
+  useCreateCourseMutation,
 } = courseApi;

@@ -4,17 +4,50 @@ import {
   ClockCircleOutlined,
   UsergroupDeleteOutlined,
   ArrowUpOutlined,
+  DeleteOutlined,
 } from "@ant-design/icons";
 import { Rate } from "antd";
 import { imageUrl } from "../../redux/baseApi";
 import { Link } from "react-router-dom";
+import { BsThreeDots } from "react-icons/bs";
+import Swal from "sweetalert2";
+import { useDelteCourseMutation } from "../../redux/features/course/productApi";
+
 
 
 const CourseCard = ({ data}) => {
 console.log('______________',data)
 
+const [delteCourse]=useDelteCourseMutation();
+
+const handleDelte = async(id:string) => {
+ 
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "You won't be able to revert this!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, delete it!'
+  }).then(async(result) => {
+    if (result.isConfirmed) {
+      console.log('click',id);
+
+      const res = await delteCourse(id);
+
+      if(res?.data?.success){
+        Swal.fire(
+          'Deleted!',
+          'Your file has been deleted.',
+          'success'
+        )
+      }
+    }
+  })
+}
   return (
-    <div className=" w-full bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden">
+    <div className=" w-full bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden relative">
       {/* COURSE CARD BANNER IMGE HERE */}
       <img
         className="w-full h-64 object-cover"
@@ -23,6 +56,10 @@ console.log('______________',data)
         height={500}
         width={500}
       />
+      <div className=" p-4  absolute top-0 left-0 right-0 ">
+        <BsThreeDots onClick={()=>handleDelte(data?._id)} className="text-white text-4xl absolute top-2 right-2 bg-gray-900 rounded-sm p-1 bg-opacity-50 cursor-pointer" />
+
+      </div>
       {/* COURSE CARD DETAILS HERE */}
       <div className="p-4">
         <div className="flex justify-between items-center pt-5">

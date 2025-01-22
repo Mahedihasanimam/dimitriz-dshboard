@@ -27,7 +27,7 @@ const CreateNewCourse: React.FC<CreateNewCourseProps> = () => {
       <Menu.Item key="5">Lecture Notes</Menu.Item>
     </Menu>
   )
-const {data}=useGetallCategoryQuery({refetchOnMountOrArgChange:true})
+  const { data } = useGetallCategoryQuery({ refetchOnMountOrArgChange: true })
   const [selectedkey, setSelectedkey] = React.useState("1")
   console.log('selectedkey', data?.data?.categories);
 
@@ -35,20 +35,22 @@ const {data}=useGetallCategoryQuery({refetchOnMountOrArgChange:true})
     basicInfo: {
       title: "",
       subtitle: "",
-      pricing: "",
-      platformFees: "20%",
-      courseCategory: "",
-      courseSubCategory: "",
+      price: "",
+      platformFees: 20,
+      category: "",
+      subCategory: "",
       courseTopic: "",
       language: "",
+    
       subtitleLanguage: "",
-      courseLevel: "",
+      lavel: "",
       duration: "",
+
     },
-   
+
   })
 
-  const handleChange = (e , tab = "basicInfo") => {
+  const handleChange = (e, tab = "basicInfo") => {
     const { name, value } = e.target
     setFormData((prevData) => ({
       ...prevData,
@@ -63,8 +65,8 @@ const {data}=useGetallCategoryQuery({refetchOnMountOrArgChange:true})
     setSelectedkey('2')
     e.preventDefault()
 
-   
-   
+
+
   }
 
   return (
@@ -114,17 +116,16 @@ const {data}=useGetallCategoryQuery({refetchOnMountOrArgChange:true})
                 {/* Pricing */}
                 <div>
                   <label className="block text-sm font-medium mb-1">Pricing</label>
-                  <select
-                    name="pricing"
-                    value={formData.basicInfo.pricing}
+                  <input
+                    type="number"
+                    name="price"
+                    value={formData.basicInfo.price}
                     onChange={(e) => handleChange(e, "basicInfo")}
                     className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
-                  >
-                    <option value="">Select...</option>
-                    <option value="free">Free</option>
-                    <option value="paid">Paid</option>
-                  </select>
+                    placeholder="Enter price"
+                  />
                 </div>
+
 
                 {/* Platform Fees */}
                 <div>
@@ -143,16 +144,16 @@ const {data}=useGetallCategoryQuery({refetchOnMountOrArgChange:true})
                   <div>
                     <label className="block text-sm font-medium mb-1">Course Category</label>
                     <select
-                      name="courseCategory"
-                      value={formData.basicInfo.courseCategory}
+                      name="category"
+                      value={formData.basicInfo.category}
                       onChange={(e) => handleChange(e, "basicInfo")}
                       className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
                     >
-                     {
-                      data?.data?.categories?.map((item) => (
-                        <option key={item.count} value={item.courseCategory}>{item.courseCategory}</option>
-                      ))
-                     }
+                      {
+                        data?.data?.categories?.map((item) => (
+                          <option key={item.count} value={item.courseCategory}>{item.courseCategory}</option>
+                        ))
+                      }
                     </select>
                   </div>
                   <div>
@@ -208,8 +209,8 @@ const {data}=useGetallCategoryQuery({refetchOnMountOrArgChange:true})
                   <div>
                     <label className="block text-sm font-medium mb-1">Course Level</label>
                     <select
-                      name="courseLevel"
-                      value={formData.basicInfo.courseLevel}
+                      name="lavel"
+                      value={formData.basicInfo.lavel}
                       onChange={(e) => handleChange(e, "basicInfo")}
                       className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
                     >
@@ -234,7 +235,7 @@ const {data}=useGetallCategoryQuery({refetchOnMountOrArgChange:true})
                   <button type="button" className="px-6 py-2 border border-gray-300 rounded-md text-gray-700">
                     Cancel
                   </button>
-                  <button  type="submit" className="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
+                  <button type="submit" className="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
                     Save & Next
                   </button>
                 </div>
