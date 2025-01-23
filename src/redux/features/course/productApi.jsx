@@ -58,8 +58,42 @@ const courseApi = api.injectEndpoints({
       }),
       invalidatesTags: ["course"],
     }),
+
+    CreateCourseSection : builder.mutation({
+      query: (body) => ({
+        url: `/section/add-section`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["course"],
+    }),
     
 
+
+    getSectionbyCourseId: builder.query({
+      query: (id) => ({
+        url: `/section/get-all-sections/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["sections"],
+    }),
+
+    addSection : builder.mutation({
+      query: (body) => ({
+        url: `/section/add-section`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["sections"],
+    }),
+    createALecture : builder.mutation({
+      query: (body) => ({
+        url: `/lecture/add-lecture`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["sections"],
+    }),
 
   }),
 });
@@ -71,4 +105,9 @@ export const {
   useApproveCourseMutation,
   useGetallCategoryQuery,
   useCreateCourseMutation,
+  useCreateCourseSectionMutation,
+  useGetSectionbyCourseIdQuery,
+  useAddSectionMutation,
+  useCreateALectureMutation,
+ 
 } = courseApi;
