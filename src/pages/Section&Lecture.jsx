@@ -27,7 +27,7 @@ const CoursePage = () => {
 
   return (
     <div className="">
-      <h1 className="text-2xl font-bold text-[#1D2939] mb-4">Course Management</h1>
+      <h1 className="text-2xl font-bold text-[#1D2939] mb-4">Add Course Sections and Lecture </h1>
       <div className="p-4">
 
       <Tabs  defaultActiveKey="3" className="bg-white rounded-lg shadow p-6">

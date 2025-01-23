@@ -32,7 +32,7 @@ import Swal from "sweetalert2";
 import Providers from "../../lib/Providers";
 import PrivateRoute from "../../component/PrivateRoute";
 import { useAuth } from "../../context/AuthContext";
-import { useLazyGetProfileQuery } from "../../redux/features/users/UserApi";
+import { useGetNotifiByUserIdQuery, useLazyGetProfileQuery } from "../../redux/features/users/UserApi";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../../redux/features/users/userSlice";
 import { imageUrl } from "../../redux/baseApi";
@@ -65,8 +65,13 @@ const Dashboard: React.FC<NotificationBadgeProps> = ({ }) => {
   const location = useLocation();
   const dispatch = useDispatch();
   const { logout } = useAuth()
+  
+  console.log("user id from notification", user?._id);
 
+  const { data } = useGetNotifiByUserIdQuery(user?._id);
 
+  console.log(data?.notifications);
+ 
   // Admin menu items
   const adminMenuItems: MenuItem[] = [
     {
@@ -105,11 +110,11 @@ const Dashboard: React.FC<NotificationBadgeProps> = ({ }) => {
       title: "Create new course",
       icon: <PlusOutlined style={{ color: "#667085", fontSize: 20 }} />,
     },
-    {
-      path: "/Section&Lecture",
-      title: "Section&Lecture",
-      icon: <PlusOutlined style={{ color: "#667085", fontSize: 20 }} />,
-    },
+    // {
+    //   path: "/Section&Lecture",
+    //   title: "Section&Lecture",
+    //   icon: <PlusOutlined style={{ color: "#667085", fontSize: 20 }} />,
+    // },
     {
       path: "/mycourse",
       title: "My courses",
@@ -568,7 +573,7 @@ const Dashboard: React.FC<NotificationBadgeProps> = ({ }) => {
                   className="cursor-pointer"
                   style={{ zIndex: 11 }} // Ensure the badge has a higher z-index than other elements
                 >
-                  <Badge count={5}>
+                  <Badge count={data?.notifications?.length || 0}>
                     <Bell size={30} color="gray" />
                   </Badge>
                 </div>

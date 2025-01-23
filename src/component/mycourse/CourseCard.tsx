@@ -47,6 +47,8 @@ const handleDelte = async(id:string) => {
   })
 }
   return (
+    <Link to={`/course/${data?._id}`}>
+
     <div className=" w-full bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden relative">
       {/* COURSE CARD BANNER IMGE HERE */}
       <img
@@ -99,6 +101,7 @@ const handleDelte = async(id:string) => {
        
       </div>
     </div>
+    </Link>
   );
 };
 export default CourseCard;

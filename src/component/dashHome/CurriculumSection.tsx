@@ -148,7 +148,7 @@ const CourseEditor = () => {
   const [sections, setSections] = useState([
     {
       id: Date.now(),
-      title: "Default Section",
+      title: "Default section title",
       lectures: [
         {
           id: Date.now() + 1,
