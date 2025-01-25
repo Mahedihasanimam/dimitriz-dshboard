@@ -18,6 +18,12 @@ const statisticsSlice = api.injectEndpoints({
         method: "GET",
       }),
     }),
+    getAdminTransections: builder.query({
+      query: ({filter}) => ({
+        url: `/payment/get-all-transactions?period=${filter}`,
+        method: "GET",
+      }),
+    }),
 
 
 
@@ -49,4 +55,4 @@ const statisticsSlice = api.injectEndpoints({
   }),
 });
 
-export const { useGetStatisticsQuery,useGetAnalyticsQuery,useGetMostEarningQuery,useSupportMutation,useAddWebinerMutation } = statisticsSlice;
+export const { useGetStatisticsQuery,useGetAnalyticsQuery,useGetMostEarningQuery,useSupportMutation,useAddWebinerMutation,useGetAdminTransectionsQuery } = statisticsSlice;

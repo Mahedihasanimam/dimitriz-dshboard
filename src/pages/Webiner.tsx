@@ -15,7 +15,6 @@ const WebinarForm: React.FC = () => {
 const [addWebiner]=useAddWebinerMutation();
   const onFinish = async(values: any) => {
     setLoading(true);
-
     // Create a FormData object
     const formData = new FormData();
     formData.append('title', values.title);
