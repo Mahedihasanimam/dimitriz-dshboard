@@ -27,7 +27,26 @@ const statisticsSlice = api.injectEndpoints({
         method: "GET",
       }),
     }),
+
+
+    support : builder.mutation({
+      query: (data) => ({
+        url: `/support/send-mail-to-support`,
+        method: "POST",
+        body: data,
+      }),
+    }),
+    addWebiner : builder.mutation({
+      query: (data) => ({
+        url: `/webinar/add-webinar`,
+        method: "POST",
+        body: data,
+      }),
+    }),
+
+
+
   }),
 });
 
-export const { useGetStatisticsQuery,useGetAnalyticsQuery,useGetMostEarningQuery } = statisticsSlice;
+export const { useGetStatisticsQuery,useGetAnalyticsQuery,useGetMostEarningQuery,useSupportMutation,useAddWebinerMutation } = statisticsSlice;

@@ -163,7 +163,7 @@ const AdminDashboard: React.FC<NotificationBadgeProps> = ({ }) => {
             </h1>
           </div>
         );
-     
+
       case "/mycourcess":
         return (
           <div>
@@ -250,7 +250,7 @@ const AdminDashboard: React.FC<NotificationBadgeProps> = ({ }) => {
   };
 
 
-  console.log("location.pathname", imageUrl+user?.image);
+  console.log("location.pathname", imageUrl + user?.image);
   return (
 
     <PrivateRoute>
@@ -298,8 +298,8 @@ const AdminDashboard: React.FC<NotificationBadgeProps> = ({ }) => {
               />
             </div>
             <Menu
-            
-            className="h-[calc(100vh-400px)] "
+
+              className="h-[calc(100vh-400px)] "
               mode="inline"
               style={{ background: "#1E1E1E", color: "`white`" }}
               defaultSelectedKeys={["2"]}
@@ -360,8 +360,8 @@ const AdminDashboard: React.FC<NotificationBadgeProps> = ({ }) => {
 
             <Menu
 
-                     mode="inline"
-                     style={{ background: "#1E1E1E", color: "`white`" }}
+              mode="inline"
+              style={{ background: "#1E1E1E", color: "`white`" }}
             >
               <div className=" px-4 w-full ">
                 <div className="py-4 ">
@@ -370,7 +370,7 @@ const AdminDashboard: React.FC<NotificationBadgeProps> = ({ }) => {
                       const isActive = location.pathname === item.path;
                       return (
                         <Menu.Item
-                          key={index} 
+                          key={index}
                           icon={item.icon}
                           style={{
                             color: isActive ? "blue" : "#fff",
@@ -402,7 +402,7 @@ const AdminDashboard: React.FC<NotificationBadgeProps> = ({ }) => {
                     <Popover
                       className="cursor-pointer"
                       placement="top"
-                     
+
                     >
                       <div>
                         <Avatar
@@ -412,13 +412,13 @@ const AdminDashboard: React.FC<NotificationBadgeProps> = ({ }) => {
                             backgroundColor: "gray",
                           }}
                           icon={
-                          <img src={ imageUrl+user?.image} alt="avatar" style={{ width: "40px", height: "40px", borderRadius: "50%" }} />
+                            <img src={imageUrl + user?.image} alt="avatar" style={{ width: "40px", height: "40px", borderRadius: "50%" }} />
                           }
                         />
                       </div>
                     </Popover>
 
- {/* ------------------------------------------------------------------------------------------------------------------------------------------ */}
+                    {/* ------------------------------------------------------------------------------------------------------------------------------------------ */}
                     <div className="space-y-4">
                       <h1 className="text-black">{user?.name}</h1>
                       <h1 className="text-black">{user?.email}</h1>
