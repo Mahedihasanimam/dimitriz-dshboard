@@ -140,7 +140,7 @@ const Earning: React.FC = () => {
       </div>
 
       {/* revinew chart ----------------- */}
-      <ResponsiveContainer width="100%" height={480}>
+      {/* <ResponsiveContainer width="100%" height={480}>
         <AreaChart data={data} syncId="anyId">
           <defs>
             <linearGradient id="colorAmt" x1="0" y1="0" x2="0" y2="1">
@@ -165,7 +165,7 @@ const Earning: React.FC = () => {
             fill="url(#colorAmt)"
           />
         </AreaChart>
-      </ResponsiveContainer>
+      </ResponsiveContainer> */}
       <TransactionTable/>
     </div>
     </div>

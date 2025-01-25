@@ -77,6 +77,13 @@ const courseApi = api.injectEndpoints({
       }),
       providesTags: ["sections"],
     }),
+    getcoursebyInstructorId: builder.query({
+      query: (id) => ({
+        url: `/course/get-course-by-instructor-id/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["course"],
+    }),
 
     addSection : builder.mutation({
       query: (body) => ({
@@ -109,5 +116,6 @@ export const {
   useGetSectionbyCourseIdQuery,
   useAddSectionMutation,
   useCreateALectureMutation,
+  useGetcoursebyInstructorIdQuery,
  
 } = courseApi;

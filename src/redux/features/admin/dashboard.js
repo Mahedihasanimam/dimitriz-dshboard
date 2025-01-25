@@ -1,4 +1,5 @@
-const { api } = require("@/baseApi");
+import { api } from "../../baseApi";
+
 
 const statisticsSlice = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -13,7 +14,7 @@ const statisticsSlice = api.injectEndpoints({
 
     getAnalytics: builder.query({
       query: (filter) => ({
-        url: `/analytics?filter=${filter}`,
+        url: `/course/get-user-course-transaction-statistcs/67358c5759b6e770a39ca863?filter=${filter}`,
         method: "GET",
       }),
     }),
