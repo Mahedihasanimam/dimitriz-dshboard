@@ -13,8 +13,8 @@ const statisticsSlice = api.injectEndpoints({
 
 
     getAnalytics: builder.query({
-      query: (filter) => ({
-        url: `/course/get-user-course-transaction-statistcs/67358c5759b6e770a39ca863?filter=${filter}`,
+      query: ({filter,id}) => ({
+        url: `/course/get-instructor-transactions/${id}?period=${filter}`,
         method: "GET",
       }),
     }),

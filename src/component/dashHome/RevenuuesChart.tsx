@@ -23,14 +23,15 @@ interface RevenueDataItem {
 const RevenueChart: React.FC = () => {
   const [filter, setFilter] = useState<string>('weekly');
 
-  const { data: apiData, isLoading, isError } = useGetAnalyticsQuery(filter);
-
+  
   const user = useSelector((state: any) => state.user.user);
-
+  
   console.log('usere', user?._id);
+  const { data: apiData, isLoading, isError } = useGetAnalyticsQuery({id: user?._id,filter});
   const { data: ratingData } = useGetcoursebyInstructorIdQuery(user?._id);
 
 console.log(ratingData,'rating data');
+console.log('data', apiData);
 
 
 const chartData =
