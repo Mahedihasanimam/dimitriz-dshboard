@@ -290,7 +290,7 @@ const Dashboard: React.FC<NotificationBadgeProps> = ({ }) => {
       case "/earning":
         return (
           <div>
-            <h1 className="text-[#333333] font-bold text-[24px]">My Courses</h1>
+            <h1 className="text-[#333333] font-bold text-[24px]">All Earnings</h1>
           </div>
         );
       case "/webiner":

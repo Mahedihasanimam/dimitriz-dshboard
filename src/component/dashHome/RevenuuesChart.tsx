@@ -232,7 +232,7 @@ const chartData =
           </AreaChart>
         </ResponsiveContainer>
 
-    </div>
+        </div>
         {/* TO DO ADD WORK ON IT ---------------------------------------------- */}
 
       </div>

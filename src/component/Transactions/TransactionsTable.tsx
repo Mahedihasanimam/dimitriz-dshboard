@@ -1,65 +1,40 @@
-import { Input, Table } from "antd";
+import { Table } from "antd";
 import React, { useState } from "react";
-import image from "../../assets/Images/Notifications/Avatar.png";
-import { Trash, Search, Pencil } from "lucide-react";
-import ModalComponent from "../share/ModalComponent";
-import SelectBox from "../share/SelectBox";
+import { useSelector } from "react-redux";
+import { useGetAllEarningByuserQuery } from "../../redux/features/course/productApi";
 
-interface UserAction {
-  sId: number;
-  image: React.ReactNode;
-  name: string;
-  email: string;
+interface TransactionData {
+  key: number;
+  date: string;
+  method: string;
+  amount: number;
   status: string;
-  dateOfBirth: string;
-  contact: string;
+  courseTitle: string;
 }
 
-interface UserData {
-  sId: number;
-  image: React.ReactNode;
-  name: string;
-  email: string;
-  status: string;
-  action: UserAction;
-}
+const TransactionTable: React.FC = () => {
+  const user = useSelector((state: any) => state.user.user);
 
-interface ProductListingProps {}
+  const { data } = useGetAllEarningByuserQuery(user?._id);
+  console.log("transaction table data", data?.transactions);
 
-const TransactionTable: React.FC<ProductListingProps> = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [openModel, setOpenModel] = useState<boolean>(false);
-  const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
-  const [userData, setUserData] = useState<UserAction>({} as UserAction);
-  const [type, setType] = useState<string>("");
-  const [selectedValue, setSelectedValue] = useState<string | undefined>();
-
   const pageSize = 10;
 
-  const data: UserData[] = [...Array(9).keys()].map((item, index) => ({
-    name: "Mastercards",
-    sId: index + 1,
-    image: <img src={image} className="w-9 h-9 rounded" alt="avatar" />,
-    date: "9-24-204",
-    purchasedProduct: "iMac air 2017",
-    category: "Vehicle",
-    amount: "$6729.00",
-    quantity: "Quantity",
-    status: "Completed",
-    action: {
-      sId: index + 1,
-      image: <img src={image} className="w-9 h-9 rounded" alt="" />,
-      name: "Fahim",
-      category: "Category",
-      amount: "$6729.00",
-      quantity: "quantity",
-      status: "Completed",
-      date: "9-24-204",
-      purchasedProduct: "iMac air 2017",
-      contact: "0521545861520",
-    },
-  }));
+  // Prepare the dataSource for the Ant Design Table
+  const dataSource = data?.transactions?.map((transaction: any, index: number) => ({
+    key: index, // A unique key for each row
+    date: new Date(transaction.date).toLocaleDateString(), // Format date to a readable format
+    method: transaction.method,
+    amount: transaction.amount,
+    status: transaction.status,
+    courseTitle: transaction.courseTitle,
+  })) || [];
 
+  // Calculate total amount
+  const totalAmount = dataSource.reduce((sum, transaction) => sum + transaction.amount, 0);
+
+  // Table columns
   const columns = [
     {
       title: "Date",
@@ -67,108 +42,65 @@ const TransactionTable: React.FC<ProductListingProps> = () => {
       key: "date",
     },
     {
-      title: "method",
-      dataIndex: "name",
-      key: "name",
+      title: "Method",
+      dataIndex: "method",
+      key: "method",
     },
-
-
     {
       title: "Amount",
       dataIndex: "amount",
       key: "amount",
+      render: (amount: number) => `$${amount.toFixed(2)}`, // Format amount as currency
     },
     {
       title: "Status",
       dataIndex: "status",
       key: "status",
+      render: (status: string) => (
+        <span
+          className={`px-2 py-1 rounded ${
+            status === "paid" ? "bg-green-200 text-green-700" : "bg-red-200 text-red-700"
+          }`}
+        >
+          {status}
+        </span>
+      ),
     },
-        
-    
+    {
+      title: "Course Title",
+      dataIndex: "courseTitle",
+      key: "courseTitle",
+    },
   ];
 
-  const handlePage = (page: number) => {
+  const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
 
-  const handleUser = (values: UserAction) => {
-    setUserData(values);
-    setOpenModel(true);
-    setType("user");
-  };
-
-  const handleDelete = (values: UserAction) => {
-    setUserData(values);
-    setOpenDeleteModal(true);
-  };
-
-  const confirmApprove = () => {
-    console.log("Approved:", userData);
-    setOpenModel(false);
-    // Add approve logic here
-  };
-
-  const confirmDelete = () => {
-    console.log("Deleted:", userData);
-    setOpenDeleteModal(false);
-    // Add delete logic here
-  };
-  const selectOptions = [
-    { value: "1", label: "week" },
-    { value: "2", label: "Month" },
-    { value: "3", label: "Year" },
-  ];
-  const handleSelectChange = (value: string) => {
-    setSelectedValue(value);
-    console.log("Selected", value);
-  };
-
   return (
-    <div className="mt-12">
+    <div className="mt-4">
+
+          <div className="mt-4 text-lg font-semibold">
+              Total Amount: <span className="ml-2 text-green-600">${totalAmount.toFixed(2)}</span>
+            </div>
       <div className="flex justify-between w-full">
         <div className="py-4">
-          <h1 className="text-xl font-bold text-[#5D5D5D]">Withdrow history</h1>
-          <p className="text-[#5D5D5D]">Activities summary at a glance</p>
-        </div>
-        <div className="pr-8">
-          <SelectBox
-            options={selectOptions}
-            placeholder="Week"
-            onChange={handleSelectChange}
-            style={{ width: 100 }}
-          />
+          <h1 className="text-xl font-bold text-[#5D5D5D]">Transaction History</h1>
+          <p className="text-[#5D5D5D]">Summary of your transaction activities</p>
         </div>
       </div>
-      <div className="">
+      <div>
         <Table
-          dataSource={data}
+          dataSource={dataSource.slice((currentPage - 1) * pageSize, currentPage * pageSize)} // Paginate manually
           columns={columns}
           pagination={{
             pageSize,
-            total: 50,
+            total: dataSource.length,
             current: currentPage,
-            onChange: handlePage,
+            onChange: handlePageChange,
           }}
-          rowClassName={() => "hover:bg-transparent"}
-        />
-        <ModalComponent
-          openModel={openModel}
-          setOpenModel={setOpenModel}
-          title="Approve Item"
-          subtitle="Are you sure you want to approve the product?"
-          cancelLabel="Cancel"
-          confirmLabel="Approve"
-          onConfirm={confirmApprove} // Your approve logic
-        />
-
-        <ModalComponent
-          openModel={openDeleteModal}
-          setOpenModel={setOpenDeleteModal}
-          title="Delete Item"
-          subtitle="Are you sure you want to delete this item?"
-          confirmLabel="Delete"
-          cancelLabel="Cancel"
-          onConfirm={confirmDelete} // Your delete logic
+          rowClassName={() => "hover:bg-gray-100"}
+     
         />
       </div>
     </div>

@@ -85,6 +85,22 @@ const courseApi = api.injectEndpoints({
       providesTags: ["course"],
     }),
 
+
+
+
+    getAllEarningByuser: builder.query({
+      query: (id) => ({
+        url: `/payment/get-user-course-transactions/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["earnings"],
+    }),
+
+
+
+
+
+
     addSection : builder.mutation({
       query: (body) => ({
         url: `/section/add-section`,
@@ -117,5 +133,6 @@ export const {
   useAddSectionMutation,
   useCreateALectureMutation,
   useGetcoursebyInstructorIdQuery,
+  useGetAllEarningByuserQuery,
  
 } = courseApi;
