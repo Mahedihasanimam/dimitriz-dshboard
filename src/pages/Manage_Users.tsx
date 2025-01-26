@@ -177,6 +177,7 @@ export default function UserTable() {
                 <td className="px-6 py-4">
                   <div className="flex gap-2">
                     <Button
+                    disabled={ user.instructorApplicationStatus !== 'pending'}
                       aria-label="Edit user"
                       onClick={() => {
                         setSelectedInstructorId(user._id);

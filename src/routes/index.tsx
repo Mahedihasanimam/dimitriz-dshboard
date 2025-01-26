@@ -25,6 +25,8 @@ import Recources from "../component/student/Recources";
 import Mycourses from "../component/student/Mycourses";
 import MycourseCard from "../pages/MycourseCard";
 import CoursePage from "../pages/Section&Lecture";
+import DaynamicRecording from "../component/student/DaynamicRecording";
+
 
 
 
@@ -36,6 +38,8 @@ const handleNotifications = (event: React.MouseEvent<HTMLDivElement>) => {
     console.log("16++++++++++++++Notification clicked!");
     // Add your notification handling logic here
 };
+
+
 
 const router = createBrowserRouter([
     {
@@ -92,6 +96,10 @@ const router = createBrowserRouter([
             {
                 path: "/recordings",
                 element:<Recordings/>
+            },
+            {
+                path: "/recordings/:id",
+                element:<DaynamicRecording/>
             },
             {
                 path: "/mycourcess",

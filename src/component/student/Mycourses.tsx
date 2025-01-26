@@ -15,6 +15,7 @@ import CourseCard from "../mycourse/CourseCard";
 import { BiRightArrow } from "react-icons/bi";
 import { MdArrowForwardIos } from "react-icons/md";
 import { useSelector } from "react-redux";
+import MyCourseCard from "../mycourse/MyCourseCard";
 const Mycourses: React.FC = () => {
   const [selectedCard, setSelectedCard] = useState<number | null>(null);
   const cardData = [
@@ -281,7 +282,7 @@ const Mycourses: React.FC = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-1  xl:grid-cols-3 lg:grid-cols-2 gap-4 py-6">
         {user?.enrolledCourses?.map((item) => (
-          <CourseCard
+          <MyCourseCard
             key={item.id}
            data={item}
           />
