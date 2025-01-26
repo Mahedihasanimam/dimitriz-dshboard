@@ -31,7 +31,7 @@ const RevenueChart: React.FC = () => {
   const { data: ratingData } = useGetcoursebyInstructorIdQuery(user?._id);
 
 console.log(ratingData,'rating data');
-console.log('data', apiData);
+console.log('user', user);
 
 
 const chartData =

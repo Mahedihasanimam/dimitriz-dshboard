@@ -37,7 +37,7 @@ const [lectureTitle,setLectureTitle]=React.useState('')
   if (isLoading) {
     return <h1>Loading...</h1>
   }
-  console.log('data', data)
+  console.log('data', user)
 
 
 
@@ -76,35 +76,7 @@ const [lectureTitle,setLectureTitle]=React.useState('')
                 </p>
               </div>
 
-              {/* <div className="xl:flex flex-col item-center gap-4">
-                <Avatar.Group className="pt-2" maxCount={5}>
-                 
-                  <Avatar src={imageone} />
-                  <Avatar src={imageone} />
-                  <Avatar src={imageone} />
-                  <Avatar src={imageone} />
-                  <Avatar src={imageone} />
-                  <Avatar src={imageone} />
-                  <Avatar src={imageone} />
-                  <Avatar src={imageone} />
-                  <Avatar src={imageone} />
-                  <Avatar src={imageone} />
-                </Avatar.Group>
-
-                <div className="flex item-center justify-between w-full gap-2">
-                  <div className="">
-                    <p className="text-[#1D2939] block text-lg font-semibold">
-                      512
-                    </p>
-
-                    <p className="text-[#263238] text-[14px] font-normal">
-                      Students watching
-                    </p>
-                  </div>
-
-                
-                </div>
-              </div> */}
+             
             </div>
           </div>
 

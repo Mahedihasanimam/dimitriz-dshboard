@@ -26,6 +26,7 @@ import Mycourses from "../component/student/Mycourses";
 import MycourseCard from "../pages/MycourseCard";
 import CoursePage from "../pages/Section&Lecture";
 import DaynamicRecording from "../component/student/DaynamicRecording";
+import ProtectedRoute from "./ProtectedRoute";
 
 
 
@@ -49,7 +50,10 @@ const router = createBrowserRouter([
             // instructor menu item --------------
             {
                 path: "/",
-                element: <DasboardHome />,
+                element: <ProtectedRoute allowedRoles={["instructor"]}>
+
+                    <DasboardHome />,
+                </ProtectedRoute>
             },
             {
                 path: "/notifications",
@@ -57,57 +61,92 @@ const router = createBrowserRouter([
             },
             {
                 path: "/createnewcourse",
-                element: <CreateNewCourse />,
+                element: <ProtectedRoute allowedRoles={["instructor"]}>
+                    <CreateNewCourse />
+                </ProtectedRoute>,
             },
             {
                 path: "/course/:id",
-                element: <CoursePage />,
+                element: <ProtectedRoute allowedRoles={["instructor"]}>
+
+                    <CoursePage />,
+                </ProtectedRoute>
             },
             {
                 path: "/mycourse",
-                element: <MycourseCard/>,
+                element: <ProtectedRoute allowedRoles={["instructor"]}>
+
+                    <MycourseCard />,
+                </ProtectedRoute>
             },
-            
+
             {
                 path: "/earning",
-                element: <Earning />,
+                element: <ProtectedRoute allowedRoles={["instructor"]}>
+
+                    <Earning />,
+                </ProtectedRoute>
             },
             {
                 path: "/webiner",
-                element: <Webiner />,
+                element: <ProtectedRoute allowedRoles={["instructor"]}>
+
+                    <Webiner />,
+                </ProtectedRoute>
             },
 
 
             // admin menu item --------------
             {
                 path: "/usermanagement",
-                element: <Totalusers />,
+                element: <ProtectedRoute allowedRoles={["admin"]}>
+
+                    <Totalusers />,
+                </ProtectedRoute>
             },
             {
                 path: "/content",
-                element:<Content/>
+                element: <ProtectedRoute allowedRoles={["admin"]}>
+
+                    <Content />
+                </ProtectedRoute>
             },
             {
                 path: "/transactions",
-                element: <TransactionsStatus />,
+                element: <ProtectedRoute allowedRoles={["admin"]}>
+
+                    <TransactionsStatus />,
+                </ProtectedRoute>
             },
 
             // student menu item ---------------
             {
                 path: "/recordings",
-                element:<Recordings/>
+                element: <ProtectedRoute allowedRoles={["user"]}>
+
+                    <Recordings />
+                </ProtectedRoute>
             },
             {
                 path: "/recordings/:id",
-                element:<DaynamicRecording/>
+                element: <ProtectedRoute allowedRoles={["user"]}>
+
+                    <DaynamicRecording />
+                </ProtectedRoute>
             },
             {
                 path: "/mycourcess",
-                element:<Mycourses/>
+                element: <ProtectedRoute allowedRoles={["user"]}>
+
+                    <Mycourses />
+                </ProtectedRoute>
             },
             {
                 path: "/resources",
-                element:<Recources/>
+                element: <ProtectedRoute allowedRoles={["user"]}>
+
+                    <Recources />
+                </ProtectedRoute>
             },
 
 
@@ -123,36 +162,36 @@ const router = createBrowserRouter([
                 path: "/settings",
                 element: <SettingsPage />,
             },
-            
+
         ]
     },
     {
         path: "/auth",
         element: <Auth />,
         children: [
-          {
-            path: "/auth",
-            element: <Login />,
-          },
-          {
-            path: "/auth/login",
-            element: <Login />,
-          },
-          {
-            path: "/auth/forget-password",
-            element: <ForgetPassword />,
-          },
-          {
-            path: "/auth/verify",
-            element: <VerifyEmail />,
-          },
-          {
-            path: "/auth/set-new-password",
-            element: <SetNewPassword />,
-          },
-                 
+            {
+                path: "/auth",
+                element: <Login />,
+            },
+            {
+                path: "/auth/login",
+                element: <Login />,
+            },
+            {
+                path: "/auth/forget-password",
+                element: <ForgetPassword />,
+            },
+            {
+                path: "/auth/verify",
+                element: <VerifyEmail />,
+            },
+            {
+                path: "/auth/set-new-password",
+                element: <SetNewPassword />,
+            },
+
         ],
-      },
+    },
 ])
 
 export default router;
