@@ -9,6 +9,14 @@ const userSlice = api.injectEndpoints({
       providesTags: ["user"],
     }),
   
+    approveInstructor : builder.mutation({
+      query: (body) => ({
+        url: `/users/auth/approve-instructor`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["user"],
+    }),
     
 
 
@@ -45,4 +53,4 @@ const userSlice = api.injectEndpoints({
   }),
 });
 
-export const { useDeleteUsersMutation, useGetAllUsersQuery, useUpdateUserRoleMutation, useUpdateOwnProfileMutation, } = userSlice;
+export const { useDeleteUsersMutation, useGetAllUsersQuery, useUpdateUserRoleMutation, useUpdateOwnProfileMutation,useApproveInstructorMutation, } = userSlice;

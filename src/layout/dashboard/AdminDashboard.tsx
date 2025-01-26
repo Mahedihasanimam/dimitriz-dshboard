@@ -285,7 +285,7 @@ const AdminDashboard: React.FC<NotificationBadgeProps> = ({ }) => {
             <img src={logo} alt="Logo" className="mx-auto py-6  w-[264px]" />
             <div className="px-2">
               <Input
-                placeholder="Search"
+                placeholder="Searchxf"
                 className="w-full mt-4 px-4 py-2  mb-6"
                 prefix={
                   <SearchOutlined

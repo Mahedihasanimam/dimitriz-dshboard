@@ -2,12 +2,14 @@
 
 import React, { useState } from 'react';
 import { Pencil, Search, Trash2 } from 'lucide-react';
-import { Button, Checkbox, Image, Input, Modal, Select } from 'antd';
-import { useDeleteUsersMutation, useGetAllUsersQuery, useUpdateUserRoleMutation } from '../redux/features/admin/userSlice';
+import { Button, Checkbox, Image, Input, Modal } from 'antd';
+import {
+  useApproveInstructorMutation,
+  useDeleteUsersMutation,
+  useGetAllUsersQuery,
+} from '../redux/features/admin/userSlice';
 import { imageUrl } from '../redux/baseApi';
 import avaterimg from '../assets/Images/dashboard/Avatar.png';
-
-const { Option } = Select;
 
 interface User {
   _id: string;
@@ -15,22 +17,22 @@ interface User {
   email: string;
   role: string;
   image?: string;
+  instructorApplicationStatus?: 'approved' | 'pending' | 'notApplied';
 }
 
 export default function UserTable() {
   const { data, isLoading, error } = useGetAllUsersQuery();
+  const [approveInstructor] = useApproveInstructorMutation();
   const [deleteUser] = useDeleteUsersMutation();
-  const [updateUserRole] = useUpdateUserRoleMutation();
 
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [deleteUserId, setDeleteUserId] = useState<string | null>(null);
-  const [editingUser, setEditingUser] = useState<User | null>(null);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
-  const [editingUserRole, setEditingUserRole] = useState('');
+  const [selectedInstructorId, setSelectedInstructorId] = useState<string | null>(null);
 
-  const users = data?.data?.result || [];
+  const users: User[] = data?.data?.result || [];
   const usersPerPage = 8;
 
   const toggleUser = (userId: string) => {
@@ -41,24 +43,18 @@ export default function UserTable() {
 
   const toggleAllUsers = () => {
     setSelectedUsers((prev) =>
-      prev.length === users.length ? [] : users.map((user) => user.id)
+      prev.length === users.length ? [] : users.map((user) => user._id)
     );
   };
 
-  const handleEdit = (user: User) => {
-    setEditingUser(user);
-    setEditingUserRole(user.role);
-    setIsEditModalVisible(true);
-  };
-
-  const handleSave = async () => {
-    if (editingUser) {
+  const handleApprove = async () => {
+    if (selectedInstructorId) {
       try {
-        await updateUserRole({ userId: editingUser._id, role: editingUserRole }).unwrap();
+       const res = await approveInstructor({instructorId:selectedInstructorId}).unwrap();
+        console.log('Instructor approved successfully',res);
         setIsEditModalVisible(false);
-        setEditingUser(null);
       } catch (error) {
-        console.error('Failed to update user role:', error);
+        console.error('Error approving instructor:', error);
       }
     }
   };
@@ -68,14 +64,13 @@ export default function UserTable() {
   };
 
   const handleDelete = async () => {
-    console.log(deleteUserId);
     if (deleteUserId) {
       try {
-        const res= await deleteUser(deleteUserId).unwrap();
-        console.log(res);
+        await deleteUser(deleteUserId).unwrap();
+        console.log('User deleted successfully');
         setDeleteUserId(null);
       } catch (error) {
-        console.error('Failed to delete user:', error);
+        console.error('Error deleting user:', error);
       }
     }
   };
@@ -128,11 +123,12 @@ export default function UserTable() {
               <th className="px-6 py-3 text-left">Name</th>
               <th className="px-6 py-3 text-left">Role</th>
               <th className="px-6 py-3 text-left">Email address</th>
+              <th className="px-6 py-3 text-left">Status</th>
               <th className="px-6 py-3 text-left sr-only">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
-            {currentUsers.map((user: User) => (
+            {currentUsers.map((user) => (
               <tr key={user._id} className="text-sm">
                 <td className="px-6 py-4">
                   <Checkbox
@@ -143,17 +139,17 @@ export default function UserTable() {
                 <td className="px-6 py-4">
                   <div className="flex items-center gap-3">
                     <div className="relative h-10 w-10">
-                      {user?.image ? (
+                      {user.image ? (
                         <Image
                           preview={false}
-                          src={imageUrl + user.image || "/placeholder.svg"}
+                          src={imageUrl + user.image}
                           alt={user.name}
                           className="rounded-full object-cover"
                         />
                       ) : (
                         <Image
                           preview={false}
-                          src={avaterimg || "/placeholder.svg"}
+                          src={avaterimg}
                           alt={user.name}
                           className="rounded-full object-cover"
                         />
@@ -161,23 +157,37 @@ export default function UserTable() {
                     </div>
                     <div>
                       <div className="font-medium text-gray-900">{user.name}</div>
-                      <div className="text-gray-500 flex">@{user.name}</div>
+                      <div className="text-gray-500">@{user.name}</div>
                     </div>
                   </div>
                 </td>
-                <td className="px-6 py-4 text-gray-500">{user?.role}</td>
-                <td className="px-6 py-4 text-gray-500">{user?.email}</td>
+                <td className="px-6 py-4 text-gray-500">{user.role}</td>
+                <td className="px-6 py-4 text-gray-500">{user.email}</td>
+                <td
+                  className={`${
+                    user.instructorApplicationStatus === 'approved' && 'text-green-500'
+                  } ${
+                    user.instructorApplicationStatus === 'pending' && 'text-yellow-500'
+                  } ${
+                    user.instructorApplicationStatus === 'notApplied' && 'text-gray-500'
+                  }`}
+                >
+                  {user.instructorApplicationStatus || 'N/A'}
+                </td>
                 <td className="px-6 py-4">
                   <div className="flex gap-2">
                     <Button
                       aria-label="Edit user"
-                      onClick={() => handleEdit(user)}
+                      onClick={() => {
+                        setSelectedInstructorId(user._id);
+                        setIsEditModalVisible(true);
+                      }}
                     >
                       <Pencil className="h-4 w-4 text-gray-500" />
                     </Button>
                     <Button
                       aria-label="Delete user"
-                      onClick={() => confirmDelete(user?._id)}
+                      onClick={() => confirmDelete(user._id)}
                     >
                       <Trash2 className="h-4 w-4 text-gray-500" />
                     </Button>
@@ -218,31 +228,35 @@ export default function UserTable() {
       {/* Delete Confirmation Modal */}
       <Modal
         title="Confirm Delete"
-        open={deleteUserId !== null}
+        open={!!deleteUserId}
         onOk={handleDelete}
         onCancel={() => setDeleteUserId(null)}
       >
-        <p className='text-[16px] text-[#101828]'>Are you sure you want to delete this user?</p>
+        <p className="text-[16px] text-[#101828]">
+          Are you sure you want to delete this user?
+        </p>
       </Modal>
 
-      {/* Edit Role Modal */}
+      {/* Approve User Modal */}
       <Modal
-        title="Edit User Role"
+        title="Approve User"
         open={isEditModalVisible}
-        onOk={handleSave}
+        footer={
+          <div className="flex gap-2 items-center justify-end">
+            <Button onClick={() => setIsEditModalVisible(false)} type="default">
+              Cancel
+            </Button>
+            <Button onClick={handleApprove} type="primary">
+              Approve
+            </Button>
+          </div>
+        }
         onCancel={() => setIsEditModalVisible(false)}
       >
-        <Select
-          value={editingUserRole}
-          onChange={(value) => setEditingUserRole(value)}
-          style={{ width: '100%' }}
-        >
-          <Option value="user">User</Option>
-          <Option value="admin">Admin</Option>
-          <Option value="instructor">Instructor</Option>
-        </Select>
+        <p className="text-[16px] text-[#101828]">
+          Are you sure you want to approve this instructor's application?
+        </p>
       </Modal>
     </div>
   );
 }
-
