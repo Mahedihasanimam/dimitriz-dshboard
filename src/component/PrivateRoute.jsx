@@ -13,7 +13,7 @@ const PrivateRoute = ({ children }) => {
   }
 
 //   return children
-  return isAuthenticated === true ? children : window.location.href = 'http://localhost:3000';
+  return isAuthenticated === true ? children : window.location.href = 'https://pantagonostis.vercel.app/';
 };
 
 export default PrivateRoute;

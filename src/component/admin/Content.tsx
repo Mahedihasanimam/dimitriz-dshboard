@@ -63,7 +63,7 @@ export default function CourseTable() {
     // Handle user deletion logic here
     console.log('Deleting user with ID:', userId);
   const res= await  deleteCourse(userId);
-  console.log(res);
+
   if(res?.data?.success){
       message.success('Course deleted successfully');
   }
@@ -72,6 +72,7 @@ export default function CourseTable() {
   const handleApproveCourse = async () => {
     try {
       const res = await approveCourse(selectedCourseId);
+      console.log('res',res)
       if (res?.data?.success) {
         message.success('Course approved successfully');
         setIsModalOpen(false);

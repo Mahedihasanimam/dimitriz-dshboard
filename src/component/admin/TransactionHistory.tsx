@@ -73,6 +73,7 @@ const TransactionHistory = () => {
     <div>
       <div className="pr-6 py-4 flex items-center justify-end">
         <SelectBox
+          
           options={selectOptions}
           placeholder="Week"
           onChange={handleSelectChange}

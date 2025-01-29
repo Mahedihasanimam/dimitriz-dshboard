@@ -44,7 +44,7 @@ const [lectureTitle,setLectureTitle]=React.useState('')
 
   const handleLectureClick = (lecture : any) => {
     console.log('lecture', lecture)
-    SetselectedVideoLink(lecture?.videoUrl)
+    SetselectedVideoLink(lecture?.videoLink)
     setLectureTitle(lecture?.title)
   }
   return (
@@ -53,11 +53,7 @@ const [lectureTitle,setLectureTitle]=React.useState('')
       <div className="xl:flex justify-between gap-6 item-center justify-between mb-4 container mx-auto">
         {/* left content ---------- */}
         <div className=" w-full">
-          <video
-            className="w-full mt-24 rounded-2xl"
-            src={imageUrl+videLink}
-            controls
-          ></video>
+        <iframe width="560" height="315" src={videLink} title={lectureTitle} frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
           <h1 className="text-[24px] font-bold py-4 ">{lectureTitle}</h1>
 
           {/* avater  */}
