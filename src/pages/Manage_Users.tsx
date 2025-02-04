@@ -48,6 +48,7 @@ export default function UserTable() {
   };
 
   const handleApprove = async () => {
+    
     if (selectedInstructorId) {
       try {
        const res = await approveInstructor({instructorId:selectedInstructorId}).unwrap();
@@ -177,7 +178,7 @@ export default function UserTable() {
                 <td className="px-6 py-4">
                   <div className="flex gap-2">
                     <Button
-                    disabled={ user.instructorApplicationStatus !== 'pending'}
+                    // disabled={ user.instructorApplicationStatus !== 'pending'}
                       aria-label="Edit user"
                       onClick={() => {
                         setSelectedInstructorId(user._id);
