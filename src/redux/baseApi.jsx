@@ -5,7 +5,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const api = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://dimitristzitzi-backend.onrender.com/",
+    baseUrl: "http://27.0.175.106:5000/",
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("token"); // Correct usage
       if (token) {
@@ -21,5 +21,5 @@ export const api = createApi({
   endpoints: () => ({}),
 });
 
-export const imageUrl = "https://dimitristzitzi-backend.onrender.com/";
+export const imageUrl = "http://27.0.175.106:5000/";
 export const websiteUrl = "https://pantagonostis.vercel.app/";
