@@ -13,7 +13,7 @@ const PrivateRoute = ({ children }) => {
   }
 
 //   return children
-  return isAuthenticated === true ? children : window.location.href = 'http://localhost:3000/auth/login/';
+  return isAuthenticated === true ? children : window.location.href = 'http://27.0.175.106:3000/auth/login';
 };
 
 export default PrivateRoute;
