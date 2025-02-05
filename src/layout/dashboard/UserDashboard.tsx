@@ -126,7 +126,7 @@ const UserDashboard: React.FC<NotificationBadgeProps> = ({ }) => {
           text: "Your'r Logged out.",
           icon: "success",
         });
-        window.location.href = "http://27.0.175.106:3000/auth/login/";
+        window.location.href = "http://pantognostis.net/auth/login/";
       }
     });
   };
