@@ -22,4 +22,4 @@ export const api = createApi({
 });
 
 export const imageUrl = "http://27.0.175.106:5000/";
-export const websiteUrl = "http://27.0.175.106:3000/";
+export const websiteUrl = "http://pantognostis.net/";
